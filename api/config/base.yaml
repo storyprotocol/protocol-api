@@ -1,0 +1,3 @@
+app_id: api
+port: 8090
+the_graph_endpoint: https://api.thegraph.com/subgraphs/name/edisonz0718/storyprotocol-v0-mvp
