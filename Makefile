@@ -12,7 +12,7 @@ help:
 	@echo '  lint:                - Run linter'
 
 ecr-auth:
-	aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ECR}
+	aws ecr get-login-password --region ${REGION} --profile=${PROFILE} | docker login --username AWS --password-stdin ${ECR}
 
 buildserver:
 	cd api && CGO_ENABLED=0 go build --ldflags "-extldflags '-static -s'" -o build/server cmd/api/main.go
@@ -27,10 +27,11 @@ build-%:
 	docker-compose build $*
 
 push-%: ecr-auth
-	docker tag $* ${ECR}/$*:${TAG}
-	docker tag $* ${ECR}/$*:latest
-	docker push ${ECR}/$*:${TAG}
-	docker push ${ECR}/$*:latest	
+	docker tag $* ${ECR}/${REPO}:${TAG}
+	docker tag $* ${ECR}/${REPO}:latest
+	docker push ${ECR}/${REPO}:${TAG}
+	docker push ${ECR}/${REPO}:latest	
+
 
 lint:
 	golangci-lint run
