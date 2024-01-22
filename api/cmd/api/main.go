@@ -35,8 +35,12 @@ func main() {
 
 	httpClient := xhttp.NewClient(&xhttp.ClientConfig{})
 
-	theGraphClient := graphql.NewClient(cfg.TheGraphEndpoint)
-	theGraphService := thegraph.NewTheGraphServiceMvpImpl(theGraphClient)
+	theGraphAlphaClient := graphql.NewClient(cfg.TheGraphAlphaEndpoint)
+	theGraphAlphaService := thegraph.NewTheGraphServiceMvpImpl(theGraphAlphaClient)
+
+	// theGraphBeta
+	theGraphBetaClient := graphql.NewClient(cfg.TheGraphBetaEndpoint)
+	theGraphBetaService := thegraph.NewTheGraphServiceBetaImpl(theGraphBetaClient)
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Hello")
@@ -49,32 +53,41 @@ func main() {
 	protocol := r.Group("/")
 	protocol.Use(cors.Default())
 	{
+
+		// BETA
+		protocol.GET("/registeredAccounts", handler.NewGetIPAccountsRegistered(theGraphBetaService, httpClient))
+		protocol.GET("/registeredIps", handler.NewGetIPsRegistered(theGraphBetaService, httpClient))
+		protocol.GET("/setAccounts", handler.NewGetSetIPAccounts(theGraphBetaService, httpClient))
+		protocol.GET("/setIpResolvers", handler.NewGetSetIPResolvers(theGraphBetaService, httpClient))
+		protocol.GET("/registeredModules", handler.NewGetRegisteredModules(theGraphBetaService, httpClient))
+		protocol.GET("/removedModules", handler.NewGetRemovedModules(theGraphBetaService, httpClient))
+
 		// Endpoint to get franchises
-		protocol.GET("/franchise", handler.NewGetFranchisesHandler(theGraphService, httpClient))
+		protocol.GET("/franchise", handler.NewGetFranchisesHandler(theGraphAlphaService, httpClient))
 
 		// Endpoint to get a franchise
-		protocol.GET("/franchise/:franchiseId", handler.NewGetFranchiseHandler(theGraphService, httpClient))
+		protocol.GET("/franchise/:franchiseId", handler.NewGetFranchiseHandler(theGraphAlphaService, httpClient))
 
 		// Endpoint to get ip assets from a franchise
-		protocol.GET("/ipasset", handler.NewGetIpAssetsHandler(theGraphService, httpClient))
+		protocol.GET("/ipasset", handler.NewGetIpAssetsHandler(theGraphAlphaService, httpClient))
 
 		// Endpoint to get a single ip asset from a franchise
-		protocol.GET("/ipasset/:ipAssetId", handler.NewGetIpAssetHandler(theGraphService, httpClient))
+		protocol.GET("/ipasset/:ipAssetId", handler.NewGetIpAssetHandler(theGraphAlphaService, httpClient))
 
 		// Endpoint to get licenses from an ip asset
-		protocol.GET("/license", handler.NewGetLicensesHandler(theGraphService))
+		protocol.GET("/license", handler.NewGetLicensesHandler(theGraphAlphaService))
 
 		// Endpoint to get a single license
-		protocol.GET("/license/:licenseId", handler.NewGetLicenseHandler(theGraphService))
+		protocol.GET("/license/:licenseId", handler.NewGetLicenseHandler(theGraphAlphaService))
 
 		// Endpoint to get collections
-		protocol.GET("/collection", handler.NewGetCollectionsHandler(theGraphService))
+		protocol.GET("/collection", handler.NewGetCollectionsHandler(theGraphAlphaService))
 
 		// Endpoint to get transactions
-		protocol.GET("/transaction", handler.NewGetTransactionsHandler(theGraphService))
+		protocol.GET("/transaction", handler.NewGetTransactionsHandler(theGraphAlphaService))
 
 		// Endpoint to get transaction
-		protocol.GET("/transaction/:transactionId", handler.NewGetTransactionHandler(theGraphService))
+		protocol.GET("/transaction/:transactionId", handler.NewGetTransactionHandler(theGraphAlphaService))
 	}
 
 	port := fmt.Sprintf(":%d", cfg.Port)

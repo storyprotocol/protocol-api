@@ -13,3 +13,12 @@ type TheGraphServiceMvp interface {
 	GetTransactions() ([]*entity.TransactionMVP, error)
 	GetTransaction(transactionId string) (*entity.TransactionMVP, error)
 }
+
+type TheGraphServiceBeta interface {
+	GetIPAccountsRegistered() ([]*entity.IPAccountRegistered, error)
+	GetIPsRegistered() ([]*entity.IPRegistered, error)
+	GetSetIPAccounts() ([]*entity.SetIPAccount, error)
+	GetSetIPResolvers() ([]*entity.SetResolver, error)
+	GetRegisteredModules() ([]*entity.ModuleAdded, error)
+	GetRemovedModules() ([]*entity.ModuleRemoved, error)
+}
