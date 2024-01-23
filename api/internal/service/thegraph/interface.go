@@ -15,10 +15,12 @@ type TheGraphServiceMvp interface {
 }
 
 type TheGraphServiceBeta interface {
-	GetIPAccountsRegistered() ([]*entity.IPAccountRegistered, error)
-	GetIPsRegistered() ([]*entity.IPRegistered, error)
-	GetSetIPAccounts() ([]*entity.SetIPAccount, error)
-	GetSetIPResolvers() ([]*entity.SetResolver, error)
-	GetRegisteredModules() ([]*entity.ModuleAdded, error)
-	GetRemovedModules() ([]*entity.ModuleRemoved, error)
+	GetIPAccount(accountId string) ([]*entity.IPAccount, error)
+	GetIPAccounts(limit int64, offset int64) ([]*entity.IPAccount, error)
+	GetModule(moduleName string) ([]*entity.Module, error)
+	GetModules(limit int64, offset int64) ([]*entity.Module, error)
+
+	//GetIPsRegistered() ([]*entity.IPRegistered, error)
+	//GetSetIPAccounts() ([]*entity.SetIPAccount, error)
+	//GetSetIPResolvers() ([]*entity.SetResolver, error)
 }

@@ -1,7 +1,7 @@
 package entity
 
 // Get IP ACCOUNT
-type IPAccountRegistered struct {
+type IPAccount struct {
 	IPAccountAddress string `json:"account,omitempty"`
 	IPAccountImpl    string `json:"implementation,omitempty"`
 	ChainId          string `json:"chainId,omitempty"`
@@ -9,12 +9,16 @@ type IPAccountRegistered struct {
 	TokenId          string `json:"tokenId,omitempty"`
 }
 
-type IPAccountsRegisteredTheGraphResponse struct {
-	IPAccountsRegistered []*IPAccountRegistered `json:"ipaccountRegistereds"`
+type IPAccountsTheGraphResponse struct {
+	IPAccounts []*IPAccount `json:"ipaccountRegistereds"`
 }
 
-type IPAccountsRegisteredResponse struct {
-	Data []*IPAccountRegistered `json:"data"`
+type IPAccountTheGraphResponse struct {
+	IPAccount *IPAccount `json:"ipaccountRegistered"`
+}
+
+type IPAccountsResponse struct {
+	Data []*IPAccount `json:"data"`
 }
 
 // GET IP Record Registered
@@ -65,29 +69,15 @@ type SetResolverResponse struct {
 }
 
 // GET Registered Modules
-type ModuleAdded struct {
+type Module struct {
 	Name   string `json:"name,omitempty"`
 	Module string `json:"module,omitempty"`
 }
 
-type ModuleAddedTheGraphResponse struct {
-	ModuleAdded []*ModuleAdded `json:"moduleAddeds"`
+type ModuleTheGraphResponse struct {
+	Module []*Module `json:"modules"`
 }
 
-type ModuleAddedResponse struct {
-	Data []*ModuleAdded `json:"data"`
-}
-
-// GET Removed Modules
-type ModuleRemoved struct {
-	Name   string `json:"name,omitempty"`
-	Module string `json:"module,omitempty"`
-}
-
-type ModuleRemovedTheGraphResponse struct {
-	ModuleRemoved []*ModuleRemoved `json:"moduleRemoveds"`
-}
-
-type ModuleRemovedResponse struct {
-	Data []*ModuleRemoved `json:"data"`
+type ModuleResponse struct {
+	Data []*Module `json:"data"`
 }

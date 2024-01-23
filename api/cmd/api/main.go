@@ -55,12 +55,16 @@ func main() {
 	{
 
 		// BETA
-		protocol.GET("/registeredAccounts", handler.NewGetIPAccountsRegistered(theGraphBetaService, httpClient))
-		protocol.GET("/registeredIps", handler.NewGetIPsRegistered(theGraphBetaService, httpClient))
-		protocol.GET("/setAccounts", handler.NewGetSetIPAccounts(theGraphBetaService, httpClient))
-		protocol.GET("/setIpResolvers", handler.NewGetSetIPResolvers(theGraphBetaService, httpClient))
-		protocol.GET("/registeredModules", handler.NewGetRegisteredModules(theGraphBetaService, httpClient))
-		protocol.GET("/removedModules", handler.NewGetRemovedModules(theGraphBetaService, httpClient))
+		protocol.GET("/account/:accountId", handler.NewGetIPAccount(theGraphBetaService, httpClient))
+		protocol.GET("/accounts", handler.NewGetIPAccounts(theGraphBetaService, httpClient))
+		protocol.GET("/module/:moduleName", handler.NewGetModule(theGraphBetaService, httpClient))
+		protocol.GET("/modules", handler.NewGetModules(theGraphBetaService, httpClient))
+
+		//protocol.GET("/registeredIps", handler.NewGetIPsRegistered(theGraphBetaService, httpClient))
+		//protocol.GET("/setAccounts", handler.NewGetSetIPAccounts(theGraphBetaService, httpClient))
+		//protocol.GET("/setIpResolvers", handler.NewGetSetIPResolvers(theGraphBetaService, httpClient))
+		//protocol.GET("/registeredModules", handler.NewGetRegisteredModules(theGraphBetaService, httpClient))
+		//protocol.GET("/removedModules", handler.NewGetRemovedModules(theGraphBetaService, httpClient))
 
 		// Endpoint to get franchises
 		protocol.GET("/franchise", handler.NewGetFranchisesHandler(theGraphAlphaService, httpClient))
