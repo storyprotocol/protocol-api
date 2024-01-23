@@ -1,5 +1,9 @@
 package entity
 
+type RequestBody struct {
+	Options *QueryOptions `json:"options"`
+}
+
 // Get IP ACCOUNT
 type IPAccount struct {
 	IPAccountAddress string `json:"account,omitempty"`

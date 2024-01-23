@@ -8,7 +8,6 @@ import (
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
@@ -31,17 +30,13 @@ func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 // GET /franchise
 func NewGetIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		limit := c.Query("limit")
-		offset := c.Query("offset")
-
-		limitI, offsetI, err := parseLimitAndOffset(limit, offset)
-		if err != nil {
-			logger.Errorf("Invalid limit or offset - offset: %s limit: %s", offset, limit)
-			c.JSON(http.StatusBadRequest, ErrorMessage("Invalid offset or limit"))
-			return
+		var requestBody entity.RequestBody
+		if err := c.BindJSON(&requestBody); err != nil {
+			logger.Errorf("Failed to read request body: %v", err)
+			requestBody = entity.RequestBody{}
 		}
 
-		ipAccounts, err := graphService.GetIPAccounts(limitI, offsetI)
+		ipAccounts, err := graphService.GetIPAccounts(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get registered IP Accounts: %v", err)
 			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
@@ -73,17 +68,13 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 
 func NewGetModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		limit := c.Query("limit")
-		offset := c.Query("offset")
-
-		limitI, offsetI, err := parseLimitAndOffset(limit, offset)
-		if err != nil {
-			logger.Errorf("Invalid limit or offset - offset: %s limit: %s", offset, limit)
-			c.JSON(http.StatusBadRequest, ErrorMessage("Invalid offset or limit"))
-			return
+		var requestBody entity.RequestBody
+		if err := c.BindJSON(&requestBody); err != nil {
+			logger.Errorf("Failed to read request body: %v", err)
+			requestBody = entity.RequestBody{}
 		}
 
-		mods, err := graphService.GetModules(limitI, offsetI)
+		mods, err := graphService.GetModules(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get added modules: %v", err)
 			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
@@ -94,21 +85,6 @@ func NewGetModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 			Data: mods,
 		})
 	}
-}
-
-func parseLimitAndOffset(limit string, offset string) (int64, int64, error) {
-	limitI, err := strconv.ParseInt(limit, 10, 64)
-	if err != nil {
-		logger.Errorf("Invalid limit: %s", limit)
-		return 0, 0, err
-	}
-	offsetI, err := strconv.ParseInt(offset, 10, 64)
-	if err != nil {
-		logger.Errorf("Invalid offset: %s", offset)
-		return 0, 0, err
-	}
-
-	return limitI, offsetI, nil
 }
 
 //func NewGetIPsRegistered(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {

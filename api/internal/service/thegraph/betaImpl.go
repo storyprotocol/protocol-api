@@ -8,6 +8,11 @@ import (
 	"log"
 )
 
+const (
+	QUERY_INTERFACE = "$first: Int, $skip: Int, $orderBy: String, $orderDirection: String"
+	QUERY_VALUE     = "first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection"
+)
+
 func NewTheGraphServiceBetaImpl(client *graphql.Client) TheGraphServiceBeta {
 	return &theGraphServiceBetaImpl{
 		client: client,
@@ -47,10 +52,12 @@ func (c *theGraphServiceBetaImpl) GetIPAccount(accountId string) ([]*entity.IPAc
 
 }
 
-func (c *theGraphServiceBetaImpl) GetIPAccounts(limit int64, offset int64) ([]*entity.IPAccount, error) {
+func (c *theGraphServiceBetaImpl) GetIPAccounts(options *TheGraphQueryOptions) ([]*entity.IPAccount, error) {
+	options = c.setQueryOptions(options)
+
 	query := fmt.Sprintf(`
-	{
-		ipaccountRegistereds (first: %d, skip: %d) {
+	query(%s) {
+		ipaccountRegistereds (%s) {
 			account
 			chainId
 			implementation
@@ -58,10 +65,15 @@ func (c *theGraphServiceBetaImpl) GetIPAccounts(limit int64, offset int64) ([]*e
 			tokenId
 		}
     }
-    `, limit, limit*offset)
+    `, QUERY_INTERFACE, QUERY_VALUE)
 
 	req := graphql.NewRequest(query)
+	req.Var("first", options.First)
+	req.Var("skip", options.Skip)
+	req.Var("orderBy", options.OrderBy)
+	req.Var("orderDirection", options.OrderDirection)
 
+	log.Println(req)
 	ctx := context.Background()
 	var ipAccountsTheGraphResponse entity.IPAccountsTheGraphResponse
 	if err := c.client.Run(ctx, req, &ipAccountsTheGraphResponse); err != nil {
@@ -102,17 +114,24 @@ func (c *theGraphServiceBetaImpl) GetModule(moduleName string) ([]*entity.Module
 
 }
 
-func (c *theGraphServiceBetaImpl) GetModules(limit int64, offset int64) ([]*entity.Module, error) {
+func (c *theGraphServiceBetaImpl) GetModules(options *TheGraphQueryOptions) ([]*entity.Module, error) {
+	options = c.setQueryOptions(options)
+
 	query := fmt.Sprintf(`
-	{
-		modules (first: %d, skip: %d) {
+	query(%s){
+		modules (%s) {
 			name
 			module
 		}
 	}
-    `, limit, limit*offset)
+    `, QUERY_INTERFACE, QUERY_VALUE)
 
 	req := graphql.NewRequest(query)
+	req.Var("first", options.First)
+	req.Var("skip", options.Skip)
+	req.Var("orderBy", options.OrderBy)
+	req.Var("orderDirection", options.OrderDirection)
+
 	ctx := context.Background()
 	var modules entity.ModuleTheGraphResponse
 	if err := c.client.Run(ctx, req, &modules); err != nil {
@@ -125,6 +144,24 @@ func (c *theGraphServiceBetaImpl) GetModules(limit int64, offset int64) ([]*enti
 	}
 
 	return mods, nil
+}
+
+func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions) *TheGraphQueryOptions {
+	if options == nil {
+		options = &TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
+
+	if options.First == 0 {
+		options.First = 100
+	}
+
+	options.OrderBy = "blockTimestamp"
+	options.OrderDirection = "desc"
+
+	return options
 }
 
 //func (c *theGraphServiceBetaImpl) GetIPsRegistered() ([]*entity.IPRegistered, error) {
