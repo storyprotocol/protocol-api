@@ -1,5 +1,0 @@
-app_id: api
-port: 8090
-the_graph_alpha_endpoint: https://api.thegraph.com/subgraphs/name/edisonz0718/storyprotocol-v0-mvp
-the_graph_beta_endpoint: https://api.thegraph.com/subgraphs/name/baxterjfinch/v0-beta
-rpc_url: https://eth-sepolia.g.alchemy.com/v2/j8FjbXW53K_ZSL1TLfYwluIhxgjpGd4-

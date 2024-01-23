@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/machinebox/graphql"
 	"github.com/storyprotocol/protocol-api/api/internal/entity"
-	"log"
 )
 
 const (
@@ -44,15 +43,13 @@ func (c *theGraphServiceBetaImpl) GetIPAccount(accountId string) ([]*entity.IPAc
 		return nil, fmt.Errorf("failed to get account from the graph. error: %v", err)
 	}
 
-	log.Println(ipAccountTheGraphResponse)
 	accts := []*entity.IPAccount{}
 	accts = append(accts, ipAccountTheGraphResponse.IPAccount)
 
 	return accts, nil
-
 }
 
-func (c *theGraphServiceBetaImpl) GetIPAccounts(options *TheGraphQueryOptions) ([]*entity.IPAccount, error) {
+func (c *theGraphServiceBetaImpl) ListIPAccounts(options *TheGraphQueryOptions) ([]*entity.IPAccount, error) {
 	options = c.setQueryOptions(options)
 
 	query := fmt.Sprintf(`
@@ -73,7 +70,6 @@ func (c *theGraphServiceBetaImpl) GetIPAccounts(options *TheGraphQueryOptions) (
 	req.Var("orderBy", options.OrderBy)
 	req.Var("orderDirection", options.OrderDirection)
 
-	log.Println(req)
 	ctx := context.Background()
 	var ipAccountsTheGraphResponse entity.IPAccountsTheGraphResponse
 	if err := c.client.Run(ctx, req, &ipAccountsTheGraphResponse); err != nil {
@@ -114,7 +110,7 @@ func (c *theGraphServiceBetaImpl) GetModule(moduleName string) ([]*entity.Module
 
 }
 
-func (c *theGraphServiceBetaImpl) GetModules(options *TheGraphQueryOptions) ([]*entity.Module, error) {
+func (c *theGraphServiceBetaImpl) ListModules(options *TheGraphQueryOptions) ([]*entity.Module, error) {
 	options = c.setQueryOptions(options)
 
 	query := fmt.Sprintf(`

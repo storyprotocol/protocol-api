@@ -6,14 +6,12 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
-	"log"
 	"net/http"
 )
 
 func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		accountId := c.Param("accountId")
-		log.Println(accountId)
 		accounts, err := graphService.GetIPAccount(accountId)
 		if err != nil {
 			logger.Errorf("Failed to get account: %v", err)
@@ -28,7 +26,7 @@ func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 }
 
 // GET /franchise
-func NewGetIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+func NewListIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody entity.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
@@ -36,7 +34,7 @@ func NewGetIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 			requestBody = entity.RequestBody{}
 		}
 
-		ipAccounts, err := graphService.GetIPAccounts(thegraph.FromRequestQueryOptions(requestBody.Options))
+		ipAccounts, err := graphService.ListIPAccounts(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get registered IP Accounts: %v", err)
 			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
@@ -66,7 +64,7 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 	}
 }
 
-func NewGetModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody entity.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
@@ -74,7 +72,7 @@ func NewGetModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 			requestBody = entity.RequestBody{}
 		}
 
-		mods, err := graphService.GetModules(thegraph.FromRequestQueryOptions(requestBody.Options))
+		mods, err := graphService.ListModules(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get added modules: %v", err)
 			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))

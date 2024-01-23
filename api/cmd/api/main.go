@@ -55,8 +55,8 @@ func main() {
 		protocol.GET("/account/:accountId", handler.NewGetIPAccount(theGraphBetaService, httpClient))
 		protocol.GET("/module/:moduleName", handler.NewGetModule(theGraphBetaService, httpClient))
 
-		protocol.POST("/accounts", handler.NewGetIPAccounts(theGraphBetaService, httpClient))
-		protocol.POST("/modules", handler.NewGetModules(theGraphBetaService, httpClient))
+		protocol.POST("/accounts", handler.NewListIPAccounts(theGraphBetaService, httpClient))
+		protocol.POST("/modules", handler.NewListModules(theGraphBetaService, httpClient))
 
 		//protocol.GET("/registeredIps", handler.NewGetIPsRegistered(theGraphBetaService, httpClient))
 		//protocol.GET("/setAccounts", handler.NewGetSetIPAccounts(theGraphBetaService, httpClient))
