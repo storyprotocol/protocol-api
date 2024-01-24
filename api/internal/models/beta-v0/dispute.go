@@ -10,13 +10,13 @@ type Dispute struct {
 }
 
 type DisputeTheGraphResponse struct {
-	Dispute []*Module `json:"dispute"`
+	Dispute []*Dispute `json:"dispute"`
 }
 
 type DisputesTheGraphResponse struct {
-	Disputes []*Module `json:"disputes"`
+	Disputes []*Dispute `json:"disputes"`
 }
 
 type DisputeResponse struct {
-	Data []*Module `json:"data"`
+	Data []*Dispute `json:"data"`
 }

@@ -3,14 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph/beta-v0"
 	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/machinebox/graphql"
 	"github.com/storyprotocol/protocol-api/api/internal/config"
-	"github.com/storyprotocol/protocol-api/api/internal/handler"
-	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
+	betaHandlers "github.com/storyprotocol/protocol-api/api/internal/handler/beta-v0"
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 )
@@ -37,7 +37,7 @@ func main() {
 
 	// theGraphBeta
 	theGraphBetaClient := graphql.NewClient(cfg.TheGraphBetaEndpoint)
-	theGraphBetaService := thegraph.NewTheGraphServiceBetaImpl(theGraphBetaClient)
+	theGraphBetaService := beta_v0.NewTheGraphServiceBetaImpl(theGraphBetaClient)
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Hello")
@@ -52,20 +52,20 @@ func main() {
 	{
 
 		// BETA
-		protocol.GET("/accounts/:accountId", handler.NewGetIPAccount(theGraphBetaService, httpClient))
-		protocol.GET("/modules/:moduleName", handler.NewGetModule(theGraphBetaService, httpClient))
-		protocol.GET("/licenseframeworks/:frameworkId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
-		protocol.GET("/licenses/:licenseId", handler.NewGetLicense(theGraphBetaService, httpClient))
-		protocol.GET("/policies/:policyId", handler.NewGetPolicy(theGraphBetaService, httpClient))
+		protocol.GET("/accounts/:accountId", betaHandlers.NewGetIPAccount(theGraphBetaService, httpClient))
+		protocol.GET("/modules/:moduleName", betaHandlers.NewGetModule(theGraphBetaService, httpClient))
+		protocol.GET("/licenseframeworks/:frameworkId", betaHandlers.NewGetLicenseFramework(theGraphBetaService, httpClient))
+		protocol.GET("/licenses/:licenseId", betaHandlers.NewGetLicense(theGraphBetaService, httpClient))
+		protocol.GET("/policies/:policyId", betaHandlers.NewGetPolicy(theGraphBetaService, httpClient))
 
 		//protocol.GET("/permissions/:permissionId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
 		//protocol.GET("/tags/:tagId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
 
-		protocol.POST("/accounts", handler.NewListIPAccounts(theGraphBetaService, httpClient))
-		protocol.POST("/modules", handler.NewListModules(theGraphBetaService, httpClient))
-		protocol.POST("/licenseframeworks", handler.NewListLicenseFrameworks(theGraphBetaService, httpClient))
-		protocol.POST("/licenses", handler.NewListLicenses(theGraphBetaService, httpClient))
-		protocol.POST("/policies", handler.NewListPolicies(theGraphBetaService, httpClient))
+		protocol.POST("/accounts", betaHandlers.NewListIPAccounts(theGraphBetaService, httpClient))
+		protocol.POST("/modules", betaHandlers.NewListModules(theGraphBetaService, httpClient))
+		protocol.POST("/licenseframeworks", betaHandlers.NewListLicenseFrameworks(theGraphBetaService, httpClient))
+		protocol.POST("/licenses", betaHandlers.NewListLicenses(theGraphBetaService, httpClient))
+		protocol.POST("/policies", betaHandlers.NewListPolicies(theGraphBetaService, httpClient))
 		//protocol.POST("/permissions", handler.NewListAccessControlPermissions(theGraphBetaService, httpClient))
 		//protocol.POST("/tags", handler.NewListAccessControlPermissions(theGraphBetaService, httpClient))
 		// disputes

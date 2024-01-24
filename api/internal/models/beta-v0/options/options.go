@@ -1,4 +1,4 @@
-package models
+package options
 
 type QueryOptions struct {
 	Pagination struct {
@@ -8,5 +8,5 @@ type QueryOptions struct {
 }
 
 type RequestBody struct {
-	Options *QueryOptions `json:"options"`
+	Options *QueryOptions `json:"messages"`
 }
