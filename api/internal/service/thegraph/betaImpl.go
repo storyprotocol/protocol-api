@@ -25,15 +25,27 @@ type theGraphServiceBetaImpl struct {
 func (c *theGraphServiceBetaImpl) GetIPAccount(accountId string) ([]*entity.IPAccount, error) {
 	query := fmt.Sprintf(`
 	query {
-		ipaccountRegistered(id: "%s") {
-			account
-			implementation
+		iprecord(id: "%s") {
+			id
+			ipId
 			chainId
 			tokenContract
 			tokenId
+			metadataResolverAddress
 	  	}
 	}
     `, accountId)
+	//query := fmt.Sprintf(`
+	//query {
+	//	ipaccountRegistered(id: "%s") {
+	//		account
+	//		implementation
+	//		chainId
+	//		tokenContract
+	//		tokenId
+	//  	}
+	//}
+	//`, accountId)
 
 	req := graphql.NewRequest(query)
 
@@ -54,12 +66,13 @@ func (c *theGraphServiceBetaImpl) ListIPAccounts(options *TheGraphQueryOptions) 
 
 	query := fmt.Sprintf(`
 	query(%s) {
-		ipaccountRegistereds (%s) {
-			account
+		iprecords (%s) {
+			id
+			ipId
 			chainId
-			implementation
 			tokenContract
 			tokenId
+			metadataResolverAddress
 		}
     }
     `, QUERY_INTERFACE, QUERY_VALUE)
