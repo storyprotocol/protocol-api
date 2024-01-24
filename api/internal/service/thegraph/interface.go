@@ -11,6 +11,7 @@ type TheGraphServiceBeta interface {
 	GetModule(moduleName string) ([]*beta_v0.Module, error)
 	GetLicense(licenseId string) ([]*beta_v0.License, error)
 	GetLicenseFramework(licenseId string) ([]*beta_v0.LicenseFramework, error)
+	GetTag(tagId string) ([]*beta_v0.Tag, error)
 	GetPolicy(policyId string) ([]*beta_v0.Policy, error)
 	GetDispute(disputeId string) ([]*beta_v0.Dispute, error)
 
@@ -22,6 +23,7 @@ type TheGraphServiceBeta interface {
 	ListAccessControlPermissions(options *TheGraphQueryOptions) ([]*beta_v0.AccessControlPermission, error)
 	ListPolicies(options *TheGraphQueryOptions) ([]*beta_v0.Policy, error)
 	ListDisputes(options *TheGraphQueryOptions) ([]*beta_v0.Dispute, error)
+	ListTag(options *TheGraphQueryOptions) ([]*beta_v0.Tag, error)
 }
 
 type TheGraphQueryOptions struct {

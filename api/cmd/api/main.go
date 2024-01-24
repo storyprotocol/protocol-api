@@ -57,20 +57,19 @@ func main() {
 		protocol.GET("/licenseframeworks/:frameworkId", betaHandlers.NewGetLicenseFramework(theGraphBetaService, httpClient))
 		protocol.GET("/licenses/:licenseId", betaHandlers.NewGetLicense(theGraphBetaService, httpClient))
 		protocol.GET("/policies/:policyId", betaHandlers.NewGetPolicy(theGraphBetaService, httpClient))
-
+		protocol.GET("/disputes/:disputeId", betaHandlers.NewGetDispute(theGraphBetaService, httpClient))
 		//protocol.GET("/permissions/:permissionId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
-		//protocol.GET("/tags/:tagId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
+		protocol.GET("/tags/:tagId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
 
 		protocol.POST("/accounts", betaHandlers.NewListIPAccounts(theGraphBetaService, httpClient))
 		protocol.POST("/modules", betaHandlers.NewListModules(theGraphBetaService, httpClient))
 		protocol.POST("/licenseframeworks", betaHandlers.NewListLicenseFrameworks(theGraphBetaService, httpClient))
 		protocol.POST("/licenses", betaHandlers.NewListLicenses(theGraphBetaService, httpClient))
 		protocol.POST("/policies", betaHandlers.NewListPolicies(theGraphBetaService, httpClient))
+		protocol.POST("/disputes", betaHandlers.NewListDisputes(theGraphBetaService, httpClient))
 		//protocol.POST("/permissions", handler.NewListAccessControlPermissions(theGraphBetaService, httpClient))
-		//protocol.POST("/tags", handler.NewListAccessControlPermissions(theGraphBetaService, httpClient))
-		// disputes
+		protocol.POST("/tags", betaHandlers.NewListTags(theGraphBetaService, httpClient))
 		// royalties
-		// policy?
 		// policyCreated <- licenseRegistry
 	}
 

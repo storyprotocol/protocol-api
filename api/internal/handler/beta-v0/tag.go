@@ -11,24 +11,24 @@ import (
 	"net/http"
 )
 
-func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		disputeId := c.Param("disputeId")
+		tagId := c.Param("tagId")
 
-		disputes, err := graphService.GetDispute(disputeId)
+		tags, err := graphService.GetTag(tagId)
 		if err != nil {
-			logger.Errorf("Failed to get dispute: %v", err)
+			logger.Errorf("Failed to get tag: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.DisputeResponse{
-			Data: disputes,
+		c.JSON(http.StatusOK, beta_v0.TagResponse{
+			Data: tags,
 		})
 	}
 }
 
-func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
@@ -36,15 +36,15 @@ func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			requestBody = options2.RequestBody{}
 		}
 
-		disputes, err := graphService.ListDisputes(thegraph.FromRequestQueryOptions(requestBody.Options))
+		tags, err := graphService.ListTag(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
-			logger.Errorf("Failed to get added disputes: %v", err)
+			logger.Errorf("Failed to list tags: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.DisputeResponse{
-			Data: disputes,
+		c.JSON(http.StatusOK, beta_v0.TagResponse{
+			Data: tags,
 		})
 	}
 }
