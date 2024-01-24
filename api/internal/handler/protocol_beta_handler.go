@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/storyprotocol/protocol-api/api/internal/entity"
+	"github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
@@ -19,7 +19,7 @@ func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.IPAccountsResponse{
+		c.JSON(http.StatusOK, beta_v0.IPAccountsResponse{
 			Data: accounts,
 		})
 	}
@@ -28,10 +28,10 @@ func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 // GET /franchise
 func NewListIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody entity.RequestBody
+		var requestBody beta_v0.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = entity.RequestBody{}
+			requestBody = beta_v0.RequestBody{}
 		}
 
 		ipAccounts, err := graphService.ListIPAccounts(thegraph.FromRequestQueryOptions(requestBody.Options))
@@ -41,7 +41,7 @@ func NewListIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xht
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.IPAccountsResponse{
+		c.JSON(http.StatusOK, beta_v0.IPAccountsResponse{
 			Data: ipAccounts,
 		})
 	}
@@ -58,7 +58,7 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.ModuleResponse{
+		c.JSON(http.StatusOK, beta_v0.ModuleResponse{
 			Data: mods,
 		})
 	}
@@ -66,10 +66,10 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 
 func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody entity.RequestBody
+		var requestBody beta_v0.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = entity.RequestBody{}
+			requestBody = beta_v0.RequestBody{}
 		}
 
 		mods, err := graphService.ListModules(thegraph.FromRequestQueryOptions(requestBody.Options))
@@ -79,7 +79,7 @@ func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.ModuleResponse{
+		c.JSON(http.StatusOK, beta_v0.ModuleResponse{
 			Data: mods,
 		})
 	}
@@ -96,7 +96,7 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.LicenseResponse{
+		c.JSON(http.StatusOK, beta_v0.LicenseResponse{
 			Data: licenses,
 		})
 	}
@@ -104,10 +104,10 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 
 func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody entity.RequestBody
+		var requestBody beta_v0.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = entity.RequestBody{}
+			requestBody = beta_v0.RequestBody{}
 		}
 
 		licenses, err := graphService.ListLicenses(thegraph.FromRequestQueryOptions(requestBody.Options))
@@ -117,7 +117,7 @@ func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.LicenseResponse{
+		c.JSON(http.StatusOK, beta_v0.LicenseResponse{
 			Data: licenses,
 		})
 	}
@@ -134,7 +134,7 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.LicenseFrameworkResponse{
+		c.JSON(http.StatusOK, beta_v0.LicenseFrameworkResponse{
 			Data: licenses,
 		})
 	}
@@ -142,10 +142,10 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 
 func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody entity.RequestBody
+		var requestBody beta_v0.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = entity.RequestBody{}
+			requestBody = beta_v0.RequestBody{}
 		}
 
 		licenses, err := graphService.ListLicenseFrameworks(thegraph.FromRequestQueryOptions(requestBody.Options))
@@ -155,7 +155,7 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.LicenseFrameworkResponse{
+		c.JSON(http.StatusOK, beta_v0.LicenseFrameworkResponse{
 			Data: licenses,
 		})
 	}
@@ -172,7 +172,7 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.PolicyResponse{
+		c.JSON(http.StatusOK, beta_v0.PolicyResponse{
 			Data: policies,
 		})
 	}
@@ -180,10 +180,10 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 
 func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody entity.RequestBody
+		var requestBody beta_v0.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = entity.RequestBody{}
+			requestBody = beta_v0.RequestBody{}
 		}
 
 		pols, err := graphService.ListPolicies(thegraph.FromRequestQueryOptions(requestBody.Options))
@@ -193,7 +193,7 @@ func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.PolicyResponse{
+		c.JSON(http.StatusOK, beta_v0.PolicyResponse{
 			Data: pols,
 		})
 	}
@@ -201,10 +201,10 @@ func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 
 func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody entity.RequestBody
+		var requestBody beta_v0.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = entity.RequestBody{}
+			requestBody = beta_v0.RequestBody{}
 		}
 
 		acps, err := graphService.ListAccessControlPermissions(thegraph.FromRequestQueryOptions(requestBody.Options))
@@ -214,7 +214,7 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 			return
 		}
 
-		c.JSON(http.StatusOK, entity.AccessControlPermissionResponse{
+		c.JSON(http.StatusOK, beta_v0.AccessControlPermissionResponse{
 			Data: acps,
 		})
 	}
@@ -229,7 +229,7 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 //			return
 //		}
 //
-//		c.JSON(http.StatusOK, entity.IPRegisteredResponse{
+//		c.JSON(http.StatusOK, models.IPRegisteredResponse{
 //			Data: ips,
 //		})
 //	}
@@ -244,7 +244,7 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 //			return
 //		}
 //
-//		c.JSON(http.StatusOK, entity.SetIPAccountResponse{
+//		c.JSON(http.StatusOK, models.SetIPAccountResponse{
 //			Data: accounts,
 //		})
 //	}
@@ -259,7 +259,7 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 //			return
 //		}
 //
-//		c.JSON(http.StatusOK, entity.SetResolverResponse{
+//		c.JSON(http.StatusOK, models.SetResolverResponse{
 //			Data: accounts,
 //		})
 //	}
@@ -275,7 +275,7 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 //			return
 //		}
 //
-//		c.JSON(http.StatusOK, entity.ModuleAddedResponse{
+//		c.JSON(http.StatusOK, models.ModuleAddedResponse{
 //			Data: mods,
 //		})
 //	}

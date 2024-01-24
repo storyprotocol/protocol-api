@@ -1,4 +1,4 @@
-package entity
+package beta_v0
 
 type LicenseFramework struct {
 	Creator                 string                  `json:"creator,omitempty"`

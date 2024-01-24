@@ -1,4 +1,4 @@
-package entity
+package beta_v0
 
 //type GetAccessControlPermissionRequest struct {
 //	Offset int `json:"offset"`

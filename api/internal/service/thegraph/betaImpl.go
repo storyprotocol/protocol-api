@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/machinebox/graphql"
-	"github.com/storyprotocol/protocol-api/api/internal/entity"
+	"github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
 )
 
 const (
@@ -22,7 +22,7 @@ type theGraphServiceBetaImpl struct {
 	client *graphql.Client
 }
 
-func (c *theGraphServiceBetaImpl) GetIPAccount(accountId string) ([]*entity.IPAccount, error) {
+func (c *theGraphServiceBetaImpl) GetIPAccount(accountId string) ([]*beta_v0.IPAccount, error) {
 	query := fmt.Sprintf(`
 	query {
 		iprecord(id: "%s") {
@@ -50,20 +50,18 @@ func (c *theGraphServiceBetaImpl) GetIPAccount(accountId string) ([]*entity.IPAc
 	req := graphql.NewRequest(query)
 
 	ctx := context.Background()
-	var ipAccountTheGraphResponse entity.IPAccountTheGraphResponse
+	var ipAccountTheGraphResponse beta_v0.IPAccountTheGraphResponse
 	if err := c.client.Run(ctx, req, &ipAccountTheGraphResponse); err != nil {
 		return nil, fmt.Errorf("failed to get account from the graph. error: %v", err)
 	}
 
-	accts := []*entity.IPAccount{}
+	accts := []*beta_v0.IPAccount{}
 	accts = append(accts, ipAccountTheGraphResponse.IPAccount)
 
 	return accts, nil
 }
 
-func (c *theGraphServiceBetaImpl) ListIPAccounts(options *TheGraphQueryOptions) ([]*entity.IPAccount, error) {
-	options = c.setQueryOptions(options)
-
+func (c *theGraphServiceBetaImpl) ListIPAccounts(options *TheGraphQueryOptions) ([]*beta_v0.IPAccount, error) {
 	query := fmt.Sprintf(`
 	query(%s) {
 		iprecords (%s) {
@@ -77,19 +75,15 @@ func (c *theGraphServiceBetaImpl) ListIPAccounts(options *TheGraphQueryOptions) 
     }
     `, QUERY_INTERFACE, QUERY_VALUE)
 
-	req := graphql.NewRequest(query)
-	req.Var("first", options.First)
-	req.Var("skip", options.Skip)
-	req.Var("orderBy", options.OrderBy)
-	req.Var("orderDirection", options.OrderDirection)
+	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()
-	var ipAccountsTheGraphResponse entity.IPAccountsTheGraphResponse
+	var ipAccountsTheGraphResponse beta_v0.IPAccountsTheGraphResponse
 	if err := c.client.Run(ctx, req, &ipAccountsTheGraphResponse); err != nil {
 		return nil, fmt.Errorf("failed to get registered ip accounts from the graph. error: %v", err)
 	}
 
-	ipAccounts := []*entity.IPAccount{}
+	ipAccounts := []*beta_v0.IPAccount{}
 	for _, ipAccount := range ipAccountsTheGraphResponse.IPAccounts {
 		ipAccounts = append(ipAccounts, ipAccount)
 	}
@@ -97,7 +91,7 @@ func (c *theGraphServiceBetaImpl) ListIPAccounts(options *TheGraphQueryOptions) 
 	return ipAccounts, nil
 }
 
-func (c *theGraphServiceBetaImpl) GetModule(moduleName string) ([]*entity.Module, error) {
+func (c *theGraphServiceBetaImpl) GetModule(moduleName string) ([]*beta_v0.Module, error) {
 	query := fmt.Sprintf(`
 	query {
 		module(id: "%s") {
@@ -109,12 +103,12 @@ func (c *theGraphServiceBetaImpl) GetModule(moduleName string) ([]*entity.Module
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
-	var modules entity.ModuleTheGraphResponse
+	var modules beta_v0.ModuleTheGraphResponse
 	if err := c.client.Run(ctx, req, &modules); err != nil {
 		return nil, fmt.Errorf("failed to get modules from the graph. error: %v", err)
 	}
 
-	mods := []*entity.Module{}
+	mods := []*beta_v0.Module{}
 	for _, mod := range modules.Module {
 		mods = append(mods, mod)
 	}
@@ -123,9 +117,7 @@ func (c *theGraphServiceBetaImpl) GetModule(moduleName string) ([]*entity.Module
 
 }
 
-func (c *theGraphServiceBetaImpl) ListModules(options *TheGraphQueryOptions) ([]*entity.Module, error) {
-	options = c.setQueryOptions(options)
-
+func (c *theGraphServiceBetaImpl) ListModules(options *TheGraphQueryOptions) ([]*beta_v0.Module, error) {
 	query := fmt.Sprintf(`
 	query(%s){
 		modules (%s) {
@@ -135,19 +127,15 @@ func (c *theGraphServiceBetaImpl) ListModules(options *TheGraphQueryOptions) ([]
 	}
     `, QUERY_INTERFACE, QUERY_VALUE)
 
-	req := graphql.NewRequest(query)
-	req.Var("first", options.First)
-	req.Var("skip", options.Skip)
-	req.Var("orderBy", options.OrderBy)
-	req.Var("orderDirection", options.OrderDirection)
+	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()
-	var modules entity.ModulesTheGraphResponse
+	var modules beta_v0.ModulesTheGraphResponse
 	if err := c.client.Run(ctx, req, &modules); err != nil {
 		return nil, fmt.Errorf("failed to get modules from the graph. error: %v", err)
 	}
 
-	mods := []*entity.Module{}
+	mods := []*beta_v0.Module{}
 	for _, mod := range modules.Modules {
 		mods = append(mods, mod)
 	}
@@ -155,7 +143,7 @@ func (c *theGraphServiceBetaImpl) ListModules(options *TheGraphQueryOptions) ([]
 	return mods, nil
 }
 
-func (c *theGraphServiceBetaImpl) GetLicense(licenseId string) ([]*entity.License, error) {
+func (c *theGraphServiceBetaImpl) GetLicense(licenseId string) ([]*beta_v0.License, error) {
 	query := fmt.Sprintf(`
 		query {
 		  license(id: "%s") {
@@ -174,12 +162,12 @@ func (c *theGraphServiceBetaImpl) GetLicense(licenseId string) ([]*entity.Licens
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
-	var licensesRes entity.LicenseTheGraphResponse
+	var licensesRes beta_v0.LicenseTheGraphResponse
 	if err := c.client.Run(ctx, req, &licensesRes); err != nil {
 		return nil, fmt.Errorf("failed to get license from the graph. error: %v", err)
 	}
 
-	licenses := []*entity.License{}
+	licenses := []*beta_v0.License{}
 	for _, license := range licensesRes.License {
 		licenses = append(licenses, license)
 	}
@@ -188,9 +176,7 @@ func (c *theGraphServiceBetaImpl) GetLicense(licenseId string) ([]*entity.Licens
 
 }
 
-func (c *theGraphServiceBetaImpl) ListLicenses(options *TheGraphQueryOptions) ([]*entity.License, error) {
-	options = c.setQueryOptions(options)
-
+func (c *theGraphServiceBetaImpl) ListLicenses(options *TheGraphQueryOptions) ([]*beta_v0.License, error) {
 	query := fmt.Sprintf(`
 	query(%s){
 		{
@@ -209,19 +195,15 @@ func (c *theGraphServiceBetaImpl) ListLicenses(options *TheGraphQueryOptions) ([
 	}
     `, QUERY_INTERFACE, QUERY_VALUE)
 
-	req := graphql.NewRequest(query)
-	req.Var("first", options.First)
-	req.Var("skip", options.Skip)
-	req.Var("orderBy", options.OrderBy)
-	req.Var("orderDirection", options.OrderDirection)
+	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()
-	var licensesRes entity.LicensesTheGraphResponse
+	var licensesRes beta_v0.LicensesTheGraphResponse
 	if err := c.client.Run(ctx, req, &licensesRes); err != nil {
 		return nil, fmt.Errorf("failed to get licenses from the graph. error: %v", err)
 	}
 
-	licenses := []*entity.License{}
+	licenses := []*beta_v0.License{}
 	for _, license := range licensesRes.Licenses {
 		licenses = append(licenses, license)
 	}
@@ -229,7 +211,7 @@ func (c *theGraphServiceBetaImpl) ListLicenses(options *TheGraphQueryOptions) ([
 	return licenses, nil
 }
 
-func (c *theGraphServiceBetaImpl) GetLicenseFramework(licenseId string) ([]*entity.LicenseFramework, error) {
+func (c *theGraphServiceBetaImpl) GetLicenseFramework(licenseId string) ([]*beta_v0.LicenseFramework, error) {
 	query := fmt.Sprintf(`
 		{
 		  licenseFramework(id: "%s") {
@@ -252,12 +234,12 @@ func (c *theGraphServiceBetaImpl) GetLicenseFramework(licenseId string) ([]*enti
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
-	var licensesRes entity.LicenseFrameworkTheGraphResponse
+	var licensesRes beta_v0.LicenseFrameworkTheGraphResponse
 	if err := c.client.Run(ctx, req, &licensesRes); err != nil {
 		return nil, fmt.Errorf("failed to get license from the graph. error: %v", err)
 	}
 
-	licenses := []*entity.LicenseFramework{}
+	licenses := []*beta_v0.LicenseFramework{}
 	for _, license := range licensesRes.LicenseFramework {
 		licenses = append(licenses, license)
 	}
@@ -266,9 +248,7 @@ func (c *theGraphServiceBetaImpl) GetLicenseFramework(licenseId string) ([]*enti
 
 }
 
-func (c *theGraphServiceBetaImpl) ListLicenseFrameworks(options *TheGraphQueryOptions) ([]*entity.LicenseFramework, error) {
-	options = c.setQueryOptions(options)
-
+func (c *theGraphServiceBetaImpl) ListLicenseFrameworks(options *TheGraphQueryOptions) ([]*beta_v0.LicenseFramework, error) {
 	query := fmt.Sprintf(`
 		query(%s) {
 		  licenseFrameworks(%s) {
@@ -288,19 +268,15 @@ func (c *theGraphServiceBetaImpl) ListLicenseFrameworks(options *TheGraphQueryOp
 		  }
     `, QUERY_INTERFACE, QUERY_VALUE)
 
-	req := graphql.NewRequest(query)
-	req.Var("first", options.First)
-	req.Var("skip", options.Skip)
-	req.Var("orderBy", options.OrderBy)
-	req.Var("orderDirection", options.OrderDirection)
+	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()
-	var licensesRes entity.LicenseFrameworksTheGraphResponse
+	var licensesRes beta_v0.LicenseFrameworksTheGraphResponse
 	if err := c.client.Run(ctx, req, &licensesRes); err != nil {
 		return nil, fmt.Errorf("failed to get license frameworks from the graph. error: %v", err)
 	}
 
-	licenses := []*entity.LicenseFramework{}
+	licenses := []*beta_v0.LicenseFramework{}
 	for _, license := range licensesRes.LicenseFrameworks {
 		licenses = append(licenses, license)
 	}
@@ -308,9 +284,7 @@ func (c *theGraphServiceBetaImpl) ListLicenseFrameworks(options *TheGraphQueryOp
 	return licenses, nil
 }
 
-func (c *theGraphServiceBetaImpl) ListAccessControlPermissions(options *TheGraphQueryOptions) ([]*entity.AccessControlPermission, error) {
-	options = c.setQueryOptions(options)
-
+func (c *theGraphServiceBetaImpl) ListAccessControlPermissions(options *TheGraphQueryOptions) ([]*beta_v0.AccessControlPermission, error) {
 	query := fmt.Sprintf(`
 	query(%s){
 		modules (%s) {
@@ -320,19 +294,15 @@ func (c *theGraphServiceBetaImpl) ListAccessControlPermissions(options *TheGraph
 	}
     `, QUERY_INTERFACE, QUERY_VALUE)
 
-	req := graphql.NewRequest(query)
-	req.Var("first", options.First)
-	req.Var("skip", options.Skip)
-	req.Var("orderBy", options.OrderBy)
-	req.Var("orderDirection", options.OrderDirection)
+	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()
-	var acpsRes entity.AccessControlPermissionTheGraphResponse
+	var acpsRes beta_v0.AccessControlPermissionTheGraphResponse
 	if err := c.client.Run(ctx, req, &acpsRes); err != nil {
 		return nil, fmt.Errorf("failed to get access control permissions from the graph. error: %v", err)
 	}
 
-	acps := []*entity.AccessControlPermission{}
+	acps := []*beta_v0.AccessControlPermission{}
 	for _, acp := range acpsRes.AccessControlPermissions {
 		acps = append(acps, acp)
 	}
@@ -340,7 +310,7 @@ func (c *theGraphServiceBetaImpl) ListAccessControlPermissions(options *TheGraph
 	return acps, nil
 }
 
-func (c *theGraphServiceBetaImpl) GetPolicy(policyId string) ([]*entity.Policy, error) {
+func (c *theGraphServiceBetaImpl) GetPolicy(policyId string) ([]*beta_v0.Policy, error) {
 	query := fmt.Sprintf(`
 		query {
 		  policy(id: "%s") {
@@ -360,12 +330,12 @@ func (c *theGraphServiceBetaImpl) GetPolicy(policyId string) ([]*entity.Policy, 
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
-	var polRes entity.PolicyTheGraphResponse
+	var polRes beta_v0.PolicyTheGraphResponse
 	if err := c.client.Run(ctx, req, &polRes); err != nil {
 		return nil, fmt.Errorf("failed to get policy from the graph. error: %v", err)
 	}
 
-	pols := []*entity.Policy{}
+	pols := []*beta_v0.Policy{}
 	for _, pol := range polRes.Policy {
 		pols = append(pols, pol)
 	}
@@ -374,9 +344,7 @@ func (c *theGraphServiceBetaImpl) GetPolicy(policyId string) ([]*entity.Policy, 
 
 }
 
-func (c *theGraphServiceBetaImpl) ListPolicies(options *TheGraphQueryOptions) ([]*entity.Policy, error) {
-	options = c.setQueryOptions(options)
-
+func (c *theGraphServiceBetaImpl) ListPolicies(options *TheGraphQueryOptions) ([]*beta_v0.Policy, error) {
 	query := fmt.Sprintf(`
 	query(%s){
 		{
@@ -396,24 +364,32 @@ func (c *theGraphServiceBetaImpl) ListPolicies(options *TheGraphQueryOptions) ([
 	}
     `, QUERY_INTERFACE, QUERY_VALUE)
 
+	req := c.buildNewRequest(options, query)
+
+	ctx := context.Background()
+	var polsRes beta_v0.PoliciesTheGraphResponse
+	if err := c.client.Run(ctx, req, &polsRes); err != nil {
+		return nil, fmt.Errorf("failed to get policies from the graph. error: %v", err)
+	}
+
+	pols := []*beta_v0.Policy{}
+	for _, pol := range polsRes.Policies {
+		pols = append(pols, pol)
+	}
+
+	return pols, nil
+}
+
+func (s *theGraphServiceBetaImpl) buildNewRequest(options *TheGraphQueryOptions, query string) *graphql.Request {
+	options = s.setQueryOptions(options)
+
 	req := graphql.NewRequest(query)
 	req.Var("first", options.First)
 	req.Var("skip", options.Skip)
 	req.Var("orderBy", options.OrderBy)
 	req.Var("orderDirection", options.OrderDirection)
 
-	ctx := context.Background()
-	var polsRes entity.PoliciesTheGraphResponse
-	if err := c.client.Run(ctx, req, &polsRes); err != nil {
-		return nil, fmt.Errorf("failed to get policies from the graph. error: %v", err)
-	}
-
-	pols := []*entity.Policy{}
-	for _, pol := range polsRes.Policies {
-		pols = append(pols, pol)
-	}
-
-	return pols, nil
+	return req
 }
 
 func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions) *TheGraphQueryOptions {
@@ -434,7 +410,7 @@ func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions)
 	return options
 }
 
-//func (c *theGraphServiceBetaImpl) GetIPsRegistered() ([]*entity.IPRegistered, error) {
+//func (c *theGraphServiceBetaImpl) GetIPsRegistered() ([]*models.IPRegistered, error) {
 //	req := graphql.NewRequest(`
 //    {
 //		ipregistereds {
@@ -447,12 +423,12 @@ func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions)
 //	}`)
 //
 //	ctx := context.Background()
-//	var ipRegisteredsTheGraphResponse entity.IPRegisteredTheGraphResponse
+//	var ipRegisteredsTheGraphResponse models.IPRegisteredTheGraphResponse
 //	if err := c.client.Run(ctx, req, &ipRegisteredsTheGraphResponse); err != nil {
 //		return nil, fmt.Errorf("failed to get registered ip accounts from the graph. error: %v", err)
 //	}
 //
-//	ips := []*entity.IPRegistered{}
+//	ips := []*models.IPRegistered{}
 //	for _, ip := range ipRegisteredsTheGraphResponse.IPRegistered {
 //		ips = append(ips, ip)
 //	}
@@ -460,7 +436,7 @@ func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions)
 //	return ips, nil
 //}
 
-//func (c *theGraphServiceBetaImpl) GetSetIPAccounts() ([]*entity.SetIPAccount, error) {
+//func (c *theGraphServiceBetaImpl) GetSetIPAccounts() ([]*models.SetIPAccount, error) {
 //	req := graphql.NewRequest(`
 //    {
 //		ipaccountSets {
@@ -472,12 +448,12 @@ func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions)
 //	}`)
 //
 //	ctx := context.Background()
-//	var ipAccountSets entity.SetIPAccountTheGraphResponse
+//	var ipAccountSets models.SetIPAccountTheGraphResponse
 //	if err := c.client.Run(ctx, req, &ipAccountSets); err != nil {
 //		return nil, fmt.Errorf("failed to get set ip accounts from the graph. error: %v", err)
 //	}
 //
-//	accs := []*entity.SetIPAccount{}
+//	accs := []*models.SetIPAccount{}
 //	for _, acc := range ipAccountSets.SetIPAccount {
 //		accs = append(accs, acc)
 //	}
@@ -485,7 +461,7 @@ func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions)
 //	return accs, nil
 //}
 
-//func (c *theGraphServiceBetaImpl) GetSetIPResolvers() ([]*entity.SetResolver, error) {
+//func (c *theGraphServiceBetaImpl) GetSetIPResolvers() ([]*models.SetResolver, error) {
 //	req := graphql.NewRequest(`
 //    {
 //		ipresolverSets {
@@ -495,12 +471,12 @@ func (s *theGraphServiceBetaImpl) setQueryOptions(options *TheGraphQueryOptions)
 //	}`)
 //
 //	ctx := context.Background()
-//	var ipResolverSets entity.SetResolverTheGraphResponse
+//	var ipResolverSets models.SetResolverTheGraphResponse
 //	if err := c.client.Run(ctx, req, &ipResolverSets); err != nil {
 //		return nil, fmt.Errorf("failed to get set ip resolvers from the graph. error: %v", err)
 //	}
 //
-//	rslvrs := []*entity.SetResolver{}
+//	rslvrs := []*models.SetResolver{}
 //	for _, rslvr := range ipResolverSets.SetResolver {
 //		rslvrs = append(rslvrs, rslvr)
 //	}

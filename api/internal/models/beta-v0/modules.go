@@ -1,4 +1,4 @@
-package entity
+package beta_v0
 
 type Module struct {
 	Name   string `json:"name,omitempty"`

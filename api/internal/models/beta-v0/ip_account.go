@@ -1,4 +1,4 @@
-package entity
+package beta_v0
 
 // Get IP ACCOUNT
 type IPAccount struct {

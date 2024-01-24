@@ -1,20 +1,23 @@
 package thegraph
 
-import "github.com/storyprotocol/protocol-api/api/internal/entity"
+import (
+	"github.com/storyprotocol/protocol-api/api/internal/models"
+	"github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
+)
 
 type TheGraphServiceBeta interface {
-	GetIPAccount(accountId string) ([]*entity.IPAccount, error)
-	GetModule(moduleName string) ([]*entity.Module, error)
-	GetLicense(licenseId string) ([]*entity.License, error)
-	GetLicenseFramework(licenseId string) ([]*entity.LicenseFramework, error)
-	GetPolicy(policyId string) ([]*entity.Policy, error)
+	GetIPAccount(accountId string) ([]*beta_v0.IPAccount, error)
+	GetModule(moduleName string) ([]*beta_v0.Module, error)
+	GetLicense(licenseId string) ([]*beta_v0.License, error)
+	GetLicenseFramework(licenseId string) ([]*beta_v0.LicenseFramework, error)
+	GetPolicy(policyId string) ([]*beta_v0.Policy, error)
 
-	ListIPAccounts(options *TheGraphQueryOptions) ([]*entity.IPAccount, error)
-	ListModules(options *TheGraphQueryOptions) ([]*entity.Module, error)
-	ListLicenses(options *TheGraphQueryOptions) ([]*entity.License, error)
-	ListLicenseFrameworks(options *TheGraphQueryOptions) ([]*entity.LicenseFramework, error)
-	ListAccessControlPermissions(options *TheGraphQueryOptions) ([]*entity.AccessControlPermission, error)
-	ListPolicies(options *TheGraphQueryOptions) ([]*entity.Policy, error)
+	ListIPAccounts(options *TheGraphQueryOptions) ([]*beta_v0.IPAccount, error)
+	ListModules(options *TheGraphQueryOptions) ([]*beta_v0.Module, error)
+	ListLicenses(options *TheGraphQueryOptions) ([]*beta_v0.License, error)
+	ListLicenseFrameworks(options *TheGraphQueryOptions) ([]*beta_v0.LicenseFramework, error)
+	ListAccessControlPermissions(options *TheGraphQueryOptions) ([]*beta_v0.AccessControlPermission, error)
+	ListPolicies(options *TheGraphQueryOptions) ([]*beta_v0.Policy, error)
 }
 
 type TheGraphQueryOptions struct {
@@ -24,7 +27,7 @@ type TheGraphQueryOptions struct {
 	OrderDirection string
 }
 
-func FromRequestQueryOptions(options *entity.QueryOptions) *TheGraphQueryOptions {
+func FromRequestQueryOptions(options *models.QueryOptions) *TheGraphQueryOptions {
 	if options == nil {
 		return &TheGraphQueryOptions{
 			First: 100,

@@ -1,4 +1,4 @@
-package entity
+package beta_v0
 
 type Policy struct {
 	ID         string     `json:"policyId,omitempty"`
