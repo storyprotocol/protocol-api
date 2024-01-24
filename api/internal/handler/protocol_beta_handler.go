@@ -178,6 +178,27 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 	}
 }
 
+func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		var requestBody entity.RequestBody
+		if err := c.BindJSON(&requestBody); err != nil {
+			logger.Errorf("Failed to read request body: %v", err)
+			requestBody = entity.RequestBody{}
+		}
+
+		pols, err := graphService.ListPolicies(thegraph.FromRequestQueryOptions(requestBody.Options))
+		if err != nil {
+			logger.Errorf("Failed to list policies: %v", err)
+			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
+			return
+		}
+
+		c.JSON(http.StatusOK, entity.PolicyResponse{
+			Data: pols,
+		})
+	}
+}
+
 func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody entity.RequestBody
