@@ -21,7 +21,7 @@ func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.IPAccountsResponse{
+		c.JSON(http.StatusOK, beta_v0.IPAccountResponse{
 			Data: accounts,
 		})
 	}

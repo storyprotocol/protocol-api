@@ -43,7 +43,7 @@ func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cli
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.TagResponse{
+		c.JSON(http.StatusOK, beta_v0.TagsResponse{
 			Data: tags,
 		})
 	}

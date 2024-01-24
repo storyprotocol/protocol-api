@@ -8,7 +8,7 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetModule(moduleName string) ([]*beta_v0.Module, error) {
+func (c *ServiceBetaImpl) GetModule(moduleName string) (*beta_v0.Module, error) {
 	query := fmt.Sprintf(`
 	query {
 		module(id: "%s") {
@@ -25,12 +25,7 @@ func (c *ServiceBetaImpl) GetModule(moduleName string) ([]*beta_v0.Module, error
 		return nil, fmt.Errorf("failed to get modules from the graph. error: %v", err)
 	}
 
-	mods := []*beta_v0.Module{}
-	for _, mod := range modules.Module {
-		mods = append(mods, mod)
-	}
-
-	return mods, nil
+	return modules.Module, nil
 
 }
 

@@ -43,7 +43,7 @@ func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.ModuleResponse{
+		c.JSON(http.StatusOK, beta_v0.ModulesResponse{
 			Data: mods,
 		})
 	}

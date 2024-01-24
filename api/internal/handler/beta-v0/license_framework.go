@@ -43,7 +43,7 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseFrameworkResponse{
+		c.JSON(http.StatusOK, beta_v0.LicensesFrameworkResponse{
 			Data: licenses,
 		})
 	}

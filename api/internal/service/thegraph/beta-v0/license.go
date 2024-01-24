@@ -8,15 +8,11 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetLicense(licenseId string) ([]*beta_v0.License, error) {
+func (c *ServiceBetaImpl) GetLicense(licenseId string) (*beta_v0.License, error) {
 	query := fmt.Sprintf(`
 		query {
 		  license(id: "%s") {
 			id
-			licenseData {
-			  licensorIpIds
-			  policyId
-			}
 			amount
 			creator
 			licenseId
@@ -32,31 +28,22 @@ func (c *ServiceBetaImpl) GetLicense(licenseId string) ([]*beta_v0.License, erro
 		return nil, fmt.Errorf("failed to get license from the graph. error: %v", err)
 	}
 
-	licenses := []*beta_v0.License{}
-	for _, license := range licensesRes.License {
-		licenses = append(licenses, license)
-	}
-
-	return licenses, nil
+	return licensesRes.License, nil
 
 }
 
 func (c *ServiceBetaImpl) ListLicenses(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.License, error) {
 	query := fmt.Sprintf(`
 	query(%s){
-		{
-		  licenses (%s) {
-			amount
-			creator
-			licenseId
-			receiver
-			licenseData {
-			  licensorIpIds
-			  policyId
-			  id
-			}
-		  }
-		}
+	  licenses (%s) {
+		id
+		blockTimestamp
+		blockNumber
+		amount
+		creator
+		licenseId
+		receiver
+	  }
 	}
     `, QUERY_INTERFACE, QUERY_VALUE)
 

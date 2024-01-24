@@ -43,7 +43,7 @@ func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.PolicyResponse{
+		c.JSON(http.StatusOK, beta_v0.PoliciesResponse{
 			Data: pols,
 		})
 	}

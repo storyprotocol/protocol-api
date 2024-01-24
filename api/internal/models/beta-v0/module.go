@@ -9,7 +9,7 @@ type Module struct {
 }
 
 type ModuleTheGraphResponse struct {
-	Module []*Module `json:"module"`
+	Module *Module `json:"module"`
 }
 
 type ModulesTheGraphResponse struct {
@@ -17,5 +17,9 @@ type ModulesTheGraphResponse struct {
 }
 
 type ModuleResponse struct {
+	Data *Module `json:"data"`
+}
+
+type ModulesResponse struct {
 	Data []*Module `json:"data"`
 }

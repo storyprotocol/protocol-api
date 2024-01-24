@@ -8,24 +8,25 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetPolicy(policyId string) ([]*beta_v0.Policy, error) {
+func (c *ServiceBetaImpl) GetPolicy(policyId string) (*beta_v0.Policy, error) {
 	query := fmt.Sprintf(`
 		query {
 		  policy(id: "%s") {
 			policyId
 			creator
-			policyData {     
-				id
-				frameworkId
-				needsActivation
-				mintingParamValues
-				linkParentParamValues
-				activationParamValues
-			}
+			blockTimestamp
+			blockNumber
 		  }
 		}
     `, policyId)
-
+	//policyData {
+	//	id
+	//	frameworkId
+	//	needsActivation
+	//	mintingParamValues
+	//	linkParentParamValues
+	//	activationParamValues
+	//}
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
 	var polRes beta_v0.PolicyTheGraphResponse
@@ -33,35 +34,29 @@ func (c *ServiceBetaImpl) GetPolicy(policyId string) ([]*beta_v0.Policy, error) 
 		return nil, fmt.Errorf("failed to get policy from the graph. error: %v", err)
 	}
 
-	pols := []*beta_v0.Policy{}
-	for _, pol := range polRes.Policy {
-		pols = append(pols, pol)
-	}
-
-	return pols, nil
+	return polRes.Policy, nil
 
 }
 
 func (c *ServiceBetaImpl) ListPolicies(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Policy, error) {
 	query := fmt.Sprintf(`
 	query(%s){
-		{
-		  policies(%s) {
-			creator
-			policyId
-			policyData {
-			  id
-			  frameworkId
-			  needsActivation
-			  mintingParamValues
-			  linkParentParamValues
-			  activationParamValues
-			}
-		  }
-		}
+	  policies(%s) {
+		creator
+		policyId
+		
+	  }
+		
 	}
     `, QUERY_INTERFACE, QUERY_VALUE)
-
+	//policyData {
+	//	id
+	//	frameworkId
+	//	needsActivation
+	//	mintingParamValues
+	//	linkParentParamValues
+	//	activationParamValues
+	//}
 	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()

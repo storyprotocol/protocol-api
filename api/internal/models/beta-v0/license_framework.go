@@ -4,6 +4,8 @@ type LicenseFramework struct {
 	Creator                 string                  `json:"creator,omitempty"`
 	ID                      string                  `json:"id,omitempty"`
 	FrameworkCreationParams FrameworkCreationParams `json:"frameworkCreationParams,omitempty"`
+	BlockNumber             string                  `json:"blockNumber,omitempty"`
+	BlockTimestamp          string                  `json:"blockTimestamp,omitempty"`
 }
 
 type FrameworkCreationParams struct {
@@ -19,7 +21,7 @@ type FrameworkCreationParams struct {
 }
 
 type LicenseFrameworkTheGraphResponse struct {
-	LicenseFramework []*LicenseFramework `json:"licenseFramework"`
+	LicenseFramework *LicenseFramework `json:"licenseFramework"`
 }
 
 type LicenseFrameworksTheGraphResponse struct {
@@ -27,5 +29,9 @@ type LicenseFrameworksTheGraphResponse struct {
 }
 
 type LicenseFrameworkResponse struct {
+	Data *LicenseFramework `json:"data"`
+}
+
+type LicensesFrameworkResponse struct {
 	Data []*LicenseFramework `json:"data"`
 }

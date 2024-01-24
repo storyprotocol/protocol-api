@@ -8,7 +8,7 @@ import (
 	beta_graph "github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetIPAccount(accountId string) ([]*beta_v0.IPAccount, error) {
+func (c *ServiceBetaImpl) GetIPAccount(accountId string) (*beta_v0.IPAccount, error) {
 	query := fmt.Sprintf(`
 	query {
 		iprecord(id: "%s") {
@@ -41,10 +41,7 @@ func (c *ServiceBetaImpl) GetIPAccount(accountId string) ([]*beta_v0.IPAccount, 
 		return nil, fmt.Errorf("failed to get account from the graph. error: %v", err)
 	}
 
-	accts := []*beta_v0.IPAccount{}
-	accts = append(accts, ipAccountTheGraphResponse.IPAccount)
-
-	return accts, nil
+	return ipAccountTheGraphResponse.IPAccount, nil
 }
 
 func (c *ServiceBetaImpl) ListIPAccounts(options *beta_graph.TheGraphQueryOptions) ([]*beta_v0.IPAccount, error) {

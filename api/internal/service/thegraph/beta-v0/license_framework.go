@@ -8,7 +8,7 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetLicenseFramework(licenseId string) ([]*beta_v0.LicenseFramework, error) {
+func (c *ServiceBetaImpl) GetLicenseFramework(licenseId string) (*beta_v0.LicenseFramework, error) {
 	query := fmt.Sprintf(`
 		{
 		  licenseFramework(id: "%s") {
@@ -36,12 +36,7 @@ func (c *ServiceBetaImpl) GetLicenseFramework(licenseId string) ([]*beta_v0.Lice
 		return nil, fmt.Errorf("failed to get license from the graph. error: %v", err)
 	}
 
-	licenses := []*beta_v0.LicenseFramework{}
-	for _, license := range licensesRes.LicenseFramework {
-		licenses = append(licenses, license)
-	}
-
-	return licenses, nil
+	return licensesRes.LicenseFramework, nil
 
 }
 
@@ -51,20 +46,21 @@ func (c *ServiceBetaImpl) ListLicenseFrameworks(options *thegraph.TheGraphQueryO
 		  licenseFrameworks(%s) {
 			id
 			creator
-			frameworkCreationParams {
-			  id
-			  activationParamDefaultValues
-			  activationParamVerifiers
-			  defaultNeedsActivation
-			  linkParentParamDefaultValues
-			  linkParentParamVerifiers
-			  mintingParamDefaultValues
-			  mintingParamVerifiers
-			  licenseUrl
-			}
+			
 		  }
+		}
     `, QUERY_INTERFACE, QUERY_VALUE)
-
+	//frameworkCreationParams {
+	//	id
+	//	activationParamDefaultValues
+	//	activationParamVerifiers
+	//	defaultNeedsActivation
+	//	linkParentParamDefaultValues
+	//	linkParentParamVerifiers
+	//	mintingParamDefaultValues
+	//	mintingParamVerifiers
+	//	licenseUrl
+	//}
 	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()

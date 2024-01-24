@@ -8,7 +8,7 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetTag(policyId string) ([]*beta_v0.Tag, error) {
+func (c *ServiceBetaImpl) GetTag(policyId string) (*beta_v0.Tag, error) {
 	query := fmt.Sprintf(`
 		query {
 		  tag(id: "%s") {
@@ -27,37 +27,30 @@ func (c *ServiceBetaImpl) GetTag(policyId string) ([]*beta_v0.Tag, error) {
 		return nil, fmt.Errorf("failed to get tag from the graph. error: %v", err)
 	}
 
-	tags := []*beta_v0.Tag{}
-	for _, tag := range tagRes.Tag {
-		tags = append(tags, tag)
-	}
-
-	return tags, nil
+	return tagRes.Tag, nil
 }
 
-func (c *ServiceBetaImpl) ListTags(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Tag, error) {
+func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Tag, error) {
 	query := fmt.Sprintf(`
 	query(%s) {
-		{
-		  tags(id: "%s") {
-			id
-			ipId
-			tag
-			deletedAt
-		  }
-		}
+	  tags(id: "%s") {
+		id
+		ipId
+		tag
+		deletedAt
+	  }
 	}
     `, QUERY_INTERFACE, QUERY_VALUE)
 
 	req := c.buildNewRequest(options, query)
 	ctx := context.Background()
-	var tagRes beta_v0.TagTheGraphResponse
+	var tagRes beta_v0.TagsTheGraphResponse
 	if err := c.client.Run(ctx, req, &tagRes); err != nil {
 		return nil, fmt.Errorf("failed to get tags from the graph. error: %v", err)
 	}
 
 	tags := []*beta_v0.Tag{}
-	for _, tag := range tagRes.Tag {
+	for _, tag := range tagRes.Tags {
 		tags = append(tags, tag)
 	}
 

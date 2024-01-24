@@ -43,7 +43,7 @@ func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.DisputeResponse{
+		c.JSON(http.StatusOK, beta_v0.DisputesResponse{
 			Data: disputes,
 		})
 	}

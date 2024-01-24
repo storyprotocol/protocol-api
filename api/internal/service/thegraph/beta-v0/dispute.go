@@ -8,7 +8,7 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetDispute(disputeId string) ([]*beta_v0.Dispute, error) {
+func (c *ServiceBetaImpl) GetDispute(disputeId string) (*beta_v0.Dispute, error) {
 	query := fmt.Sprintf(`
 	query {
 		dispute(id: "%s") {
@@ -25,12 +25,7 @@ func (c *ServiceBetaImpl) GetDispute(disputeId string) ([]*beta_v0.Dispute, erro
 		return nil, fmt.Errorf("failed to get dispute from the graph. error: %v", err)
 	}
 
-	disputes := []*beta_v0.Dispute{}
-	for _, dispute := range disputesRes.Dispute {
-		disputes = append(disputes, dispute)
-	}
-
-	return disputes, nil
+	return disputesRes.Dispute, nil
 
 }
 

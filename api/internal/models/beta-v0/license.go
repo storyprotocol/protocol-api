@@ -1,12 +1,14 @@
 package beta_v0
 
 type License struct {
-	ID          string      `json:"id,omitempty"`
-	Amount      string      `json:"amount,omitempty"`
-	Creator     string      `json:"creator,omitempty"`
-	LicenseId   string      `json:"licenseId,omitempty"`
-	Receiver    string      `json:"receiver,omitempty"`
-	LicenseData LicenseData `json:"licenseData,omitempty"`
+	ID             string      `json:"id,omitempty"`
+	Amount         string      `json:"amount,omitempty"`
+	Creator        string      `json:"creator,omitempty"`
+	LicenseId      string      `json:"licenseId,omitempty"`
+	Receiver       string      `json:"receiver,omitempty"`
+	LicenseData    LicenseData `json:"licenseData,omitempty"`
+	BlockNumber    string      `json:"blockNumber,omitempty"`
+	BlockTimestamp string      `json:"blockTimestamp,omitempty"`
 }
 
 type LicenseData struct {
@@ -15,7 +17,7 @@ type LicenseData struct {
 }
 
 type LicenseTheGraphResponse struct {
-	License []*License `json:"license"`
+	License *License `json:"license"`
 }
 
 type LicensesTheGraphResponse struct {
@@ -23,5 +25,9 @@ type LicensesTheGraphResponse struct {
 }
 
 type LicenseResponse struct {
+	Data *License `json:"data"`
+}
+
+type LicensesResponse struct {
 	Data []*License `json:"data"`
 }

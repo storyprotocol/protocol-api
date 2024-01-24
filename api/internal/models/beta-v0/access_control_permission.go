@@ -6,11 +6,13 @@ package beta_v0
 //}
 
 type AccessControlPermission struct {
-	IpAccount  string `json:"sender,omitempty"`
-	Signer     string `json:"sender,omitempty"`
-	To         string `json:"sender,omitempty"`
-	Func       string `json:"id,omitempty"`
-	Permission string `json:"fwCreation,omitempty"`
+	IpAccount      string `json:"sender,omitempty"`
+	Signer         string `json:"sender,omitempty"`
+	To             string `json:"sender,omitempty"`
+	Func           string `json:"id,omitempty"`
+	Permission     string `json:"fwCreation,omitempty"`
+	BlockNumber    string `json:"blockNumber,omitempty"`
+	BlockTimestamp string `json:"blockTimestamp,omitempty"`
 }
 
 type AccessControlPermissionTheGraphResponse struct {

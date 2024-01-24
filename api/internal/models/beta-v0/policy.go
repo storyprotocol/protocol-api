@@ -1,9 +1,11 @@
 package beta_v0
 
 type Policy struct {
-	ID         string     `json:"policyId,omitempty"`
-	Creator    string     `json:"creator,omitempty"`
-	PolicyData PolicyData `json:"policyData,omitempty"`
+	ID      string `json:"policyId,omitempty"`
+	Creator string `json:"creator,omitempty"`
+	//PolicyData     PolicyData `json:"policyData,omitempty"`
+	BlockNumber    string `json:"blockNumber,omitempty"`
+	BlockTimestamp string `json:"blockTimestamp,omitempty"`
 }
 
 type PolicyData struct {
@@ -19,9 +21,13 @@ type PoliciesTheGraphResponse struct {
 }
 
 type PolicyTheGraphResponse struct {
-	Policy []*Policy `json:"policy"`
+	Policy *Policy `json:"policy"`
 }
 
 type PolicyResponse struct {
+	Data *Policy `json:"data"`
+}
+
+type PoliciesResponse struct {
 	Data []*Policy `json:"data"`
 }
