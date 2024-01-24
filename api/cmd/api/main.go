@@ -52,18 +52,26 @@ func main() {
 	{
 
 		// BETA
-		protocol.GET("/account/:accountId", handler.NewGetIPAccount(theGraphBetaService, httpClient))
-		protocol.GET("/module/:moduleName", handler.NewGetModule(theGraphBetaService, httpClient))
+		protocol.GET("/accounts/:accountId", handler.NewGetIPAccount(theGraphBetaService, httpClient))
+		protocol.GET("/modules/:moduleName", handler.NewGetModule(theGraphBetaService, httpClient))
+		protocol.GET("/licenseframeworks/:frameworkId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
+		protocol.GET("/licenses/:licenseId", handler.NewGetLicense(theGraphBetaService, httpClient))
+		protocol.GET("/policies/:policyId", handler.NewGetPolicy(theGraphBetaService, httpClient))
+
+		//protocol.GET("/permissions/:permissionId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
+		//protocol.GET("/tags/:tagId", handler.NewGetLicenseFramework(theGraphBetaService, httpClient))
 
 		protocol.POST("/accounts", handler.NewListIPAccounts(theGraphBetaService, httpClient))
 		protocol.POST("/modules", handler.NewListModules(theGraphBetaService, httpClient))
-
-		//protocol.GET("/registeredIps", handler.NewGetIPsRegistered(theGraphBetaService, httpClient))
-		//protocol.GET("/setAccounts", handler.NewGetSetIPAccounts(theGraphBetaService, httpClient))
-		//protocol.GET("/setIpResolvers", handler.NewGetSetIPResolvers(theGraphBetaService, httpClient))
-		//protocol.GET("/registeredModules", handler.NewGetRegisteredModules(theGraphBetaService, httpClient))
-		//protocol.GET("/removedModules", handler.NewGetRemovedModules(theGraphBetaService, httpClient))
-
+		protocol.POST("/licenseframeworks", handler.NewListLicenseFrameworks(theGraphBetaService, httpClient))
+		protocol.POST("/licenses", handler.NewListLicenses(theGraphBetaService, httpClient))
+		protocol.POST("/policies", handler.NewListPolicies(theGraphBetaService, httpClient))
+		//protocol.POST("/permissions", handler.NewListAccessControlPermissions(theGraphBetaService, httpClient))
+		//protocol.POST("/tags", handler.NewListAccessControlPermissions(theGraphBetaService, httpClient))
+		// disputes
+		// royalties
+		// policy?
+		// policyCreated <- licenseRegistry
 	}
 
 	port := fmt.Sprintf(":%d", cfg.Port)

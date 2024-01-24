@@ -85,6 +85,120 @@ func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.
 	}
 }
 
+func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		licenseId := c.Param("licenseId")
+
+		licenses, err := graphService.GetLicense(licenseId)
+		if err != nil {
+			logger.Errorf("Failed to get license: %v", err)
+			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
+			return
+		}
+
+		c.JSON(http.StatusOK, entity.LicenseResponse{
+			Data: licenses,
+		})
+	}
+}
+
+func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		var requestBody entity.RequestBody
+		if err := c.BindJSON(&requestBody); err != nil {
+			logger.Errorf("Failed to read request body: %v", err)
+			requestBody = entity.RequestBody{}
+		}
+
+		licenses, err := graphService.ListLicenses(thegraph.FromRequestQueryOptions(requestBody.Options))
+		if err != nil {
+			logger.Errorf("Failed to list licenses: %v", err)
+			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
+			return
+		}
+
+		c.JSON(http.StatusOK, entity.LicenseResponse{
+			Data: licenses,
+		})
+	}
+}
+
+func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		licenseId := c.Param("licenseId")
+
+		licenses, err := graphService.GetLicenseFramework(licenseId)
+		if err != nil {
+			logger.Errorf("Failed to get license: %v", err)
+			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
+			return
+		}
+
+		c.JSON(http.StatusOK, entity.LicenseFrameworkResponse{
+			Data: licenses,
+		})
+	}
+}
+
+func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		var requestBody entity.RequestBody
+		if err := c.BindJSON(&requestBody); err != nil {
+			logger.Errorf("Failed to read request body: %v", err)
+			requestBody = entity.RequestBody{}
+		}
+
+		licenses, err := graphService.ListLicenseFrameworks(thegraph.FromRequestQueryOptions(requestBody.Options))
+		if err != nil {
+			logger.Errorf("Failed to get license frameworks: %v", err)
+			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
+			return
+		}
+
+		c.JSON(http.StatusOK, entity.LicenseFrameworkResponse{
+			Data: licenses,
+		})
+	}
+}
+
+func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		policyId := c.Param("policyId")
+
+		policies, err := graphService.GetPolicy(policyId)
+		if err != nil {
+			logger.Errorf("Failed to get policy: %v", err)
+			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
+			return
+		}
+
+		c.JSON(http.StatusOK, entity.PolicyResponse{
+			Data: policies,
+		})
+	}
+}
+
+func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		var requestBody entity.RequestBody
+		if err := c.BindJSON(&requestBody); err != nil {
+			logger.Errorf("Failed to read request body: %v", err)
+			requestBody = entity.RequestBody{}
+		}
+
+		acps, err := graphService.ListAccessControlPermissions(thegraph.FromRequestQueryOptions(requestBody.Options))
+		if err != nil {
+			logger.Errorf("Failed to get access control permissions: %v", err)
+			c.JSON(http.StatusInternalServerError, ErrorMessage("Internal server error"))
+			return
+		}
+
+		c.JSON(http.StatusOK, entity.AccessControlPermissionResponse{
+			Data: acps,
+		})
+	}
+}
+
 //func NewGetIPsRegistered(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 //	return func(c *gin.Context) {
 //		ips, err := graphService.GetIPsRegistered()
