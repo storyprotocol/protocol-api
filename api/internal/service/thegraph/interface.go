@@ -14,6 +14,7 @@ type TheGraphServiceBeta interface {
 	GetTag(tagId string) (*beta_v0.Tag, error)
 	GetPolicy(policyId string) (*beta_v0.Policy, error)
 	GetDispute(disputeId string) (*beta_v0.Dispute, error)
+	GetPermission(permissionId string) (*beta_v0.Permission, error)
 
 	// LISTS
 	ListIPAccounts(options *TheGraphQueryOptions) ([]*beta_v0.IPAccount, error)
@@ -24,6 +25,7 @@ type TheGraphServiceBeta interface {
 	ListPolicies(options *TheGraphQueryOptions) ([]*beta_v0.Policy, error)
 	ListDisputes(options *TheGraphQueryOptions) ([]*beta_v0.Dispute, error)
 	ListTag(options *TheGraphQueryOptions) ([]*beta_v0.Tag, error)
+	ListPermissions(options *TheGraphQueryOptions) ([]*beta_v0.Permission, error)
 }
 
 type TheGraphQueryOptions struct {
