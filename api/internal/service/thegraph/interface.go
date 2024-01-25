@@ -8,7 +8,7 @@ import (
 type TheGraphServiceBeta interface {
 	// GET
 	GetIPAccount(accountId string) (*beta_v0.IPAccount, error)
-	GetModule(moduleName string) (*beta_v0.Module, error)
+	GetModule(moduleId string) (*beta_v0.Module, error)
 	GetLicense(licenseId string) (*beta_v0.License, error)
 	GetLicenseFramework(licenseId string) (*beta_v0.LicenseFramework, error)
 	GetTag(tagId string) (*beta_v0.Tag, error)

@@ -14,21 +14,20 @@ func (c *ServiceBetaImpl) GetLicenseFramework(licenseId string) (*beta_v0.Licens
 		  licenseFramework(id: "%s") {
 			creator
 			id
-			frameworkCreationParams {
-			  activationParamDefaultValues
-			  activationParamVerifiers
-			  defaultNeedsActivation
-			  licenseUrl
-			  linkParentParamDefaultValues
-			  linkParentParamVerifiers
-			  mintingParamDefaultValues
-			  mintingParamVerifiers
-			  id
-			}
 		  }
 		}
     `, licenseId)
-
+	//frameworkCreationParams {
+	//	activationParamDefaultValues
+	//	activationParamVerifiers
+	//	defaultNeedsActivation
+	//	licenseUrl
+	//	linkParentParamDefaultValues
+	//	linkParentParamVerifiers
+	//	mintingParamDefaultValues
+	//	mintingParamVerifiers
+	//	id
+	//}
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
 	var licensesRes beta_v0.LicenseFrameworkTheGraphResponse

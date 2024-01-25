@@ -13,9 +13,9 @@ import (
 
 func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		moduleName := c.Param("moduleName")
+		moduleId := c.Param("moduleId")
 
-		mods, err := graphService.GetModule(moduleName)
+		mods, err := graphService.GetModule(moduleId)
 		if err != nil {
 			logger.Errorf("Failed to get module: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))

@@ -37,7 +37,7 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Permission, error) {
 	query := fmt.Sprintf(`
 	query(%s) {
-	  permission(id: "%s") {
+	  permissions(id: "%s") {
 		id
 		ipAccount
 		permission

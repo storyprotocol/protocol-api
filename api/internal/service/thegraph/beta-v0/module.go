@@ -8,7 +8,7 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetModule(moduleName string) (*beta_v0.Module, error) {
+func (c *ServiceBetaImpl) GetModule(moduleId string) (*beta_v0.Module, error) {
 	query := fmt.Sprintf(`
 	query {
 		module(id: "%s") {
@@ -16,7 +16,7 @@ func (c *ServiceBetaImpl) GetModule(moduleName string) (*beta_v0.Module, error) 
 			module
 	  	}
 	}
-    `, moduleName)
+    `, moduleId)
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()

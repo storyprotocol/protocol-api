@@ -13,7 +13,7 @@ import (
 
 func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		licenseId := c.Param("licenseId")
+		licenseId := c.Param("frameworkId")
 
 		licenses, err := graphService.GetLicenseFramework(licenseId)
 		if err != nil {

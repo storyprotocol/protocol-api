@@ -13,9 +13,9 @@ import (
 
 func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		tagId := c.Param("tagId")
+		ipId := c.Param("ipId")
 
-		tags, err := graphService.GetTag(tagId)
+		tags, err := graphService.GetTag(ipId)
 		if err != nil {
 			logger.Errorf("Failed to get tag: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
