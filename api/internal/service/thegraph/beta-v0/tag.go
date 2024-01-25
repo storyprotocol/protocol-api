@@ -31,16 +31,17 @@ func (c *ServiceBetaImpl) GetTag(policyId string) (*beta_v0.Tag, error) {
 }
 
 func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Tag, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s) {
-	  tags(id: "%s") {
+	  tags(%s, where:{%s}) {
 		id
 		ipId
 		tag
 		deletedAt
 	  }
 	}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 	ctx := context.Background()
