@@ -14,6 +14,7 @@ func (c *ServiceBetaImpl) GetPolicy(policyId string) (*beta_v0.Policy, error) {
 		  policy(id: "%s") {
 			policyId
 			creator
+			frameworkId
 			blockTimestamp
 			blockNumber
 		  }
@@ -39,16 +40,19 @@ func (c *ServiceBetaImpl) GetPolicy(policyId string) (*beta_v0.Policy, error) {
 }
 
 func (c *ServiceBetaImpl) ListPolicies(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Policy, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){
-	  policies(%s) {
+	  policies(%s, where:{%s}) {
 		creator
 		policyId
-		
+		frameworkId
+		blockTimestamp
+		blockNumber
 	  }
 		
 	}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 	//policyData {
 	//	id
 	//	frameworkId

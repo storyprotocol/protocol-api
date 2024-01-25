@@ -40,15 +40,16 @@ func (c *ServiceBetaImpl) GetLicenseFramework(licenseId string) (*beta_v0.Licens
 }
 
 func (c *ServiceBetaImpl) ListLicenseFrameworks(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.LicenseFramework, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 		query(%s) {
-		  licenseFrameworks(%s) {
+		  licenseFrameworks(%s, where:{%s}) {
 			id
 			creator
 			
 		  }
 		}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 	//frameworkCreationParams {
 	//	id
 	//	activationParamDefaultValues

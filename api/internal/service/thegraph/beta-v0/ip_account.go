@@ -45,9 +45,10 @@ func (c *ServiceBetaImpl) GetIPAccount(accountId string) (*beta_v0.IPAccount, er
 }
 
 func (c *ServiceBetaImpl) ListIPAccounts(options *beta_graph.TheGraphQueryOptions) ([]*beta_v0.IPAccount, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s) {
-		iprecords (%s) {
+		iprecords (%s, where:{%s}) {
 			id
 			ipId
 			chainId
@@ -56,7 +57,7 @@ func (c *ServiceBetaImpl) ListIPAccounts(options *beta_graph.TheGraphQueryOption
 			metadataResolverAddress
 		}
     }
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 

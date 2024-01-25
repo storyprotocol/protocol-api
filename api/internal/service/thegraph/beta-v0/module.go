@@ -30,14 +30,15 @@ func (c *ServiceBetaImpl) GetModule(moduleId string) (*beta_v0.Module, error) {
 }
 
 func (c *ServiceBetaImpl) ListModules(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Module, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){
-		modules (%s) {
+		modules (%s, where:{%s}) {
 			name
 			module
 		}
 	}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 

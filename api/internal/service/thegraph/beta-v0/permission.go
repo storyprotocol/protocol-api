@@ -35,9 +35,10 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 }
 
 func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Permission, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s) {
-	  permissions(id: "%s") {
+	  permissions(id: "%s", where:{%s}) {
 		id
 		ipAccount
 		permission
@@ -48,7 +49,7 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 		blockNumber
 	  }
 	}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 	ctx := context.Background()

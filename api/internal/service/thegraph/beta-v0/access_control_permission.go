@@ -8,14 +8,15 @@ import (
 )
 
 func (c *ServiceBetaImpl) ListAccessControlPermissions(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.AccessControlPermission, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){
-		modules (%s) {
+		modules (%s, where:{%s}) {
 			name
 			module
 		}
 	}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 

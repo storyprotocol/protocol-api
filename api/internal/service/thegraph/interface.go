@@ -33,6 +33,14 @@ type TheGraphQueryOptions struct {
 	Skip           int
 	OrderBy        string
 	OrderDirection string
+	Where          struct {
+		Creator       string
+		Receiver      string
+		TokenContract string
+		FrameworkId   string
+		IPAccount     string
+		IPID          string
+	}
 }
 
 func FromRequestQueryOptions(options *options.QueryOptions) *TheGraphQueryOptions {
@@ -43,12 +51,23 @@ func FromRequestQueryOptions(options *options.QueryOptions) *TheGraphQueryOption
 		}
 	}
 
+	var queryOptions = &TheGraphQueryOptions{}
+
 	if options.Pagination.Limit == 0 {
 		options.Pagination.Limit = 100
 	}
 
-	return &TheGraphQueryOptions{
-		First: options.Pagination.Limit,
-		Skip:  options.Pagination.Offset,
-	}
+	queryOptions.First = options.Pagination.Limit
+	queryOptions.Skip = options.Pagination.Offset
+
+	queryOptions.Where = struct {
+		Creator       string
+		Receiver      string
+		TokenContract string
+		FrameworkId   string
+		IPAccount     string
+		IPID          string
+	}(options.Where)
+
+	return queryOptions
 }

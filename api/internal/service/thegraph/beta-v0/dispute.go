@@ -30,14 +30,15 @@ func (c *ServiceBetaImpl) GetDispute(disputeId string) (*beta_v0.Dispute, error)
 }
 
 func (c *ServiceBetaImpl) ListDisputes(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Dispute, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){
-		disputes (%s) {
+		disputes (%s, where:{%s}) {
 			name
 			module
 		}
 	}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 

@@ -33,9 +33,10 @@ func (c *ServiceBetaImpl) GetLicense(licenseId string) (*beta_v0.License, error)
 }
 
 func (c *ServiceBetaImpl) ListLicenses(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.License, error) {
+	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){
-	  licenses (%s) {
+	  licenses (%s, where:{%s}) {
 		id
 		blockTimestamp
 		blockNumber
@@ -45,7 +46,7 @@ func (c *ServiceBetaImpl) ListLicenses(options *thegraph.TheGraphQueryOptions) (
 		receiver
 	  }
 	}
-    `, QUERY_INTERFACE, QUERY_VALUE)
+    `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 

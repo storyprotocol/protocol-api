@@ -1,8 +1,9 @@
 package beta_v0
 
 type Policy struct {
-	ID      string `json:"policyId,omitempty"`
-	Creator string `json:"creator,omitempty"`
+	ID          string `json:"policyId,omitempty"`
+	Creator     string `json:"creator,omitempty"`
+	FrameworkId string `json:"frameworkId,omitempty"`
 	//PolicyData     PolicyData `json:"policyData,omitempty"`
 	BlockNumber    string `json:"blockNumber,omitempty"`
 	BlockTimestamp string `json:"blockTimestamp,omitempty"`

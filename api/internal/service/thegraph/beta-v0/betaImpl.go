@@ -1,8 +1,10 @@
 package beta_v0
 
 import (
+	"fmt"
 	"github.com/machinebox/graphql"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
+	"log"
 )
 
 const (
@@ -29,7 +31,40 @@ func (s *ServiceBetaImpl) buildNewRequest(options *thegraph.TheGraphQueryOptions
 	req.Var("orderBy", options.OrderBy)
 	req.Var("orderDirection", options.OrderDirection)
 
+	whereString := ""
+	if options.Where.IPID != "" {
+		log.Println("Sewtting where string")
+		whereString = whereString + fmt.Sprintf("ipId: \"%s\"", options.Where.IPID)
+	}
+
+	print(fmt.Sprintf("{%s}", whereString))
+	req.Var("where", fmt.Sprintf("{%s}", whereString))
+
 	return req
+}
+
+func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOptions) string {
+	whereString := ""
+	if options.Where.IPID != "" {
+		whereString = whereString + fmt.Sprintf("ipId: \"%s\",", options.Where.IPID)
+	}
+	if options.Where.IPAccount != "" {
+		whereString = whereString + fmt.Sprintf("ipAccount: \"%s\",", options.Where.IPAccount)
+	}
+	if options.Where.TokenContract != "" {
+		whereString = whereString + fmt.Sprintf("tokenContract: \"%s\",", options.Where.TokenContract)
+	}
+	if options.Where.Creator != "" {
+		whereString = whereString + fmt.Sprintf("creator: \"%s\",", options.Where.Creator)
+	}
+	if options.Where.FrameworkId != "" {
+		whereString = whereString + fmt.Sprintf("frameworkId: \"%s\",", options.Where.FrameworkId)
+	}
+	if options.Where.Receiver != "" {
+		whereString = whereString + fmt.Sprintf("receiver: \"%s\",", options.Where.Receiver)
+	}
+
+	return whereString
 }
 
 func (s *ServiceBetaImpl) setQueryOptions(options *thegraph.TheGraphQueryOptions) *thegraph.TheGraphQueryOptions {
@@ -49,77 +84,3 @@ func (s *ServiceBetaImpl) setQueryOptions(options *thegraph.TheGraphQueryOptions
 
 	return options
 }
-
-//func (c *TheGraphServiceBetaImpl) GetIPsRegistered() ([]*models.IPRegistered, error) {
-//	req := graphql.NewRequest(`
-//    {
-//		ipregistereds {
-//			id
-//			chainId
-//			tokenContract
-//			tokenId
-//			resolver
-//		}
-//	}`)
-//
-//	ctx := context.Background()
-//	var ipRegisteredsTheGraphResponse models.IPRegisteredTheGraphResponse
-//	if err := c.client.Run(ctx, req, &ipRegisteredsTheGraphResponse); err != nil {
-//		return nil, fmt.Errorf("failed to get registered ip accounts from the graph. error: %v", err)
-//	}
-//
-//	ips := []*models.IPRegistered{}
-//	for _, ip := range ipRegisteredsTheGraphResponse.IPRegistered {
-//		ips = append(ips, ip)
-//	}
-//
-//	return ips, nil
-//}
-
-//func (c *TheGraphServiceBetaImpl) GetSetIPAccounts() ([]*models.SetIPAccount, error) {
-//	req := graphql.NewRequest(`
-//    {
-//		ipaccountSets {
-//			ipId
-//			chainId
-//			tokenContract
-//			tokenId
-//		}
-//	}`)
-//
-//	ctx := context.Background()
-//	var ipAccountSets models.SetIPAccountTheGraphResponse
-//	if err := c.client.Run(ctx, req, &ipAccountSets); err != nil {
-//		return nil, fmt.Errorf("failed to get set ip accounts from the graph. error: %v", err)
-//	}
-//
-//	accs := []*models.SetIPAccount{}
-//	for _, acc := range ipAccountSets.SetIPAccount {
-//		accs = append(accs, acc)
-//	}
-//
-//	return accs, nil
-//}
-
-//func (c *TheGraphServiceBetaImpl) GetSetIPResolvers() ([]*models.SetResolver, error) {
-//	req := graphql.NewRequest(`
-//    {
-//		ipresolverSets {
-//			ipId
-//			resolver
-//		}
-//	}`)
-//
-//	ctx := context.Background()
-//	var ipResolverSets models.SetResolverTheGraphResponse
-//	if err := c.client.Run(ctx, req, &ipResolverSets); err != nil {
-//		return nil, fmt.Errorf("failed to get set ip resolvers from the graph. error: %v", err)
-//	}
-//
-//	rslvrs := []*models.SetResolver{}
-//	for _, rslvr := range ipResolverSets.SetResolver {
-//		rslvrs = append(rslvrs, rslvr)
-//	}
-//
-//	return rslvrs, nil
-//}
