@@ -2,6 +2,7 @@ package beta_v0
 
 import (
 	"context"
+	b64 "encoding/base64"
 	"fmt"
 	"github.com/machinebox/graphql"
 	beta_v0 "github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
@@ -30,6 +31,9 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 	if err := c.client.Run(ctx, req, &permRes); err != nil {
 		return nil, fmt.Errorf("failed to get perm from the graph. error: %v", err)
 	}
+
+	permIdHashed := b64.StdEncoding.EncodeToString([]byte(permRes.Permission.ID))
+	permRes.Permission.ID = permIdHashed
 
 	return permRes.Permission, nil
 }
@@ -60,6 +64,8 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 
 	perms := []*beta_v0.Permission{}
 	for _, perm := range permsRes.Permissions {
+		permIdHashed := b64.StdEncoding.EncodeToString([]byte(perm.ID))
+		perm.ID = permIdHashed
 		perms = append(perms, perm)
 	}
 
