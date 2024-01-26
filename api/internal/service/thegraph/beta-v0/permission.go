@@ -2,14 +2,20 @@ package beta_v0
 
 import (
 	"context"
-	b64 "encoding/base64"
 	"fmt"
+
 	"github.com/machinebox/graphql"
+	encoder "github.com/storyprotocol/protocol-api/api/internal/helpers"
 	beta_v0 "github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
 func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permission, error) {
+	id, err := encoder.Decrypt(permissionId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode id. error: %v", err)
+	}
+
 	query := fmt.Sprintf(`
 		query {
 		  permission(id: "%s") {
@@ -23,7 +29,7 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 			blockNumber
 		  }
 		}
-    `, permissionId)
+    `, id)
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
@@ -32,8 +38,7 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 		return nil, fmt.Errorf("failed to get perm from the graph. error: %v", err)
 	}
 
-	permIdHashed := b64.StdEncoding.EncodeToString([]byte(permRes.Permission.ID))
-	permRes.Permission.ID = permIdHashed
+	permRes.Permission.ID = permissionId
 
 	return permRes.Permission, nil
 }
@@ -64,8 +69,12 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 
 	perms := []*beta_v0.Permission{}
 	for _, perm := range permsRes.Permissions {
-		permIdHashed := b64.StdEncoding.EncodeToString([]byte(perm.ID))
-		perm.ID = permIdHashed
+		id, err := encoder.Encrypt(perm.ID)
+		if err != nil {
+			return nil, fmt.Errorf("failed to encode id. error: %v", err)
+		}
+
+		perm.ID = id
 		perms = append(perms, perm)
 	}
 

@@ -2,14 +2,20 @@ package beta_v0
 
 import (
 	"context"
-	b64 "encoding/base64"
 	"fmt"
+
 	"github.com/machinebox/graphql"
+	encoder "github.com/storyprotocol/protocol-api/api/internal/helpers"
 	beta_v0 "github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetTag(policyId string) (*beta_v0.Tag, error) {
+func (c *ServiceBetaImpl) GetTag(tagId string) (*beta_v0.Tag, error) {
+	id, err := encoder.Decrypt(tagId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to encode id. error: %v", err)
+	}
+
 	query := fmt.Sprintf(`
 		query {
 		  tag(id: "%s") {
@@ -19,7 +25,7 @@ func (c *ServiceBetaImpl) GetTag(policyId string) (*beta_v0.Tag, error) {
 			deletedAt
 		  }
 		}
-    `, policyId)
+    `, id)
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
@@ -28,8 +34,7 @@ func (c *ServiceBetaImpl) GetTag(policyId string) (*beta_v0.Tag, error) {
 		return nil, fmt.Errorf("failed to get tag from the graph. error: %v", err)
 	}
 
-	tagIdHashed := b64.StdEncoding.EncodeToString([]byte(tagRes.Tag.ID))
-	tagRes.Tag.ID = tagIdHashed
+	tagRes.Tag.ID = tagId
 
 	return tagRes.Tag, nil
 }
@@ -56,8 +61,13 @@ func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*be
 
 	tags := []*beta_v0.Tag{}
 	for _, tag := range tagRes.Tags {
-		tagIdHashed := b64.StdEncoding.EncodeToString([]byte(tag.ID))
-		tag.ID = tagIdHashed
+		id, err := encoder.Encrypt(tag.ID)
+		if err != nil {
+			return nil, fmt.Errorf("failed to encode id. error: %v", err)
+		}
+
+		tag.ID = id
+
 		tags = append(tags, tag)
 	}
 
