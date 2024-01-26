@@ -13,7 +13,7 @@ import (
 
 func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		ipId := c.Param("ipId")
+		ipId := c.Param("tagId")
 
 		tags, err := graphService.GetTag(ipId)
 		if err != nil {

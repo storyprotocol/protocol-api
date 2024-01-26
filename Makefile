@@ -23,14 +23,14 @@ runserver:
 server:
 	make buildserver && make runserver
 
-build-%:
+build:
 	docker-compose build $*
 
 push-%: ecr-auth
 	docker tag $* ${ECR}/${REPO}:${TAG}
 	docker tag $* ${ECR}/${REPO}:latest
 	docker push ${ECR}/${REPO}:${TAG}
-	docker push ${ECR}/${REPO}:latest	
+	docker push ${ECR}/${REPO}:latest
 
 
 lint:
