@@ -18,8 +18,8 @@ func (c *ServiceBetaImpl) GetTag(tagId string) (*beta_v0.Tag, error) {
 
 	query := fmt.Sprintf(`
 		query {
-		  tag(id: "%s") {
-			id
+		  tag(uuid: "%s") {
+			uuid
 			ipId
 			tag
 			deletedAt
@@ -34,8 +34,6 @@ func (c *ServiceBetaImpl) GetTag(tagId string) (*beta_v0.Tag, error) {
 		return nil, fmt.Errorf("failed to get tag from the graph. error: %v", err)
 	}
 
-	tagRes.Tag.ID = tagId
-
 	return tagRes.Tag, nil
 }
 
@@ -44,7 +42,7 @@ func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*be
 	query := fmt.Sprintf(`
 	query(%s) {
 	  tags(%s, where:{%s}) {
-		id
+		uuid
 		ipId
 		tag
 		deletedAt
@@ -61,13 +59,6 @@ func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*be
 
 	tags := []*beta_v0.Tag{}
 	for _, tag := range tagRes.Tags {
-		id, err := encoder.Encrypt(tag.ID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to encode id. error: %v", err)
-		}
-
-		tag.ID = id
-
 		tags = append(tags, tag)
 	}
 

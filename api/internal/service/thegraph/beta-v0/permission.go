@@ -18,8 +18,8 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 
 	query := fmt.Sprintf(`
 		query {
-		  permission(id: "%s") {
-			id
+		  permission(uuid: "%s") {
+			uuid
 			ipAccount
 			permission
 			signer
@@ -38,8 +38,6 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 		return nil, fmt.Errorf("failed to get perm from the graph. error: %v", err)
 	}
 
-	permRes.Permission.ID = permissionId
-
 	return permRes.Permission, nil
 }
 
@@ -48,7 +46,7 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 	query := fmt.Sprintf(`
 	query(%s) {
 	  permissions(id: "%s", where:{%s}) {
-		id
+		uuid
 		ipAccount
 		permission
 		signer
@@ -69,12 +67,6 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 
 	perms := []*beta_v0.Permission{}
 	for _, perm := range permsRes.Permissions {
-		id, err := encoder.Encrypt(perm.ID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to encode id. error: %v", err)
-		}
-
-		perm.ID = id
 		perms = append(perms, perm)
 	}
 
