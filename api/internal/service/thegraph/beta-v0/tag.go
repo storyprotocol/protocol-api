@@ -4,37 +4,35 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/machinebox/graphql"
-	encoder "github.com/storyprotocol/protocol-api/api/internal/helpers"
 	beta_v0 "github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
 func (c *ServiceBetaImpl) GetTag(tagId string) (*beta_v0.Tag, error) {
-	id, err := encoder.Decrypt(tagId)
-	if err != nil {
-		return nil, fmt.Errorf("failed to encode id. error: %v", err)
-	}
-
 	query := fmt.Sprintf(`
 		query {
-		  tag(uuid: "%s") {
+		  tags(where: { uuid:  "%s" }) {
 			uuid
 			ipId
 			tag
 			deletedAt
 		  }
 		}
-    `, id)
+    `, tagId)
 
-	req := graphql.NewRequest(query)
+	req := c.buildNewRequest(nil, query)
 	ctx := context.Background()
-	var tagRes beta_v0.TagTheGraphResponse
+	var tagRes beta_v0.TagsTheGraphResponse
 	if err := c.client.Run(ctx, req, &tagRes); err != nil {
-		return nil, fmt.Errorf("failed to get tag from the graph. error: %v", err)
+		return nil, fmt.Errorf("failed to get tags from the graph. error: %v", err)
 	}
 
-	return tagRes.Tag, nil
+	tags := []*beta_v0.Tag{}
+	for _, tag := range tagRes.Tags {
+		tags = append(tags, tag)
+	}
+
+	return tags[0], nil
 }
 
 func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Tag, error) {

@@ -4,21 +4,14 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/machinebox/graphql"
-	encoder "github.com/storyprotocol/protocol-api/api/internal/helpers"
 	beta_v0 "github.com/storyprotocol/protocol-api/api/internal/models/beta-v0"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
 func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permission, error) {
-	id, err := encoder.Decrypt(permissionId)
-	if err != nil {
-		return nil, fmt.Errorf("failed to decode id. error: %v", err)
-	}
-
 	query := fmt.Sprintf(`
 		query {
-		  permission(uuid: "%s") {
+		  permissions(where: { uuid:  "%s" }) {
 			uuid
 			ipAccount
 			permission
@@ -29,16 +22,20 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 			blockNumber
 		  }
 		}
-    `, id)
+    `, permissionId)
 
-	req := graphql.NewRequest(query)
+	req := c.buildNewRequest(nil, query)
 	ctx := context.Background()
-	var permRes beta_v0.PermissionTheGraphResponse
-	if err := c.client.Run(ctx, req, &permRes); err != nil {
-		return nil, fmt.Errorf("failed to get perm from the graph. error: %v", err)
+	var permsRes beta_v0.PermissionsTheGraphResponse
+	if err := c.client.Run(ctx, req, &permsRes); err != nil {
+		return nil, fmt.Errorf("failed to get permissions from the graph. error: %v", err)
 	}
 
-	return permRes.Permission, nil
+	perms := []*beta_v0.Permission{}
+	for _, perm := range permsRes.Permissions {
+		perms = append(perms, perm)
+	}
+	return perms[0], nil
 }
 
 func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Permission, error) {
@@ -46,6 +43,7 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 	query := fmt.Sprintf(`
 	query(%s) {
 	  permissions(id: "%s", where:{%s}) {
+		id
 		uuid
 		ipAccount
 		permission
