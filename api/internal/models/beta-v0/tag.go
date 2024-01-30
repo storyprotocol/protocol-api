@@ -1,6 +1,7 @@
 package beta_v0
 
 type Tag struct {
+	ID             string `json:"id,omitempty"`
 	UUID           string `json:"uuid,omitempty"`
 	IPID           string `json:"ipId,omitempty"`
 	Tag            string `json:"tag,omitempty"`
