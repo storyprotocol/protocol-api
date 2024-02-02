@@ -32,6 +32,6 @@ type LicenseFrameworkResponse struct {
 	Data *LicenseFramework `json:"data"`
 }
 
-type LicensesFrameworkResponse struct {
+type LicenseFrameworksResponse struct {
 	Data []*LicenseFramework `json:"data"`
 }

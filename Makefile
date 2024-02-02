@@ -14,6 +14,9 @@ help:
 ecr-auth:
 	aws ecr get-login-password --region ${REGION} --profile=${PROFILE} | docker login --username AWS --password-stdin ${ECR}
 
+compileswag:
+	swag init -g ./api/cmd/api/main.go -o api/cmd/docs
+
 buildserver:
 	cd api && CGO_ENABLED=0 go build --ldflags "-extldflags '-static -s'" -o build/server cmd/api/main.go
 

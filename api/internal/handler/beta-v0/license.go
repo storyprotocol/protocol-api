@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetLicense Example godoc
+// @Summary Get an License
+// @Schemes
+// @Description Retrieve a License
+// @Tags Licenses
+// @Accept json
+// @Produce json
+// @Param        licenseId   path      string  true  "License ID"
+// @Success 200 {object} LicenseResponse
+// @Router /licenses/{licenseId} [get]
 func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		licenseId := c.Param("licenseId")
@@ -28,6 +40,17 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 	}
 }
 
+// @BasePath /api/v1
+
+// ListLicenses Example godoc
+// @Summary List Licenses
+// @Schemes
+// @Description Retrieve a paginated, filtered list of Licenses
+// @Tags Licenses
+// @Accept json
+// @Produce json
+// @Success 200 {object} LicensesResponse
+// @Router /licenses [post]
 func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

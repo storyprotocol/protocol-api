@@ -1,0 +1,566 @@
+definitions:
+  beta_v0.Dispute:
+    properties:
+      arbitrationPolicy:
+        type: string
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      disputeEveidenceLink:
+        type: string
+      id:
+        type: string
+      initiator:
+        type: string
+      ipId:
+        type: string
+      targetTag:
+        type: string
+    type: object
+  beta_v0.DisputeResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.Dispute'
+    type: object
+  beta_v0.DisputesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.Dispute'
+        type: array
+    type: object
+  beta_v0.FrameworkCreationParams:
+    properties:
+      activationParamDefaultValues:
+        items:
+          type: string
+        type: array
+      activationParamVerifiers:
+        items:
+          type: string
+        type: array
+      defaultNeedsActivation:
+        type: boolean
+      id:
+        type: string
+      licenseUrl:
+        type: string
+      linkParentParamDefaultValues:
+        items:
+          type: string
+        type: array
+      linkParentParamVerifiers:
+        items:
+          type: string
+        type: array
+      mintingParamDefaultValues:
+        items:
+          type: string
+        type: array
+      mintingParamVerifiers:
+        items:
+          type: string
+        type: array
+    type: object
+  beta_v0.IPAccount:
+    properties:
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      chainId:
+        type: string
+      id:
+        type: string
+      ipId:
+        type: string
+      metadataResolverAddress:
+        type: string
+      tokenContract:
+        type: string
+      tokenId:
+        type: string
+    type: object
+  beta_v0.IPAccountResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.IPAccount'
+    type: object
+  beta_v0.IPAccountsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.IPAccount'
+        type: array
+    type: object
+  beta_v0.License:
+    properties:
+      amount:
+        type: string
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      creator:
+        type: string
+      id:
+        type: string
+      licenseData:
+        $ref: '#/definitions/beta_v0.LicenseData'
+      licenseId:
+        type: string
+      receiver:
+        type: string
+    type: object
+  beta_v0.LicenseData:
+    properties:
+      licensorIpIds:
+        items:
+          type: string
+        type: array
+      policyId:
+        type: string
+    type: object
+  beta_v0.LicenseFramework:
+    properties:
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      creator:
+        type: string
+      frameworkCreationParams:
+        $ref: '#/definitions/beta_v0.FrameworkCreationParams'
+      id:
+        type: string
+    type: object
+  beta_v0.LicenseFrameworkResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.LicenseFramework'
+    type: object
+  beta_v0.LicenseFrameworksResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.LicenseFramework'
+        type: array
+    type: object
+  beta_v0.LicenseResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.License'
+    type: object
+  beta_v0.LicensesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.License'
+        type: array
+    type: object
+  beta_v0.Module:
+    properties:
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      deletedAt:
+        type: string
+      module:
+        type: string
+      name:
+        type: string
+    type: object
+  beta_v0.ModuleResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.Module'
+    type: object
+  beta_v0.ModulesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.Module'
+        type: array
+    type: object
+  beta_v0.Permission:
+    properties:
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      func:
+        type: string
+      id:
+        type: string
+      ipAccount:
+        type: string
+      permission:
+        type: string
+      signer:
+        type: string
+      to:
+        type: string
+      uuid:
+        type: string
+    type: object
+  beta_v0.PermissionResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.Permission'
+    type: object
+  beta_v0.PermissionsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.Permission'
+        type: array
+    type: object
+  beta_v0.PoliciesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.Policy'
+        type: array
+    type: object
+  beta_v0.Policy:
+    properties:
+      blockNumber:
+        description: PolicyData     PolicyData `json:"policyData,omitempty"`
+        type: string
+      blockTimestamp:
+        type: string
+      creator:
+        type: string
+      frameworkId:
+        type: string
+      policyId:
+        type: string
+    type: object
+  beta_v0.PolicyResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.Policy'
+    type: object
+  beta_v0.Tag:
+    properties:
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: string
+      ipId:
+        type: string
+      tag:
+        type: string
+      uuid:
+        type: string
+    type: object
+  beta_v0.TagResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.Tag'
+    type: object
+  beta_v0.TagsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.Tag'
+        type: array
+    type: object
+info:
+  contact: {}
+paths:
+  /accounts:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of IPAccounts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.IPAccountsResponse'
+      summary: List IPAccounts
+      tags:
+      - Accounts
+  /accounts/{accountId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve an IPAccount
+      parameters:
+      - description: Account ID
+        in: path
+        name: accountId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.IPAccountResponse'
+      summary: Get an IPAccount
+      tags:
+      - Accounts
+  /disputes:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Disputes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.DisputesResponse'
+      summary: List Disputes
+      tags:
+      - Disputes
+  /disputes/{disputeId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Dispute
+      parameters:
+      - description: Dispute ID
+        in: path
+        name: disputeId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.DisputeResponse'
+      summary: Get a Dispute
+      tags:
+      - Disputes
+  /licenseframeworks:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of LicenseFrameworks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.LicenseFrameworksResponse'
+      summary: List LicenseFrameworks
+      tags:
+      - LicenseFrameworks
+  /licenseframeworks/{frameworkId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a LicenseFramework
+      parameters:
+      - description: Framework ID
+        in: path
+        name: frameworkId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.LicenseFrameworkResponse'
+      summary: Get a LicenseFramework
+      tags:
+      - LicenseFrameworks
+  /licenses:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Licenses
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.LicensesResponse'
+      summary: List Licenses
+      tags:
+      - Licenses
+  /licenses/{licenseId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a License
+      parameters:
+      - description: License ID
+        in: path
+        name: licenseId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.LicenseResponse'
+      summary: Get an License
+      tags:
+      - Licenses
+  /modules:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Modules
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.ModulesResponse'
+      summary: List Modules
+      tags:
+      - Modules
+  /modules/{moduleId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Module
+      parameters:
+      - description: Module ID
+        in: path
+        name: moduleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.ModuleResponse'
+      summary: Get a GetModule
+      tags:
+      - Modules
+  /permissions:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Permissions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.PermissionsResponse'
+      summary: List Permissions
+      tags:
+      - Permissions
+  /permissions/{permissionId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Permission
+      parameters:
+      - description: Permission ID
+        in: path
+        name: permissionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.PermissionResponse'
+      summary: Get a Permission
+      tags:
+      - Permissions
+  /policies:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Policies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.PoliciesResponse'
+      summary: List Policies
+      tags:
+      - Policies
+  /policies/{policyId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Policy
+      parameters:
+      - description: Policy ID
+        in: path
+        name: policyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.PolicyResponse'
+      summary: Get a Policy
+      tags:
+      - Policies
+  /tags:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Tags
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.TagsResponse'
+      summary: List Tags
+      tags:
+      - Tags
+  /tags/{tagId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Tag
+      parameters:
+      - description: Tag ID
+        in: path
+        name: tagId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.TagResponse'
+      summary: Get a Tag
+      tags:
+      - Tags
+swagger: "2.0"

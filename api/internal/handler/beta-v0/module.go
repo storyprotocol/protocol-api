@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetModule Example godoc
+// @Summary Get a GetModule
+// @Schemes
+// @Description Retrieve a Module
+// @Tags Modules
+// @Accept json
+// @Produce json
+// @Param        moduleId   path      string  true  "Module ID"
+// @Success 200 {object} ModuleResponse
+// @Router /modules/{moduleId} [get]
 func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		moduleId := c.Param("moduleId")
@@ -28,6 +40,17 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 	}
 }
 
+// @BasePath /api/v1
+
+// ListModules Example godoc
+// @Summary List Modules
+// @Schemes
+// @Description Retrieve a paginated, filtered list of Modules
+// @Tags Modules
+// @Accept json
+// @Produce json
+// @Success 200 {object} ModulesResponse
+// @Router /modules [post]
 func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

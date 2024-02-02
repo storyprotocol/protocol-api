@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetLicenseFramework Example godoc
+// @Summary Get a LicenseFramework
+// @Schemes
+// @Description Retrieve a LicenseFramework
+// @Tags LicenseFrameworks
+// @Accept json
+// @Produce json
+// @Param        frameworkId   path      string  true  "Framework ID"
+// @Success 200 {object} LicenseFrameworkResponse
+// @Router /licenseframeworks/{frameworkId} [get]
 func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		licenseId := c.Param("frameworkId")
@@ -28,6 +40,17 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 	}
 }
 
+// @BasePath /api/v1
+
+// ListLicenseFrameworks Example godoc
+// @Summary List LicenseFrameworks
+// @Schemes
+// @Description Retrieve a paginated, filtered list of LicenseFrameworks
+// @Tags LicenseFrameworks
+// @Accept json
+// @Produce json
+// @Success 200 {object} LicenseFrameworksResponse
+// @Router /licenseframeworks [post]
 func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
@@ -43,7 +66,7 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.LicensesFrameworkResponse{
+		c.JSON(http.StatusOK, beta_v0.LicenseFrameworksResponse{
 			Data: licenses,
 		})
 	}
