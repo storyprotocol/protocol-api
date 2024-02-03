@@ -30,7 +30,7 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 		mods, err := graphService.GetModule(moduleId)
 		if err != nil {
 			logger.Errorf("Failed to get module: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

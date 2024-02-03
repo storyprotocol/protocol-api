@@ -30,7 +30,7 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 		perms, err := graphService.GetPermission(permissionId)
 		if err != nil {
 			logger.Errorf("Failed to get permission: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -62,7 +62,7 @@ func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xh
 		perms, err := graphService.ListPermissions(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to list permissions: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

@@ -18,6 +18,8 @@ type AppConfig struct {
 	Env                   string `yaml:"env"`
 	TheGraphAlphaEndpoint string `yaml:"the_graph_alpha_endpoint"`
 	TheGraphBetaEndpoint  string `yaml:"the_graph_beta_endpoint"`
+	OAuthSecret           string `yaml:"oauth_secret"`
+	OAuthID               string `yaml:"oauth_id"`
 }
 
 var (

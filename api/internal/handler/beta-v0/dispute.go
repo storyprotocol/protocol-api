@@ -30,7 +30,7 @@ func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 		disputes, err := graphService.GetDispute(disputeId)
 		if err != nil {
 			logger.Errorf("Failed to get dispute: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -62,7 +62,7 @@ func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 		disputes, err := graphService.ListDisputes(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get added disputes: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

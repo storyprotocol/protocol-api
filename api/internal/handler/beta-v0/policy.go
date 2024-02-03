@@ -30,7 +30,7 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 		policies, err := graphService.GetPolicy(policyId)
 		if err != nil {
 			logger.Errorf("Failed to get policy: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -62,7 +62,7 @@ func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 		pols, err := graphService.ListPolicies(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to list policies: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

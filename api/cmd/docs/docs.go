@@ -28,6 +28,16 @@ const docTemplate = `{
                     "Accounts"
                 ],
                 "summary": "List IPAccounts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "token",
+                        "description": "access token",
+                        "name": "access_token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -57,6 +67,14 @@ const docTemplate = `{
                         "description": "Account ID",
                         "name": "accountId",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "token",
+                        "description": "access token",
+                        "name": "access_token",
+                        "in": "query",
                         "required": true
                     }
                 ],

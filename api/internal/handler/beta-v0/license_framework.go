@@ -30,7 +30,7 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 		licenses, err := graphService.GetLicenseFramework(licenseId)
 		if err != nil {
 			logger.Errorf("Failed to get license: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -62,7 +62,7 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 		licenses, err := graphService.ListLicenseFrameworks(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get license frameworks: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

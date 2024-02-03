@@ -30,7 +30,7 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 		tags, err := graphService.GetTag(ipId)
 		if err != nil {
 			logger.Errorf("Failed to get tag: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -62,7 +62,7 @@ func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cli
 		tags, err := graphService.ListTag(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to list tags: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

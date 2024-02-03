@@ -21,6 +21,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param        accountId   path      string  true  "Account ID"
+// @Param        access_token    query     string  true  "access token"  Format(access_token)
 // @Success 200 {object} IPAccountResponse
 // @Router /accounts/{accountId} [get]
 func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
@@ -29,7 +30,7 @@ func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 		accounts, err := graphService.GetIPAccount(accountId)
 		if err != nil {
 			logger.Errorf("Failed to get account: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -46,6 +47,7 @@ func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 // @Schemes
 // @Description Retrieve a paginated, filtered list of IPAccounts
 // @Tags Accounts
+// @Param        access_token    query     string  true  "access token"  Format(access_token)
 // @Accept json
 // @Produce json
 // @Success 200 {object} IPAccountsResponse
@@ -61,7 +63,7 @@ func NewListIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xht
 		ipAccounts, err := graphService.ListIPAccounts(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get registered IP Accounts: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

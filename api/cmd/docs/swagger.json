@@ -1,9 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {},
-        "version": "v0.1-Beta",
-        "title": "Story API"
+        "contact": {}
     },
     "paths": {
         "/accounts": {
@@ -19,6 +17,16 @@
                     "Accounts"
                 ],
                 "summary": "List IPAccounts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "token",
+                        "description": "access token",
+                        "name": "access_token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -48,6 +56,14 @@
                         "description": "Account ID",
                         "name": "accountId",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "token",
+                        "description": "access token",
+                        "name": "access_token",
+                        "in": "query",
                         "required": true
                     }
                 ],
