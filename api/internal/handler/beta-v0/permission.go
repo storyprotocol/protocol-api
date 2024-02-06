@@ -46,6 +46,9 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Summary List Permissions
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Permissions
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Tags Permissions
 // @Accept json
 // @Produce json

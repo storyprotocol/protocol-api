@@ -13,50 +13,50 @@ import (
 
 // @BasePath /api/v1
 
-// GetModule Example godoc
-// @Summary Get a GetModule
+// GetIPAPolicy Example godoc
+// @Summary Get a IPAPolicy
 // @Schemes
-// @Description Retrieve a Module
+// @Description Retrieve a IPAPolicy
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
-// @Tags Modules
+// @Tags IPAPolicies
 // @Accept json
 // @Produce json
-// @Param        moduleId   path      string  true  "Module ID"
-// @Success 200 {object} ModuleResponse
-// @Router /modules/{moduleId} [get]
-func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+// @Param        ipaPolicyId   path      string  true  "IPAPolicy ID"
+// @Success 200 {object} IPAPolicyResponse
+// @Router /ipapolicies/{ipaPolicyId} [get]
+func NewGetIPAPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		moduleId := c.Param("moduleId")
+		ipaPolicyId := c.Param("ipaPolicyId")
 
-		mods, err := graphService.GetModule(moduleId)
+		policies, err := graphService.GetIPAPolicy(ipaPolicyId)
 		if err != nil {
-			logger.Errorf("Failed to get module: %v", err)
+			logger.Errorf("Failed to get ipa policy: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.ModuleResponse{
-			Data: mods,
+		c.JSON(http.StatusOK, beta_v0.IPAPolicyResponse{
+			Data: policies,
 		})
 	}
 }
 
 // @BasePath /api/v1
 
-// ListModules Example godoc
-// @Summary List Modules
+// ListIPAPolicies Example godoc
+// @Summary List IPAPolicies
 // @Schemes
-// @Description Retrieve a paginated, filtered list of Modules
+// @Description Retrieve a paginated, filtered list of Policies
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
-// @Tags Modules
+// @Tags IPAPolicies
 // @Accept json
 // @Produce json
-// @Success 200 {object} ModulesResponse
-// @Router /modules [post]
-func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+// @Success 200 {object} IPAPoliciesResponse
+// @Router /ipapolicies [post]
+func NewListIPAPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
@@ -64,15 +64,15 @@ func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.
 			requestBody = options2.RequestBody{}
 		}
 
-		mods, err := graphService.ListModules(thegraph.FromRequestQueryOptions(requestBody.Options))
+		pols, err := graphService.ListIPAPolicies(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
-			logger.Errorf("Failed to get added modules: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			logger.Errorf("Failed to list ipa policies: %v", err)
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.ModulesResponse{
-			Data: mods,
+		c.JSON(http.StatusOK, beta_v0.IPAPoliciesResponse{
+			Data: pols,
 		})
 	}
 }

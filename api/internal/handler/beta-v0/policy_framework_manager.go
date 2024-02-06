@@ -11,6 +11,20 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetPolicyFrameworkManager Example godoc
+// @Summary Get a PolicyFrameworkManager
+// @Schemes
+// @Description Retrieve a PolicyFrameworkManager
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Tags PolicyFrameworkManagers
+// @Accept json
+// @Produce json
+// @Param        pfwmId   path      string  true  "PolicyFrameworkManager ID"
+// @Success 200 {object} PolicyFrameworkManagerResponse
+// @Router /policyframeworks/{pfwmId} [get]
 func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		pfwmId := c.Param("pfwmId")
@@ -28,6 +42,20 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 	}
 }
 
+// @BasePath /api/v1
+
+// ListPolicyFrameworkManagers Example godoc
+// @Summary List PolicyFrameworkManagers
+// @Schemes
+// @Description Retrieve a paginated, filtered list of PolicyFrameworkManagers
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
+// @Tags PolicyFrameworkManagers
+// @Accept json
+// @Produce json
+// @Success 200 {object} PolicyFrameworkManagersResponse
+// @Router /policymanagers [post]
 func NewListPolicyFrameworkManagers(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

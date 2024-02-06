@@ -17,6 +17,8 @@ import (
 // @Summary Get a Tag
 // @Schemes
 // @Description Retrieve a Tag
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
 // @Tags Tags
 // @Accept json
 // @Produce json
@@ -46,6 +48,9 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 // @Summary List Tags
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Tags
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Tags Tags
 // @Accept json
 // @Produce json

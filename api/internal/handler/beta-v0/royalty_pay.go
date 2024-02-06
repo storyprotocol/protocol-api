@@ -11,6 +11,20 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetRoyalty Example godoc
+// @Summary Get a RoyaltyPay
+// @Schemes
+// @Description Retrieve a RoyaltyPay
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Tags RoyaltyPays
+// @Accept json
+// @Produce json
+// @Param        royaltyPayId   path      string  true  "RoyaltyPay ID"
+// @Success 200 {object} RoyaltyPayResponse
+// @Router /royaltypays/{royaltyPayId} [get]
 func NewGetRoyaltyPay(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		royaltyPayId := c.Param("royaltyPayId")
@@ -28,6 +42,20 @@ func NewGetRoyaltyPay(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 	}
 }
 
+// @BasePath /api/v1
+
+// ListRoyaltyPays Example godoc
+// @Summary List RoyaltyPays
+// @Schemes
+// @Description Retrieve a paginated, filtered list of RoyaltyPays
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
+// @Tags RoyaltyPays
+// @Accept json
+// @Produce json
+// @Success 200 {object} RoyaltyPaysResponse
+// @Router /royaltypays [post]
 func NewListRoyaltyPays(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

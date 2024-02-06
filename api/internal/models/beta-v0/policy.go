@@ -1,12 +1,12 @@
 package beta_v0
 
 type Policy struct {
-	ID                      string    `json:"policyId,omitempty"`
-	FrameworkManagerAddress string    `json:"frameworkManagerAddress,omitempty"`
-	Data                    string    `json:"data,omitempty"`
-	UML                     UMLPolicy `json:"umlPolicy,omitempty"`
-	BlockNumber             string    `json:"blockNumber,omitempty"`
-	BlockTimestamp          string    `json:"blockTimestamp,omitempty"`
+	ID                     string `json:"id,omitempty"`
+	PolicyID               string `json:"policyId,omitempty"`
+	PolicyFrameworkManager string `json:"policyFrameworkManager,omitempty"`
+	Policy                 string `json:"policy,omitempty"`
+	BlockNumber            string `json:"blockNumber,omitempty"`
+	BlockTimestamp         string `json:"blockTimestamp,omitempty"`
 }
 
 type UMLPolicy struct {

@@ -21,6 +21,8 @@ import (
 // @Accept json
 // @Produce json
 // @Param        disputeId   path      string  true  "Dispute ID"
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
 // @Success 200 {object} DisputeResponse
 // @Router /disputes/{disputeId} [get]
 func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
@@ -49,6 +51,9 @@ func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Tags Disputes
 // @Accept json
 // @Produce json
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Success 200 {object} DisputesResponse
 // @Router /disputes [post]
 func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {

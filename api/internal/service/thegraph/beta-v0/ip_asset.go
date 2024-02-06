@@ -19,6 +19,8 @@ func (c *ServiceBetaImpl) GetIPAsset(assetId string) (*beta_v0.IPAsset, error) {
 			tokenId
 			metadataResolverAddress
 			metadata
+			blockNumber
+			blockTimestamp
 	  	}	
 	}
     `, assetId)
@@ -56,6 +58,8 @@ func (c *ServiceBetaImpl) ListIPAssets(options *beta_graph.TheGraphQueryOptions)
 			tokenContract
 			tokenId
 			metadataResolverAddress
+			blockNumber
+			blockTimestamp
 		}
     }
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

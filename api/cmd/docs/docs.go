@@ -15,9 +15,14 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/accounts": {
+        "/assets": {
             "post": {
-                "description": "Retrieve a paginated, filtered list of IPAccounts",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of IPAssets",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,32 +30,45 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Accounts"
+                    "Assets"
                 ],
-                "summary": "List IPAccounts",
+                "summary": "List IPAssets",
                 "parameters": [
                     {
                         "type": "string",
-                        "format": "token",
-                        "description": "access token",
-                        "name": "access_token",
-                        "in": "query",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
                         "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/beta_v0.IPAccountsResponse"
+                            "$ref": "#/definitions/beta_v0.IPAssetsResponse"
                         }
                     }
                 }
             }
         },
-        "/accounts/{accountId}": {
+        "/assets/{assetId}": {
             "get": {
-                "description": "Retrieve an IPAccount",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve an IPAsset",
                 "consumes": [
                     "application/json"
                 ],
@@ -58,23 +76,22 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Accounts"
+                    "IPAssets"
                 ],
-                "summary": "Get an IPAccount",
+                "summary": "Get an IPAsset",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Account ID",
-                        "name": "accountId",
+                        "description": "Asset ID",
+                        "name": "assetId",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "format": "token",
-                        "description": "access token",
-                        "name": "access_token",
-                        "in": "query",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -82,7 +99,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/beta_v0.IPAccountResponse"
+                            "$ref": "#/definitions/beta_v0.IPAssetResponse"
                         }
                     }
                 }
@@ -90,6 +107,11 @@ const docTemplate = `{
         },
         "/disputes": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a paginated, filtered list of Disputes",
                 "consumes": [
                     "application/json"
@@ -101,6 +123,24 @@ const docTemplate = `{
                     "Disputes"
                 ],
                 "summary": "List Disputes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -113,6 +153,11 @@ const docTemplate = `{
         },
         "/disputes/{disputeId}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a Dispute",
                 "consumes": [
                     "application/json"
@@ -131,6 +176,13 @@ const docTemplate = `{
                         "name": "disputeId",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -145,6 +197,11 @@ const docTemplate = `{
         },
         "/licenseframeworks": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a paginated, filtered list of LicenseFrameworks",
                 "consumes": [
                     "application/json"
@@ -156,6 +213,24 @@ const docTemplate = `{
                     "LicenseFrameworks"
                 ],
                 "summary": "List LicenseFrameworks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -168,6 +243,11 @@ const docTemplate = `{
         },
         "/licenseframeworks/{frameworkId}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a LicenseFramework",
                 "consumes": [
                     "application/json"
@@ -180,6 +260,13 @@ const docTemplate = `{
                 ],
                 "summary": "Get a LicenseFramework",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Framework ID",
@@ -200,6 +287,11 @@ const docTemplate = `{
         },
         "/licenses": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a paginated, filtered list of Licenses",
                 "consumes": [
                     "application/json"
@@ -211,6 +303,24 @@ const docTemplate = `{
                     "Licenses"
                 ],
                 "summary": "List Licenses",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -223,6 +333,11 @@ const docTemplate = `{
         },
         "/licenses/{licenseId}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a License",
                 "consumes": [
                     "application/json"
@@ -235,6 +350,13 @@ const docTemplate = `{
                 ],
                 "summary": "Get an License",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "License ID",
@@ -255,6 +377,11 @@ const docTemplate = `{
         },
         "/modules": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a paginated, filtered list of Modules",
                 "consumes": [
                     "application/json"
@@ -266,6 +393,24 @@ const docTemplate = `{
                     "Modules"
                 ],
                 "summary": "List Modules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -278,6 +423,11 @@ const docTemplate = `{
         },
         "/modules/{moduleId}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a Module",
                 "consumes": [
                     "application/json"
@@ -290,6 +440,13 @@ const docTemplate = `{
                 ],
                 "summary": "Get a GetModule",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Module ID",
@@ -310,6 +467,11 @@ const docTemplate = `{
         },
         "/permissions": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a paginated, filtered list of Permissions",
                 "consumes": [
                     "application/json"
@@ -321,6 +483,24 @@ const docTemplate = `{
                     "Permissions"
                 ],
                 "summary": "List Permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -365,6 +545,11 @@ const docTemplate = `{
         },
         "/policies": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a paginated, filtered list of Policies",
                 "consumes": [
                     "application/json"
@@ -376,6 +561,24 @@ const docTemplate = `{
                     "Policies"
                 ],
                 "summary": "List Policies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -388,6 +591,11 @@ const docTemplate = `{
         },
         "/policies/{policyId}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a Policy",
                 "consumes": [
                     "application/json"
@@ -400,6 +608,13 @@ const docTemplate = `{
                 ],
                 "summary": "Get a Policy",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Policy ID",
@@ -418,8 +633,283 @@ const docTemplate = `{
                 }
             }
         },
+        "/policyframeworks/{pfwmId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a PolicyFrameworkManager",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PolicyFrameworkManagers"
+                ],
+                "summary": "Get a PolicyFrameworkManager",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "PolicyFrameworkManager ID",
+                        "name": "pfwmId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.PolicyFrameworkManagerResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/policymanagers": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of PolicyFrameworkManagers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PolicyFrameworkManagers"
+                ],
+                "summary": "List PolicyFrameworkManagers",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.PolicyFrameworkManagersResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/royalties": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of Royalties",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Royalties"
+                ],
+                "summary": "List Royalties",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.RoyaltiesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/royalties/{royaltyId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a Royalty",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Royalties"
+                ],
+                "summary": "Get a Royalty",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Royalty ID",
+                        "name": "policyId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.RoyaltyResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/royaltypays": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of RoyaltyPays",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RoyaltyPays"
+                ],
+                "summary": "List RoyaltyPays",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.RoyaltyPaysResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/royaltypays/{royaltyPayId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a RoyaltyPay",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RoyaltyPays"
+                ],
+                "summary": "Get a RoyaltyPay",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "RoyaltyPay ID",
+                        "name": "royaltyPayId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.RoyaltyPayResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/tags": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a paginated, filtered list of Tags",
                 "consumes": [
                     "application/json"
@@ -431,6 +921,24 @@ const docTemplate = `{
                     "Tags"
                 ],
                 "summary": "List Tags",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -443,6 +951,11 @@ const docTemplate = `{
         },
         "/tags/{tagId}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a Tag",
                 "consumes": [
                     "application/json"
@@ -455,6 +968,13 @@ const docTemplate = `{
                 ],
                 "summary": "Get a Tag",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Tag ID",
@@ -487,7 +1007,13 @@ const docTemplate = `{
                 "blockTimestamp": {
                     "type": "string"
                 },
-                "disputeEveidenceLink": {
+                "currentTag": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "evidenceLink": {
                     "type": "string"
                 },
                 "id": {
@@ -496,7 +1022,7 @@ const docTemplate = `{
                 "initiator": {
                     "type": "string"
                 },
-                "ipId": {
+                "targetIpId": {
                     "type": "string"
                 },
                 "targetTag": {
@@ -573,7 +1099,7 @@ const docTemplate = `{
                 }
             }
         },
-        "beta_v0.IPAccount": {
+        "beta_v0.IPAsset": {
             "type": "object",
             "properties": {
                 "blockNumber": {
@@ -591,6 +1117,9 @@ const docTemplate = `{
                 "ipId": {
                     "type": "string"
                 },
+                "metadata": {
+                    "type": "string"
+                },
                 "metadataResolverAddress": {
                     "type": "string"
                 },
@@ -602,21 +1131,21 @@ const docTemplate = `{
                 }
             }
         },
-        "beta_v0.IPAccountResponse": {
+        "beta_v0.IPAssetResponse": {
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/beta_v0.IPAccount"
+                    "$ref": "#/definitions/beta_v0.IPAsset"
                 }
             }
         },
-        "beta_v0.IPAccountsResponse": {
+        "beta_v0.IPAssetsResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/beta_v0.IPAccount"
+                        "$ref": "#/definitions/beta_v0.IPAsset"
                     }
                 }
             }
@@ -624,43 +1153,23 @@ const docTemplate = `{
         "beta_v0.License": {
             "type": "object",
             "properties": {
-                "amount": {
-                    "type": "string"
-                },
                 "blockNumber": {
                     "type": "string"
                 },
                 "blockTimestamp": {
                     "type": "string"
                 },
-                "creator": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
-                "licenseData": {
-                    "$ref": "#/definitions/beta_v0.LicenseData"
-                },
-                "licenseId": {
+                "licensorIpId": {
                     "type": "string"
-                },
-                "receiver": {
-                    "type": "string"
-                }
-            }
-        },
-        "beta_v0.LicenseData": {
-            "type": "object",
-            "properties": {
-                "licensorIpIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
                 },
                 "policyId": {
                     "type": "string"
+                },
+                "transferable": {
+                    "type": "boolean"
                 }
             }
         },
@@ -734,6 +1243,9 @@ const docTemplate = `{
                 "deletedAt": {
                     "type": "string"
                 },
+                "id": {
+                    "type": "string"
+                },
                 "module": {
                     "type": "string"
                 },
@@ -774,9 +1286,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "string"
-                },
-                "ipAccount": {
                     "type": "string"
                 },
                 "permission": {
@@ -827,20 +1336,64 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "blockNumber": {
-                    "description": "PolicyData     PolicyData ` + "`" + `json:\"policyData,omitempty\"` + "`" + `",
                     "type": "string"
                 },
                 "blockTimestamp": {
                     "type": "string"
                 },
-                "creator": {
+                "data": {
                     "type": "string"
                 },
-                "frameworkId": {
+                "frameworkManagerAddress": {
                     "type": "string"
                 },
                 "policyId": {
                     "type": "string"
+                },
+                "umlPolicy": {
+                    "$ref": "#/definitions/beta_v0.UMLPolicy"
+                }
+            }
+        },
+        "beta_v0.PolicyFrameworkManager": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "blockNumber": {
+                    "type": "string"
+                },
+                "blockTimestamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "licenseUrl": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "beta_v0.PolicyFrameworkManagerResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/beta_v0.PolicyFrameworkManager"
+                }
+            }
+        },
+        "beta_v0.PolicyFrameworkManagersResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/beta_v0.PolicyFrameworkManager"
+                    }
                 }
             }
         },
@@ -849,6 +1402,96 @@ const docTemplate = `{
             "properties": {
                 "data": {
                     "$ref": "#/definitions/beta_v0.Policy"
+                }
+            }
+        },
+        "beta_v0.RoyaltiesResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/beta_v0.Royalty"
+                    }
+                }
+            }
+        },
+        "beta_v0.Royalty": {
+            "type": "object",
+            "properties": {
+                "blockNumber": {
+                    "type": "string"
+                },
+                "blockTimestamp": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ipId": {
+                    "type": "string"
+                },
+                "royaltyPolicy": {
+                    "type": "string"
+                }
+            }
+        },
+        "beta_v0.RoyaltyPay": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "blockNumber": {
+                    "type": "string"
+                },
+                "blockTimestamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "payerIpId": {
+                    "type": "string"
+                },
+                "receiverIpId": {
+                    "type": "string"
+                },
+                "sender": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "beta_v0.RoyaltyPayResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/beta_v0.RoyaltyPay"
+                }
+            }
+        },
+        "beta_v0.RoyaltyPaysResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/beta_v0.RoyaltyPay"
+                    }
+                }
+            }
+        },
+        "beta_v0.RoyaltyResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/beta_v0.Royalty"
                 }
             }
         },
@@ -894,6 +1537,109 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/beta_v0.Tag"
                     }
+                }
+            }
+        },
+        "beta_v0.UMLPolicy": {
+            "type": "object",
+            "properties": {
+                "attribution": {
+                    "type": "string"
+                },
+                "commercialAttribution": {
+                    "type": "string"
+                },
+                "commercialUse": {
+                    "type": "string"
+                },
+                "commercializers": {
+                    "type": "string"
+                },
+                "derivativesAllowed": {
+                    "type": "string"
+                },
+                "derivativesApproval": {
+                    "type": "string"
+                },
+                "derivativesAttribution": {
+                    "type": "string"
+                },
+                "derivativesReciprocal": {
+                    "type": "string"
+                },
+                "derivativesRevShare": {
+                    "type": "string"
+                },
+                "distributionChannels": {
+                    "type": "string"
+                },
+                "frameworkManagerAddress": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "royaltyPolicy": {
+                    "type": "string"
+                },
+                "territories": {
+                    "type": "string"
+                },
+                "transferable": {
+                    "type": "string"
+                }
+            }
+        },
+        "options.QueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "creator": {
+                            "type": "string"
+                        },
+                        "frameworkId": {
+                            "type": "string"
+                        },
+                        "ipAsset": {
+                            "type": "string"
+                        },
+                        "ipId": {
+                            "type": "string"
+                        },
+                        "receiver": {
+                            "type": "string"
+                        },
+                        "tokenContract": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "options.RequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/options.QueryOptions"
                 }
             }
         }

@@ -21,6 +21,8 @@ func (c *ServiceBetaImpl) GetDispute(disputeId string) (*beta_v0.Dispute, error)
 			evidenceLink
 			initiator
 			data
+			blockNumber
+			blockTimestamp
 	  	}
 	}
     `, disputeId)
@@ -50,6 +52,8 @@ func (c *ServiceBetaImpl) ListDisputes(options *thegraph.TheGraphQueryOptions) (
 			evidenceLink
 			initiator
 			data
+			blockNumber
+			blockTimestamp
 		}
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

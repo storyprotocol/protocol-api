@@ -14,6 +14,8 @@ func (c *ServiceBetaImpl) ListAccessControlPermissions(options *thegraph.TheGrap
 		modules (%s, where:{%s}) {
 			name
 			module
+			blockNumber
+			blockTimestamp
 		}
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

@@ -1,7 +1,8 @@
 package beta_v0
 
 type IPAPolicy struct {
-	ID             string `json:"ipId,omitempty"`
+	ID             string `json:"id,omitempty"`
+	IPID           string `json:"ipId,omitempty"`
 	PolicyId       string `json:"policyId,omitempty"`
 	Index          string `json:"index,omitempty"`
 	Active         bool   `json:"active,omitempty"`
@@ -11,11 +12,11 @@ type IPAPolicy struct {
 }
 
 type IPAPoliciesTheGraphResponse struct {
-	IPAPolicies []*IPAPolicy `json:"ipaPolicies"`
+	IPAPolicies []*IPAPolicy `json:"ipapolicies"`
 }
 
 type IPAPolicyTheGraphResponse struct {
-	IPAPolicy *IPAPolicy `json:"ipaPolicy"`
+	IPAPolicy *IPAPolicy `json:"ipapolicy"`
 }
 
 type IPAPolicyResponse struct {

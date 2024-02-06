@@ -15,6 +15,8 @@ func (c *ServiceBetaImpl) GetLicense(licenseId string) (*beta_v0.License, error)
 			id
 			policyId
 			licensorIpId
+			blockNumber
+			blockTimestamp
 		  }
 		}
     `, licenseId)

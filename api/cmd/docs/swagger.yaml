@@ -7,13 +7,17 @@ definitions:
         type: string
       blockTimestamp:
         type: string
-      disputeEveidenceLink:
+      currentTag:
+        type: string
+      data:
+        type: string
+      evidenceLink:
         type: string
       id:
         type: string
       initiator:
         type: string
-      ipId:
+      targetIpId:
         type: string
       targetTag:
         type: string
@@ -63,7 +67,7 @@ definitions:
           type: string
         type: array
     type: object
-  beta_v0.IPAccount:
+  beta_v0.IPAsset:
     properties:
       blockNumber:
         type: string
@@ -75,6 +79,8 @@ definitions:
         type: string
       ipId:
         type: string
+      metadata:
+        type: string
       metadataResolverAddress:
         type: string
       tokenContract:
@@ -82,45 +88,32 @@ definitions:
       tokenId:
         type: string
     type: object
-  beta_v0.IPAccountResponse:
+  beta_v0.IPAssetResponse:
     properties:
       data:
-        $ref: '#/definitions/beta_v0.IPAccount'
+        $ref: '#/definitions/beta_v0.IPAsset'
     type: object
-  beta_v0.IPAccountsResponse:
+  beta_v0.IPAssetsResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/beta_v0.IPAccount'
+          $ref: '#/definitions/beta_v0.IPAsset'
         type: array
     type: object
   beta_v0.License:
     properties:
-      amount:
-        type: string
       blockNumber:
         type: string
       blockTimestamp:
         type: string
-      creator:
-        type: string
       id:
         type: string
-      licenseData:
-        $ref: '#/definitions/beta_v0.LicenseData'
-      licenseId:
+      licensorIpId:
         type: string
-      receiver:
-        type: string
-    type: object
-  beta_v0.LicenseData:
-    properties:
-      licensorIpIds:
-        items:
-          type: string
-        type: array
       policyId:
         type: string
+      transferable:
+        type: boolean
     type: object
   beta_v0.LicenseFramework:
     properties:
@@ -167,6 +160,8 @@ definitions:
         type: string
       deletedAt:
         type: string
+      id:
+        type: string
       module:
         type: string
       name:
@@ -193,8 +188,6 @@ definitions:
       func:
         type: string
       id:
-        type: string
-      ipAccount:
         type: string
       permission:
         type: string
@@ -227,21 +220,107 @@ definitions:
   beta_v0.Policy:
     properties:
       blockNumber:
-        description: PolicyData     PolicyData `json:"policyData,omitempty"`
         type: string
       blockTimestamp:
         type: string
-      creator:
+      data:
         type: string
-      frameworkId:
+      frameworkManagerAddress:
         type: string
       policyId:
         type: string
+      umlPolicy:
+        $ref: '#/definitions/beta_v0.UMLPolicy'
+    type: object
+  beta_v0.PolicyFrameworkManager:
+    properties:
+      address:
+        type: string
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      id:
+        type: string
+      licenseUrl:
+        type: string
+      name:
+        type: string
+    type: object
+  beta_v0.PolicyFrameworkManagerResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.PolicyFrameworkManager'
+    type: object
+  beta_v0.PolicyFrameworkManagersResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.PolicyFrameworkManager'
+        type: array
     type: object
   beta_v0.PolicyResponse:
     properties:
       data:
         $ref: '#/definitions/beta_v0.Policy'
+    type: object
+  beta_v0.RoyaltiesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.Royalty'
+        type: array
+    type: object
+  beta_v0.Royalty:
+    properties:
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      data:
+        type: string
+      id:
+        type: string
+      ipId:
+        type: string
+      royaltyPolicy:
+        type: string
+    type: object
+  beta_v0.RoyaltyPay:
+    properties:
+      amount:
+        type: string
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      id:
+        type: string
+      payerIpId:
+        type: string
+      receiverIpId:
+        type: string
+      sender:
+        type: string
+      token:
+        type: string
+    type: object
+  beta_v0.RoyaltyPayResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.RoyaltyPay'
+    type: object
+  beta_v0.RoyaltyPaysResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.RoyaltyPay'
+        type: array
+    type: object
+  beta_v0.RoyaltyResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.Royalty'
     type: object
   beta_v0.Tag:
     properties:
@@ -272,48 +351,119 @@ definitions:
           $ref: '#/definitions/beta_v0.Tag'
         type: array
     type: object
+  beta_v0.UMLPolicy:
+    properties:
+      attribution:
+        type: string
+      commercialAttribution:
+        type: string
+      commercialUse:
+        type: string
+      commercializers:
+        type: string
+      derivativesAllowed:
+        type: string
+      derivativesApproval:
+        type: string
+      derivativesAttribution:
+        type: string
+      derivativesReciprocal:
+        type: string
+      derivativesRevShare:
+        type: string
+      distributionChannels:
+        type: string
+      frameworkManagerAddress:
+        type: string
+      id:
+        type: string
+      royaltyPolicy:
+        type: string
+      territories:
+        type: string
+      transferable:
+        type: string
+    type: object
+  options.QueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          creator:
+            type: string
+          frameworkId:
+            type: string
+          ipAsset:
+            type: string
+          ipId:
+            type: string
+          receiver:
+            type: string
+          tokenContract:
+            type: string
+        type: object
+    type: object
+  options.RequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/options.QueryOptions'
+    type: object
 info:
-  version: "v0.1-beta"
-  title: "Story OpenAPI Spec"
   contact: {}
 paths:
-  /accounts:
+  /assets:
     post:
       consumes:
       - application/json
-      description: Retrieve a paginated, filtered list of IPAccounts
+      description: Retrieve a paginated, filtered list of IPAssets
       parameters:
-      - description: access token
-        format: token
-        in: query
-        name: access_token
+      - description: API Key
+        in: header
+        name: X-API-Key
         required: true
         type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/beta_v0.IPAccountsResponse'
-      summary: List IPAccounts
+            $ref: '#/definitions/beta_v0.IPAssetsResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List IPAssets
       tags:
-      - Accounts
-  /accounts/{accountId}:
+      - Assets
+  /assets/{assetId}:
     get:
       consumes:
       - application/json
-      description: Retrieve an IPAccount
+      description: Retrieve an IPAsset
       parameters:
-      - description: Account ID
+      - description: Asset ID
         in: path
-        name: accountId
+        name: assetId
         required: true
         type: string
-      - description: access token
-        format: token
-        in: query
-        name: access_token
+      - description: API Key
+        in: header
+        name: X-API-Key
         required: true
         type: string
       produces:
@@ -322,15 +472,29 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/beta_v0.IPAccountResponse'
-      summary: Get an IPAccount
+            $ref: '#/definitions/beta_v0.IPAssetResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get an IPAsset
       tags:
-      - Accounts
+      - IPAssets
   /disputes:
     post:
       consumes:
       - application/json
       description: Retrieve a paginated, filtered list of Disputes
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
@@ -338,6 +502,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.DisputesResponse'
+      security:
+      - ApiKeyAuth: []
       summary: List Disputes
       tags:
       - Disputes
@@ -352,6 +518,11 @@ paths:
         name: disputeId
         required: true
         type: string
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -359,6 +530,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.DisputeResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get a Dispute
       tags:
       - Disputes
@@ -367,6 +540,18 @@ paths:
       consumes:
       - application/json
       description: Retrieve a paginated, filtered list of LicenseFrameworks
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
@@ -374,6 +559,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.LicenseFrameworksResponse'
+      security:
+      - ApiKeyAuth: []
       summary: List LicenseFrameworks
       tags:
       - LicenseFrameworks
@@ -383,6 +570,11 @@ paths:
       - application/json
       description: Retrieve a LicenseFramework
       parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
       - description: Framework ID
         in: path
         name: frameworkId
@@ -395,6 +587,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.LicenseFrameworkResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get a LicenseFramework
       tags:
       - LicenseFrameworks
@@ -403,6 +597,18 @@ paths:
       consumes:
       - application/json
       description: Retrieve a paginated, filtered list of Licenses
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
@@ -410,6 +616,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.LicensesResponse'
+      security:
+      - ApiKeyAuth: []
       summary: List Licenses
       tags:
       - Licenses
@@ -419,6 +627,11 @@ paths:
       - application/json
       description: Retrieve a License
       parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
       - description: License ID
         in: path
         name: licenseId
@@ -431,6 +644,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.LicenseResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get an License
       tags:
       - Licenses
@@ -439,6 +654,18 @@ paths:
       consumes:
       - application/json
       description: Retrieve a paginated, filtered list of Modules
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
@@ -446,6 +673,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.ModulesResponse'
+      security:
+      - ApiKeyAuth: []
       summary: List Modules
       tags:
       - Modules
@@ -455,6 +684,11 @@ paths:
       - application/json
       description: Retrieve a Module
       parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
       - description: Module ID
         in: path
         name: moduleId
@@ -467,6 +701,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.ModuleResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get a GetModule
       tags:
       - Modules
@@ -475,6 +711,18 @@ paths:
       consumes:
       - application/json
       description: Retrieve a paginated, filtered list of Permissions
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
@@ -482,6 +730,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.PermissionsResponse'
+      security:
+      - ApiKeyAuth: []
       summary: List Permissions
       tags:
       - Permissions
@@ -511,6 +761,18 @@ paths:
       consumes:
       - application/json
       description: Retrieve a paginated, filtered list of Policies
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
@@ -518,6 +780,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.PoliciesResponse'
+      security:
+      - ApiKeyAuth: []
       summary: List Policies
       tags:
       - Policies
@@ -527,6 +791,11 @@ paths:
       - application/json
       description: Retrieve a Policy
       parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
       - description: Policy ID
         in: path
         name: policyId
@@ -539,14 +808,199 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.PolicyResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get a Policy
       tags:
       - Policies
+  /policyframeworks/{pfwmId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a PolicyFrameworkManager
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: PolicyFrameworkManager ID
+        in: path
+        name: pfwmId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.PolicyFrameworkManagerResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a PolicyFrameworkManager
+      tags:
+      - PolicyFrameworkManagers
+  /policymanagers:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of PolicyFrameworkManagers
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.PolicyFrameworkManagersResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List PolicyFrameworkManagers
+      tags:
+      - PolicyFrameworkManagers
+  /royalties:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Royalties
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.RoyaltiesResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List Royalties
+      tags:
+      - Royalties
+  /royalties/{royaltyId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Royalty
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Royalty ID
+        in: path
+        name: policyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.RoyaltyResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a Royalty
+      tags:
+      - Royalties
+  /royaltypays:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of RoyaltyPays
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.RoyaltyPaysResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List RoyaltyPays
+      tags:
+      - RoyaltyPays
+  /royaltypays/{royaltyPayId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a RoyaltyPay
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: RoyaltyPay ID
+        in: path
+        name: royaltyPayId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.RoyaltyPayResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a RoyaltyPay
+      tags:
+      - RoyaltyPays
   /tags:
     post:
       consumes:
       - application/json
       description: Retrieve a paginated, filtered list of Tags
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
       produces:
       - application/json
       responses:
@@ -554,6 +1008,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.TagsResponse'
+      security:
+      - ApiKeyAuth: []
       summary: List Tags
       tags:
       - Tags
@@ -563,6 +1019,11 @@ paths:
       - application/json
       description: Retrieve a Tag
       parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
       - description: Tag ID
         in: path
         name: tagId
@@ -575,6 +1036,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/beta_v0.TagResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get a Tag
       tags:
       - Tags

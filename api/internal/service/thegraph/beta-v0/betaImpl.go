@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/machinebox/graphql"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
-	"log"
 )
 
 const (
-	QUERY_INTERFACE = "$first: Int, $skip: Int, $orderBy: String, $orderDirection: String"
-	QUERY_VALUE     = "first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection"
+	QUERY_INTERFACE   = "$first: Int, $skip: Int, $orderBy: String, $orderDirection: String"
+	QUERY_VALUE       = "first: $first, skip: $skip, orderBy: $orderBy, orderDirection: $orderDirection"
+	QUERY_PLACEHOLDER = "string"
 )
 
 func NewTheGraphServiceBetaImpl(client *graphql.Client) thegraph.TheGraphServiceBeta {
@@ -33,11 +33,9 @@ func (s *ServiceBetaImpl) buildNewRequest(options *thegraph.TheGraphQueryOptions
 
 	whereString := ""
 	if options.Where.IPID != "" {
-		log.Println("Sewtting where string")
 		whereString = whereString + fmt.Sprintf("ipId: \"%s\"", options.Where.IPID)
 	}
 
-	print(fmt.Sprintf("{%s}", whereString))
 	req.Var("where", fmt.Sprintf("{%s}", whereString))
 
 	return req
@@ -45,22 +43,22 @@ func (s *ServiceBetaImpl) buildNewRequest(options *thegraph.TheGraphQueryOptions
 
 func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOptions) string {
 	whereString := ""
-	if options.Where.IPID != "" {
+	if options.Where.IPID != "" && options.Where.IPID != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("ipId: \"%s\",", options.Where.IPID)
 	}
-	if options.Where.IPAsset != "" {
+	if options.Where.IPAsset != "" && options.Where.IPAsset != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("ipAsset: \"%s\",", options.Where.IPAsset)
 	}
-	if options.Where.TokenContract != "" {
+	if options.Where.TokenContract != "" && options.Where.TokenContract != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("tokenContract: \"%s\",", options.Where.TokenContract)
 	}
-	if options.Where.Creator != "" {
+	if options.Where.Creator != "" && options.Where.Creator != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("creator: \"%s\",", options.Where.Creator)
 	}
-	if options.Where.FrameworkId != "" {
+	if options.Where.FrameworkId != "" && options.Where.FrameworkId != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("frameworkId: \"%s\",", options.Where.FrameworkId)
 	}
-	if options.Where.Receiver != "" {
+	if options.Where.Receiver != "" && options.Where.Receiver != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("receiver: \"%s\",", options.Where.Receiver)
 	}
 

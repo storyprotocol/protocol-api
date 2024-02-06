@@ -16,6 +16,8 @@ func (c *ServiceBetaImpl) GetTag(tagId string) (*beta_v0.Tag, error) {
 			ipId
 			tag
 			deletedAt
+			blockNumber
+			blockTimestamp
 		  }
 		}
     `, tagId)
@@ -45,6 +47,8 @@ func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*be
 		ipId
 		tag
 		deletedAt
+		blockNumber
+		blockTimestamp
 	  }
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

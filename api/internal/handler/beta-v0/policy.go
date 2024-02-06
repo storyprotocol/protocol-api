@@ -17,6 +17,8 @@ import (
 // @Summary Get a Policy
 // @Schemes
 // @Description Retrieve a Policy
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
 // @Tags Policies
 // @Accept json
 // @Produce json
@@ -46,6 +48,9 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 // @Summary List Policies
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Policies
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
+// @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Tags Policies
 // @Accept json
 // @Produce json

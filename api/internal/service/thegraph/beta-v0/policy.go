@@ -12,10 +12,10 @@ func (c *ServiceBetaImpl) GetPolicy(policyId string) (*beta_v0.Policy, error) {
 	query := fmt.Sprintf(`
 		query {
 		  policy(id: "%s") {
+			id
 			policyId
-			data
-			frameworkManagerAddress
-			umlPolicy
+			policyFrameworkManager
+			policy
 			blockTimestamp
 			blockNumber
 		  }
@@ -45,12 +45,12 @@ func (c *ServiceBetaImpl) ListPolicies(options *thegraph.TheGraphQueryOptions) (
 	query := fmt.Sprintf(`
 	query(%s){
 	  policies(%s, where:{%s}) {
-		policyId
-		data
-		frameworkManagerAddress
-		umlPolicy
-		blockTimestamp
-		blockNumber
+			id
+			policyId
+			policyFrameworkManager
+			policy
+			blockTimestamp
+			blockNumber
 	  }
 		
 	}
