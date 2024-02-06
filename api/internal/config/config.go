@@ -13,11 +13,12 @@ import (
 )
 
 type AppConfig struct {
-	AppID                 string `yaml:"app_id"`
-	Port                  int64  `yaml:"port"`
-	Env                   string `yaml:"env"`
-	TheGraphAlphaEndpoint string `yaml:"the_graph_alpha_endpoint"`
-	TheGraphBetaEndpoint  string `yaml:"the_graph_beta_endpoint"`
+	AppID                 string   `yaml:"app_id"`
+	Port                  int64    `yaml:"port"`
+	Env                   string   `yaml:"env"`
+	TheGraphAlphaEndpoint string   `yaml:"the_graph_alpha_endpoint"`
+	TheGraphBetaEndpoint  string   `yaml:"the_graph_beta_endpoint"`
+	ApiKeys               []string `yaml:"api_keys"`
 }
 
 var (
