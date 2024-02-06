@@ -1,6 +1,7 @@
 package beta_v0
 
 type Module struct {
+	ID             string `json:"id,omitempty"`
 	Name           string `json:"name,omitempty"`
 	Module         string `json:"module,omitempty"`
 	BlockNumber    string `json:"blockNumber,omitempty"`

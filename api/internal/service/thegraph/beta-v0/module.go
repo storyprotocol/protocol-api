@@ -12,6 +12,7 @@ func (c *ServiceBetaImpl) GetModule(moduleId string) (*beta_v0.Module, error) {
 	query := fmt.Sprintf(`
 	query {
 		module(id: "%s") {
+			id
 			name
 			module
 	  	}
@@ -34,6 +35,7 @@ func (c *ServiceBetaImpl) ListModules(options *thegraph.TheGraphQueryOptions) ([
 	query := fmt.Sprintf(`
 	query(%s){
 		modules (%s, where:{%s}) {
+			id
 			name
 			module
 		}

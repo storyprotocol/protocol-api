@@ -7,25 +7,31 @@ import (
 
 type TheGraphServiceBeta interface {
 	// GET
-	GetIPAccount(accountId string) (*beta_v0.IPAccount, error)
+	GetIPAsset(assetId string) (*beta_v0.IPAsset, error)
 	GetModule(moduleId string) (*beta_v0.Module, error)
 	GetLicense(licenseId string) (*beta_v0.License, error)
 	GetLicenseFramework(licenseId string) (*beta_v0.LicenseFramework, error)
-	GetTag(tagId string) (*beta_v0.Tag, error)
 	GetPolicy(policyId string) (*beta_v0.Policy, error)
 	GetDispute(disputeId string) (*beta_v0.Dispute, error)
 	GetPermission(permissionId string) (*beta_v0.Permission, error)
+	GetTag(tagId string) (*beta_v0.Tag, error)
+	GetRoyalty(royaltyId string) (*beta_v0.Royalty, error)
+	GetRoyaltyPay(royaltyPayId string) (*beta_v0.RoyaltyPay, error)
+	GetPolicyFrameworkManager(pfwmId string) (*beta_v0.PolicyFrameworkManager, error)
 
 	// LISTS
-	ListIPAccounts(options *TheGraphQueryOptions) ([]*beta_v0.IPAccount, error)
+	ListIPAssets(options *TheGraphQueryOptions) ([]*beta_v0.IPAsset, error)
 	ListModules(options *TheGraphQueryOptions) ([]*beta_v0.Module, error)
 	ListLicenses(options *TheGraphQueryOptions) ([]*beta_v0.License, error)
 	ListLicenseFrameworks(options *TheGraphQueryOptions) ([]*beta_v0.LicenseFramework, error)
 	ListAccessControlPermissions(options *TheGraphQueryOptions) ([]*beta_v0.AccessControlPermission, error)
 	ListPolicies(options *TheGraphQueryOptions) ([]*beta_v0.Policy, error)
 	ListDisputes(options *TheGraphQueryOptions) ([]*beta_v0.Dispute, error)
-	ListTag(options *TheGraphQueryOptions) ([]*beta_v0.Tag, error)
 	ListPermissions(options *TheGraphQueryOptions) ([]*beta_v0.Permission, error)
+	ListTag(options *TheGraphQueryOptions) ([]*beta_v0.Tag, error)
+	ListRoyalties(options *TheGraphQueryOptions) ([]*beta_v0.Royalty, error)
+	ListRoyaltyPays(options *TheGraphQueryOptions) ([]*beta_v0.RoyaltyPay, error)
+	ListPolicyFrameworkManagers(options *TheGraphQueryOptions) ([]*beta_v0.PolicyFrameworkManager, error)
 }
 
 type TheGraphQueryOptions struct {
@@ -38,7 +44,7 @@ type TheGraphQueryOptions struct {
 		Receiver      string
 		TokenContract string
 		FrameworkId   string
-		IPAccount     string
+		IPAsset       string
 		IPID          string
 	}
 }
@@ -65,7 +71,7 @@ func FromRequestQueryOptions(options *options.QueryOptions) *TheGraphQueryOption
 		Receiver      string
 		TokenContract string
 		FrameworkId   string
-		IPAccount     string
+		IPAsset       string
 		IPID          string
 	}(options.Where)
 
