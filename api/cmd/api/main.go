@@ -6,11 +6,14 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/machinebox/graphql"
+	"github.com/storyprotocol/protocol-api/api/cmd/docs"
 	"github.com/storyprotocol/protocol-api/api/internal/config"
 	betaHandlers "github.com/storyprotocol/protocol-api/api/internal/handler/beta-v0"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph/beta-v0"
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 	"slices"
 )
@@ -50,38 +53,43 @@ func main() {
 		c.JSON(http.StatusOK, "OK")
 	})
 
-	protocol := r.Group("/")
-	protocol.Use(cors.Default())
-	protocol.Use(AuthMiddleware())
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	v1 := r.Group("/api/v1")
 
 	{
-
+		protocol := v1.Group("/")
+		protocol.Use(cors.Default())
+		protocol.Use(AuthMiddleware())
 		// BETA
-		protocol.GET("/assets/:assetId", betaHandlers.NewGetIPAsset(theGraphBetaService, httpClient))
-		protocol.GET("/modules/:moduleId", betaHandlers.NewGetModule(theGraphBetaService, httpClient))
-		//protocol.GET("/licenseframeworks/:frameworkId", betaHandlers.NewGetLicenseFramework(theGraphBetaService, httpClient))
-		protocol.GET("/licenses/:licenseId", betaHandlers.NewGetLicense(theGraphBetaService, httpClient))
-		protocol.GET("/policies/:policyId", betaHandlers.NewGetPolicy(theGraphBetaService, httpClient))
-		protocol.GET("/disputes/:disputeId", betaHandlers.NewGetDispute(theGraphBetaService, httpClient))
-		protocol.GET("/permissions/:permissionId", betaHandlers.NewGetPermission(theGraphBetaService, httpClient))
-		protocol.GET("/tags/:tagId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
-		protocol.GET("/royalties/:royaltyId", betaHandlers.NewGetRoyalty(theGraphBetaService, httpClient))
-		protocol.GET("/royaltypays/:royaltyPayId", betaHandlers.NewGetRoyaltyPay(theGraphBetaService, httpClient))
-		protocol.GET("/policyframeworks/:pfwmId", betaHandlers.NewGetPolicyFrameworkManager(theGraphBetaService, httpClient))
+		{
+			protocol.GET("/assets/:assetId", betaHandlers.NewGetIPAsset(theGraphBetaService, httpClient))
+			protocol.GET("/modules/:moduleId", betaHandlers.NewGetModule(theGraphBetaService, httpClient))
+			//protocol.GET("/licenseframeworks/:frameworkId", betaHandlers.NewGetLicenseFramework(theGraphBetaService, httpClient))
+			protocol.GET("/licenses/:licenseId", betaHandlers.NewGetLicense(theGraphBetaService, httpClient))
+			protocol.GET("/policies/:policyId", betaHandlers.NewGetPolicy(theGraphBetaService, httpClient))
+			protocol.GET("/disputes/:disputeId", betaHandlers.NewGetDispute(theGraphBetaService, httpClient))
+			protocol.GET("/permissions/:permissionId", betaHandlers.NewGetPermission(theGraphBetaService, httpClient))
+			protocol.GET("/tags/:tagId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
+			protocol.GET("/royalties/:royaltyId", betaHandlers.NewGetRoyalty(theGraphBetaService, httpClient))
+			protocol.GET("/royaltypays/:royaltyPayId", betaHandlers.NewGetRoyaltyPay(theGraphBetaService, httpClient))
+			protocol.GET("/policyframeworks/:pfwmId", betaHandlers.NewGetPolicyFrameworkManager(theGraphBetaService, httpClient))
 
-		protocol.POST("/assets", betaHandlers.NewListIPAssets(theGraphBetaService, httpClient))
-		protocol.POST("/modules", betaHandlers.NewListModules(theGraphBetaService, httpClient))
-		//protocol.POST("/licenseframeworks", betaHandlers.NewListLicenseFrameworks(theGraphBetaService, httpClient))
-		protocol.POST("/licenses", betaHandlers.NewListLicenses(theGraphBetaService, httpClient))
-		protocol.POST("/policies", betaHandlers.NewListPolicies(theGraphBetaService, httpClient))
-		protocol.POST("/disputes", betaHandlers.NewListDisputes(theGraphBetaService, httpClient))
-		protocol.POST("/permissions", betaHandlers.NewListPermissions(theGraphBetaService, httpClient))
-		protocol.POST("/tags", betaHandlers.NewListTags(theGraphBetaService, httpClient))
-		protocol.POST("/royalties", betaHandlers.NewListRoyalties(theGraphBetaService, httpClient))
-		protocol.POST("/royaltypays", betaHandlers.NewListRoyaltyPays(theGraphBetaService, httpClient))
-		protocol.POST("/policyframeworks", betaHandlers.NewListPolicyFrameworkManagers(theGraphBetaService, httpClient))
+			protocol.POST("/assets", betaHandlers.NewListIPAssets(theGraphBetaService, httpClient))
+			protocol.POST("/modules", betaHandlers.NewListModules(theGraphBetaService, httpClient))
+			//protocol.POST("/licenseframeworks", betaHandlers.NewListLicenseFrameworks(theGraphBetaService, httpClient))
+			protocol.POST("/licenses", betaHandlers.NewListLicenses(theGraphBetaService, httpClient))
+			protocol.POST("/policies", betaHandlers.NewListPolicies(theGraphBetaService, httpClient))
+			protocol.POST("/disputes", betaHandlers.NewListDisputes(theGraphBetaService, httpClient))
+			protocol.POST("/permissions", betaHandlers.NewListPermissions(theGraphBetaService, httpClient))
+			protocol.POST("/tags", betaHandlers.NewListTags(theGraphBetaService, httpClient))
+			protocol.POST("/royalties", betaHandlers.NewListRoyalties(theGraphBetaService, httpClient))
+			protocol.POST("/royaltypays", betaHandlers.NewListRoyaltyPays(theGraphBetaService, httpClient))
+			protocol.POST("/policyframeworks", betaHandlers.NewListPolicyFrameworkManagers(theGraphBetaService, httpClient))
+		}
 
 	}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	port := fmt.Sprintf(":%d", cfg.Port)
 	_ = r.Run(port)

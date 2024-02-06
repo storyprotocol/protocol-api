@@ -22,7 +22,7 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 		acps, err := graphService.ListAccessControlPermissions(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get access control permissions: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

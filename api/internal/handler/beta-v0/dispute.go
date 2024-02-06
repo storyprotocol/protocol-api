@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetDispute Example godoc
+// @Summary Get a Dispute
+// @Schemes
+// @Description Retrieve a Dispute
+// @Tags Disputes
+// @Accept json
+// @Produce json
+// @Param        disputeId   path      string  true  "Dispute ID"
+// @Success 200 {object} DisputeResponse
+// @Router /disputes/{disputeId} [get]
 func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		disputeId := c.Param("disputeId")
@@ -18,7 +30,7 @@ func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 		disputes, err := graphService.GetDispute(disputeId)
 		if err != nil {
 			logger.Errorf("Failed to get dispute: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -28,6 +40,17 @@ func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 	}
 }
 
+// @BasePath /api/v1
+
+// ListDisputes Example godoc
+// @Summary List Disputes
+// @Schemes
+// @Description Retrieve a paginated, filtered list of Disputes
+// @Tags Disputes
+// @Accept json
+// @Produce json
+// @Success 200 {object} DisputesResponse
+// @Router /disputes [post]
 func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
@@ -39,7 +62,7 @@ func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 		disputes, err := graphService.ListDisputes(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to get added disputes: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

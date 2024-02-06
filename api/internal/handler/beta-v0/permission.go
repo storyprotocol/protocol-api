@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetPermission Example godoc
+// @Summary Get a Permission
+// @Schemes
+// @Description Retrieve a Permission
+// @Tags Permissions
+// @Accept json
+// @Produce json
+// @Param        permissionId   path      string  true  "Permission ID"
+// @Success 200 {object} PermissionResponse
+// @Router /permissions/{permissionId} [get]
 func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		permissionId := c.Param("permissionId")
@@ -18,7 +30,7 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 		perms, err := graphService.GetPermission(permissionId)
 		if err != nil {
 			logger.Errorf("Failed to get permission: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -28,6 +40,17 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 	}
 }
 
+// @BasePath /api/v1
+
+// ListPermissions Example godoc
+// @Summary List Permissions
+// @Schemes
+// @Description Retrieve a paginated, filtered list of Permissions
+// @Tags Permissions
+// @Accept json
+// @Produce json
+// @Success 200 {object} PermissionsResponse
+// @Router /permissions [post]
 func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
@@ -39,7 +62,7 @@ func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xh
 		perms, err := graphService.ListPermissions(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to list permissions: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

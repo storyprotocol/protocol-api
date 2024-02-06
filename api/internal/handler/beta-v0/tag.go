@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetTag Example godoc
+// @Summary Get a Tag
+// @Schemes
+// @Description Retrieve a Tag
+// @Tags Tags
+// @Accept json
+// @Produce json
+// @Param        tagId   path      string  true  "Tag ID"
+// @Success 200 {object} TagResponse
+// @Router /tags/{tagId} [get]
 func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		ipId := c.Param("tagId")
@@ -18,7 +30,7 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 		tags, err := graphService.GetTag(ipId)
 		if err != nil {
 			logger.Errorf("Failed to get tag: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -28,6 +40,17 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 	}
 }
 
+// @BasePath /api/v1
+
+// ListTags Example godoc
+// @Summary List Tags
+// @Schemes
+// @Description Retrieve a paginated, filtered list of Tags
+// @Tags Tags
+// @Accept json
+// @Produce json
+// @Success 200 {object} TagsResponse
+// @Router /tags [post]
 func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
@@ -39,7 +62,7 @@ func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cli
 		tags, err := graphService.ListTag(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to list tags: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 

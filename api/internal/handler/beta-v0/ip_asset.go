@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetIPAsset Example godoc
+// @Summary Get an IPAsset
+// @Schemes
+// @Description Retrieve an IPAsset
+// @Tags IPAssets
+// @Accept json
+// @Produce json
+// @Param        assetId   path      string  true  "Asset ID"
+// @Success 200 {object} IPAssetResponse
+// @Router /assets/{assetId} [get]
 func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		assetId := c.Param("assetId")
@@ -27,6 +39,17 @@ func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 	}
 }
 
+// @BasePath /api/v1
+
+// ListIPAssets Example godoc
+// @Summary List IPAssets
+// @Schemes
+// @Description Retrieve a paginated, filtered list of IPAssets
+// @Tags Assets
+// @Accept json
+// @Produce json
+// @Success 200 {object} IPAssetsResponse
+// @Router /assets [post]
 func NewListIPAssets(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

@@ -11,6 +11,18 @@ import (
 	"net/http"
 )
 
+// @BasePath /api/v1
+
+// GetPolicy Example godoc
+// @Summary Get a Policy
+// @Schemes
+// @Description Retrieve a Policy
+// @Tags Policies
+// @Accept json
+// @Produce json
+// @Param        policyId   path      string  true  "Policy ID"
+// @Success 200 {object} PolicyResponse
+// @Router /policies/{policyId} [get]
 func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		policyId := c.Param("policyId")
@@ -18,7 +30,7 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 		policies, err := graphService.GetPolicy(policyId)
 		if err != nil {
 			logger.Errorf("Failed to get policy: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
@@ -28,6 +40,17 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 	}
 }
 
+// @BasePath /api/v1
+
+// ListPolicies Example godoc
+// @Summary List Policies
+// @Schemes
+// @Description Retrieve a paginated, filtered list of Policies
+// @Tags Policies
+// @Accept json
+// @Produce json
+// @Success 200 {object} PoliciesResponse
+// @Router /policies [post]
 func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
@@ -39,7 +62,7 @@ func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 		pols, err := graphService.ListPolicies(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to list policies: %v", err)
-			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
+			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
