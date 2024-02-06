@@ -48,8 +48,8 @@ func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOp
 	if options.Where.IPID != "" {
 		whereString = whereString + fmt.Sprintf("ipId: \"%s\",", options.Where.IPID)
 	}
-	if options.Where.IPAccount != "" {
-		whereString = whereString + fmt.Sprintf("ipAccount: \"%s\",", options.Where.IPAccount)
+	if options.Where.IPAsset != "" {
+		whereString = whereString + fmt.Sprintf("ipAsset: \"%s\",", options.Where.IPAsset)
 	}
 	if options.Where.TokenContract != "" {
 		whereString = whereString + fmt.Sprintf("tokenContract: \"%s\",", options.Where.TokenContract)

@@ -12,8 +12,13 @@ func (c *ServiceBetaImpl) GetDispute(disputeId string) (*beta_v0.Dispute, error)
 	query := fmt.Sprintf(`
 	query {
 		dispute(id: "%s") {
-			name
-			module
+			targetIpId
+			targetTag
+			currentTag
+			arbitrationPolicy
+			evidenceLInk
+			initiator
+			data
 	  	}
 	}
     `, disputeId)
@@ -34,8 +39,13 @@ func (c *ServiceBetaImpl) ListDisputes(options *thegraph.TheGraphQueryOptions) (
 	query := fmt.Sprintf(`
 	query(%s){
 		disputes (%s, where:{%s}) {
-			name
-			module
+			targetIpId
+			targetTag
+			currentTag
+			arbitrationPolicy
+			evidenceLInk
+			initiator
+			data
 		}
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

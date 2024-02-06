@@ -52,25 +52,30 @@ func main() {
 	{
 
 		// BETA
-		protocol.GET("/accounts/:accountId", betaHandlers.NewGetIPAccount(theGraphBetaService, httpClient))
+		protocol.GET("/assets/:assetId", betaHandlers.NewGetIPAsset(theGraphBetaService, httpClient))
 		protocol.GET("/modules/:moduleId", betaHandlers.NewGetModule(theGraphBetaService, httpClient))
 		protocol.GET("/licenseframeworks/:frameworkId", betaHandlers.NewGetLicenseFramework(theGraphBetaService, httpClient))
 		protocol.GET("/licenses/:licenseId", betaHandlers.NewGetLicense(theGraphBetaService, httpClient))
 		protocol.GET("/policies/:policyId", betaHandlers.NewGetPolicy(theGraphBetaService, httpClient))
-		//protocol.GET("/disputes/:disputeId", betaHandlers.NewGetDispute(theGraphBetaService, httpClient))
+		protocol.GET("/disputes/:disputeId", betaHandlers.NewGetDispute(theGraphBetaService, httpClient))
 		protocol.GET("/permissions/:permissionId", betaHandlers.NewGetPermission(theGraphBetaService, httpClient))
 		protocol.GET("/tags/:tagId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
+		protocol.GET("/royalties/:royaltyId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
+		protocol.GET("/royaltypays/:royaltyPayId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
+		protocol.GET("/policyframeworks/:pfwmId", betaHandlers.NewGetPolicyFrameworkManager(theGraphBetaService, httpClient))
 
-		protocol.POST("/accounts", betaHandlers.NewListIPAccounts(theGraphBetaService, httpClient))
+		protocol.POST("/assets", betaHandlers.NewListIPAssets(theGraphBetaService, httpClient))
 		protocol.POST("/modules", betaHandlers.NewListModules(theGraphBetaService, httpClient))
 		protocol.POST("/licenseframeworks", betaHandlers.NewListLicenseFrameworks(theGraphBetaService, httpClient))
 		protocol.POST("/licenses", betaHandlers.NewListLicenses(theGraphBetaService, httpClient))
 		protocol.POST("/policies", betaHandlers.NewListPolicies(theGraphBetaService, httpClient))
-		//protocol.POST("/disputes", betaHandlers.NewListDisputes(theGraphBetaService, httpClient))
+		protocol.POST("/disputes", betaHandlers.NewListDisputes(theGraphBetaService, httpClient))
 		protocol.POST("/permissions", betaHandlers.NewListPermissions(theGraphBetaService, httpClient))
 		protocol.POST("/tags", betaHandlers.NewListTags(theGraphBetaService, httpClient))
-		// royalties
-		// policyCreated <- licenseRegistry
+		protocol.GET("/royalties", betaHandlers.NewListRoyalties(theGraphBetaService, httpClient))
+		protocol.GET("/royaltypays", betaHandlers.NewListRoyaltyPays(theGraphBetaService, httpClient))
+		protocol.GET("/policyframeworks", betaHandlers.NewListPolicyFrameworkManagers(theGraphBetaService, httpClient))
+
 	}
 
 	port := fmt.Sprintf(":%d", cfg.Port)
