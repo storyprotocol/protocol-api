@@ -1,19 +1,13 @@
 package beta_v0
 
 type License struct {
-	ID             string      `json:"id,omitempty"`
-	Amount         string      `json:"amount,omitempty"`
-	Creator        string      `json:"creator,omitempty"`
-	LicenseId      string      `json:"licenseId,omitempty"`
-	Receiver       string      `json:"receiver,omitempty"`
-	LicenseData    LicenseData `json:"licenseData,omitempty"`
-	BlockNumber    string      `json:"blockNumber,omitempty"`
-	BlockTimestamp string      `json:"blockTimestamp,omitempty"`
-}
+	ID           string `json:"id,omitempty"`
+	PolicyID     string `json:"policyId,omitempty"`
+	LicensorIpId string `json:"licensorIpId,omitempty"`
+	Transferable bool   `json:"transferable,omitempty"`
 
-type LicenseData struct {
-	PolicyID      string   `json:"policyId,omitempty"`
-	LicensorIpIds []string `json:"licensorIpIds,omitempty"`
+	BlockNumber    string `json:"blockNumber,omitempty"`
+	BlockTimestamp string `json:"blockTimestamp,omitempty"`
 }
 
 type LicenseTheGraphResponse struct {

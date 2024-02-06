@@ -13,10 +13,8 @@ func (c *ServiceBetaImpl) GetLicense(licenseId string) (*beta_v0.License, error)
 		query {
 		  license(id: "%s") {
 			id
-			amount
-			creator
-			licenseId
-			receiver
+			policyId
+			licensorIpId
 		  }
 		}
     `, licenseId)
@@ -38,12 +36,10 @@ func (c *ServiceBetaImpl) ListLicenses(options *thegraph.TheGraphQueryOptions) (
 	query(%s){
 	  licenses (%s, where:{%s}) {
 		id
+		policyId
+		licensorIpId
 		blockTimestamp
 		blockNumber
-		amount
-		creator
-		licenseId
-		receiver
 	  }
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

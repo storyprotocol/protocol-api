@@ -12,8 +12,8 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 	query := fmt.Sprintf(`
 		query {
 		  permissions(where: { uuid:  "%s" }) {
+			id
 			uuid
-			ipAccount
 			permission
 			signer
 			to
@@ -46,7 +46,6 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 	  permissions(id: "%s", where:{%s}) {
 		id
 		uuid
-		ipAccount
 		permission
 		signer
 		to

@@ -11,23 +11,24 @@ import (
 	"net/http"
 )
 
-func NewGetIPAccount(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+func NewGetRoyalty(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		accountId := c.Param("accountId")
-		accounts, err := graphService.GetIPAccount(accountId)
+		royaltyId := c.Param("royaltyId")
+
+		roys, err := graphService.GetRoyalty(royaltyId)
 		if err != nil {
-			logger.Errorf("Failed to get account: %v", err)
+			logger.Errorf("Failed to get royalty: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.IPAccountResponse{
-			Data: accounts,
+		c.JSON(http.StatusOK, beta_v0.RoyaltyResponse{
+			Data: roys,
 		})
 	}
 }
 
-func NewListIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+func NewListRoyalties(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
@@ -35,15 +36,15 @@ func NewListIPAccounts(graphService thegraph.TheGraphServiceBeta, httpClient xht
 			requestBody = options2.RequestBody{}
 		}
 
-		ipAccounts, err := graphService.ListIPAccounts(thegraph.FromRequestQueryOptions(requestBody.Options))
+		roys, err := graphService.ListRoyalties(thegraph.FromRequestQueryOptions(requestBody.Options))
 		if err != nil {
-			logger.Errorf("Failed to get registered IP Accounts: %v", err)
+			logger.Errorf("Failed to list royalties: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.IPAccountsResponse{
-			Data: ipAccounts,
+		c.JSON(http.StatusOK, beta_v0.RoyaltiesResponse{
+			Data: roys,
 		})
 	}
 }

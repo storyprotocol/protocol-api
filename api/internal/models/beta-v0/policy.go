@@ -1,20 +1,30 @@
 package beta_v0
 
 type Policy struct {
-	ID          string `json:"policyId,omitempty"`
-	Creator     string `json:"creator,omitempty"`
-	FrameworkId string `json:"frameworkId,omitempty"`
-	//PolicyData     PolicyData `json:"policyData,omitempty"`
-	BlockNumber    string `json:"blockNumber,omitempty"`
-	BlockTimestamp string `json:"blockTimestamp,omitempty"`
+	ID                      string    `json:"policyId,omitempty"`
+	FrameworkManagerAddress string    `json:"frameworkManagerAddress,omitempty"`
+	Data                    string    `json:"data,omitempty"`
+	UML                     UMLPolicy `json:"umlPolicy,omitempty"`
+	BlockNumber             string    `json:"blockNumber,omitempty"`
+	BlockTimestamp          string    `json:"blockTimestamp,omitempty"`
 }
 
-type PolicyData struct {
-	FrameworkId           string   `json:"frameworkId,omitempty"`
-	NeedsActivation       bool     `json:"needsActivation,omitempty"`
-	MintingParamValues    []string `json:"mintingParamValues,omitempty"`
-	LinkParentParamValues []string `json:"linkParentParamValues,omitempty"`
-	ActivationParamValues []string `json:"activationParamValues,omitempty"`
+type UMLPolicy struct {
+	ID                      string `json:"id,omitempty"`
+	FrameworkManagerAddress string `json:"frameworkManagerAddress,omitempty"`
+	Attribution             string `json:"attribution,omitempty"`
+	Transferable            string `json:"transferable,omitempty"`
+	CommercialUse           string `json:"commercialUse,omitempty"`
+	CommercialAttribution   string `json:"commercialAttribution,omitempty"`
+	Commercializers         string `json:"commercializers,omitempty"`
+	DerivativesAllowed      string `json:"derivativesAllowed,omitempty"`
+	DerivativesAttribution  string `json:"derivativesAttribution,omitempty"`
+	DerivativesApproval     string `json:"derivativesApproval,omitempty"`
+	DerivativesReciprocal   string `json:"derivativesReciprocal,omitempty"`
+	DerivativesRevShare     string `json:"derivativesRevShare,omitempty"`
+	Territories             string `json:"territories,omitempty"`
+	DistributionChannels    string `json:"distributionChannels,omitempty"`
+	RoyaltyPolicy           string `json:"royaltyPolicy,omitempty"`
 }
 
 type PoliciesTheGraphResponse struct {
