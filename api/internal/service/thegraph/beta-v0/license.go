@@ -15,7 +15,6 @@ func (c *ServiceBetaImpl) GetLicense(licenseId string) (*beta_v0.License, error)
 			id
 			policyId
 			licensorIpId
-			transferable
 		  }
 		}
     `, licenseId)
@@ -39,7 +38,6 @@ func (c *ServiceBetaImpl) ListLicenses(options *thegraph.TheGraphQueryOptions) (
 		id
 		policyId
 		licensorIpId
-		transferable
 		blockTimestamp
 		blockNumber
 	  }

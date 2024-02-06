@@ -6,7 +6,7 @@ type Dispute struct {
 	TargetTag         string `json:"targetTag,omitempty"`
 	CurrentTag        string `json:"currentTag,omitempty"`
 	ArbitrationPolicy string `json:"arbitrationPolicy,omitempty"`
-	EveidenceLink     string `json:"eveidenceLink,omitempty"`
+	EvidenceLink      string `json:"evidenceLink,omitempty"`
 	Initiator         string `json:"initiator,omitempty"`
 	Data              string `json:"data,omitempty"`
 	BlockNumber       string `json:"blockNumber,omitempty"`

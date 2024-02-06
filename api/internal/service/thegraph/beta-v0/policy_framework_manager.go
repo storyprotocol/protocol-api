@@ -33,7 +33,7 @@ func (c *ServiceBetaImpl) GetPolicyFrameworkManager(pfmId string) (*beta_v0.Poli
 
 }
 
-func (c *ServiceBetaImpl) ListPolicyFrameworkManager(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.PolicyFrameworkManager, error) {
+func (c *ServiceBetaImpl) ListPolicyFrameworkManagers(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.PolicyFrameworkManager, error) {
 	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){

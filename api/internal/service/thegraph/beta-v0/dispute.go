@@ -12,11 +12,13 @@ func (c *ServiceBetaImpl) GetDispute(disputeId string) (*beta_v0.Dispute, error)
 	query := fmt.Sprintf(`
 	query {
 		dispute(id: "%s") {
+			id
 			targetIpId
 			targetTag
 			currentTag
+			deletedAt
 			arbitrationPolicy
-			evidenceLInk
+			evidenceLink
 			initiator
 			data
 	  	}
@@ -39,11 +41,13 @@ func (c *ServiceBetaImpl) ListDisputes(options *thegraph.TheGraphQueryOptions) (
 	query := fmt.Sprintf(`
 	query(%s){
 		disputes (%s, where:{%s}) {
+			id
 			targetIpId
 			targetTag
 			currentTag
+			deletedAt
 			arbitrationPolicy
-			evidenceLInk
+			evidenceLink
 			initiator
 			data
 		}

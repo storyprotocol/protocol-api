@@ -22,11 +22,11 @@ type Metadata struct {
 }
 
 type IPAssetsTheGraphResponse struct {
-	IPAssets []*IPAsset `json:"iprecords"`
+	IPAssets []*IPAsset `json:"ipassets"`
 }
 
 type IPAssetTheGraphResponse struct {
-	IPAsset *IPAsset `json:"iprecord"`
+	IPAsset *IPAsset `json:"ipasset"`
 }
 
 type IPAssetResponse struct {

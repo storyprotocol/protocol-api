@@ -11,9 +11,11 @@ import (
 func (c *ServiceBetaImpl) GetRoyalty(royaltyId string) (*beta_v0.Royalty, error) {
 	query := fmt.Sprintf(`
 		query {
-		  royalty(id: "%s") {
+		  iproyalty(id: "%s") {
+			id
 			ipId
 			data
+			royaltyPolicy
 			blockTimestamp
 			blockNumber
 		  }
@@ -35,7 +37,9 @@ func (c *ServiceBetaImpl) ListRoyalties(options *thegraph.TheGraphQueryOptions) 
 	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){
-	  royalties(%s, where:{%s}) {
+	  iproyalties(%s, where:{%s}) {
+			id
+			royaltyPolicy
 			ipId
 			data
 			blockTimestamp

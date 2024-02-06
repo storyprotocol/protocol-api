@@ -3,8 +3,6 @@ package beta_v0
 type Permission struct {
 	ID             string `json:"id,omitempty"`
 	UUID           string `json:"uuid,omitempty"`
-	IPAOwner       string `json:"ipaOwner,omitempty"`
-	IPAccount      string `json:"ipAccountAddress,omitempty"`
 	Permission     string `json:"permission,omitempty"`
 	Signer         string `json:"signer,omitempty"`
 	To             string `json:"to,omitempty"`

@@ -11,7 +11,7 @@ import (
 func (c *ServiceBetaImpl) GetIPAsset(assetId string) (*beta_v0.IPAsset, error) {
 	query := fmt.Sprintf(`
 	query {
-		iprecord(id: "%s") {
+		ipasset(id: "%s") {
 			id
 			ipId
 			chainId
@@ -49,7 +49,7 @@ func (c *ServiceBetaImpl) ListIPAssets(options *beta_graph.TheGraphQueryOptions)
 	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s) {
-		iprecords (%s, where:{%s}) {
+		ipassets (%s, where:{%s}) {
 			id
 			ipId
 			chainId
