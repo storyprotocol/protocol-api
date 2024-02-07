@@ -24,7 +24,7 @@ import (
 // @param X-API-Key header string true "API Key"
 // @Param        licenseId   path      string  true  "License ID"
 // @Success 200 {object} LicenseResponse
-// @Router /licenses/{licenseId} [get]
+// @Router /api/v1/licenses/{licenseId} [get]
 func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		licenseId := c.Param("licenseId")
@@ -55,7 +55,7 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @param X-API-Key header string true "API Key"
 // @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Success 200 {object} LicensesResponse
-// @Router /licenses [post]
+// @Router /api/v1/licenses [post]
 func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

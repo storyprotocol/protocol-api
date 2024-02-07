@@ -17,6 +17,10 @@ ecr-auth:
 compileswag:
 	swag init -g ./api/cmd/api/main.go -o api/cmd/docs
 
+updatereadme:
+	rdme openapi --version=v0.1-beta \
+      --key=rdme_xn8s9h4f2fb37d2b8939711a4231fb837cd3f763c26c1475c08afcef03bfee675a2dc3
+
 buildserver:
 	cd api && CGO_ENABLED=0 go build --ldflags "-extldflags '-static -s'" -o build/server cmd/api/main.go
 

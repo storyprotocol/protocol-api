@@ -67,6 +67,37 @@ definitions:
           type: string
         type: array
     type: object
+  beta_v0.IPAPoliciesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.IPAPolicy'
+        type: array
+    type: object
+  beta_v0.IPAPolicy:
+    properties:
+      active:
+        type: boolean
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      id:
+        type: string
+      index:
+        type: string
+      inherited:
+        type: boolean
+      ipId:
+        type: string
+      policyId:
+        type: string
+    type: object
+  beta_v0.IPAPolicyResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.IPAPolicy'
+    type: object
   beta_v0.IPAsset:
     properties:
       blockNumber:
@@ -223,14 +254,14 @@ definitions:
         type: string
       blockTimestamp:
         type: string
-      data:
+      id:
         type: string
-      frameworkManagerAddress:
+      policy:
+        type: string
+      policyFrameworkManager:
         type: string
       policyId:
         type: string
-      umlPolicy:
-        $ref: '#/definitions/beta_v0.UMLPolicy'
     type: object
   beta_v0.PolicyFrameworkManager:
     properties:
@@ -351,39 +382,6 @@ definitions:
           $ref: '#/definitions/beta_v0.Tag'
         type: array
     type: object
-  beta_v0.UMLPolicy:
-    properties:
-      attribution:
-        type: string
-      commercialAttribution:
-        type: string
-      commercialUse:
-        type: string
-      commercializers:
-        type: string
-      derivativesAllowed:
-        type: string
-      derivativesApproval:
-        type: string
-      derivativesAttribution:
-        type: string
-      derivativesReciprocal:
-        type: string
-      derivativesRevShare:
-        type: string
-      distributionChannels:
-        type: string
-      frameworkManagerAddress:
-        type: string
-      id:
-        type: string
-      royaltyPolicy:
-        type: string
-      territories:
-        type: string
-      transferable:
-        type: string
-    type: object
   options.QueryOptions:
     properties:
       orderBy:
@@ -421,7 +419,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /assets:
+  /api/v1/assets:
     post:
       consumes:
       - application/json
@@ -449,8 +447,8 @@ paths:
       - ApiKeyAuth: []
       summary: List IPAssets
       tags:
-      - Assets
-  /assets/{assetId}:
+      - IPAssets
+  /api/v1/assets/{assetId}:
     get:
       consumes:
       - application/json
@@ -478,7 +476,7 @@ paths:
       summary: Get an IPAsset
       tags:
       - IPAssets
-  /disputes:
+  /api/v1/disputes:
     post:
       consumes:
       - application/json
@@ -507,7 +505,7 @@ paths:
       summary: List Disputes
       tags:
       - Disputes
-  /disputes/{disputeId}:
+  /api/v1/disputes/{disputeId}:
     get:
       consumes:
       - application/json
@@ -535,7 +533,64 @@ paths:
       summary: Get a Dispute
       tags:
       - Disputes
-  /licenseframeworks:
+  /api/v1/ipapolicies:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Policies
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.IPAPoliciesResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List IPAPolicies
+      tags:
+      - IPAPolicies
+  /api/v1/ipapolicies/{ipaPolicyId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a IPAPolicy
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: IPAPolicy ID
+        in: path
+        name: ipaPolicyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.IPAPolicyResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a IPAPolicy
+      tags:
+      - IPAPolicies
+  /api/v1/licenseframeworks:
     post:
       consumes:
       - application/json
@@ -564,7 +619,7 @@ paths:
       summary: List LicenseFrameworks
       tags:
       - LicenseFrameworks
-  /licenseframeworks/{frameworkId}:
+  /api/v1/licenseframeworks/{frameworkId}:
     get:
       consumes:
       - application/json
@@ -592,7 +647,7 @@ paths:
       summary: Get a LicenseFramework
       tags:
       - LicenseFrameworks
-  /licenses:
+  /api/v1/licenses:
     post:
       consumes:
       - application/json
@@ -621,7 +676,7 @@ paths:
       summary: List Licenses
       tags:
       - Licenses
-  /licenses/{licenseId}:
+  /api/v1/licenses/{licenseId}:
     get:
       consumes:
       - application/json
@@ -649,7 +704,7 @@ paths:
       summary: Get an License
       tags:
       - Licenses
-  /modules:
+  /api/v1/modules:
     post:
       consumes:
       - application/json
@@ -678,7 +733,7 @@ paths:
       summary: List Modules
       tags:
       - Modules
-  /modules/{moduleId}:
+  /api/v1/modules/{moduleId}:
     get:
       consumes:
       - application/json
@@ -706,7 +761,7 @@ paths:
       summary: Get a GetModule
       tags:
       - Modules
-  /permissions:
+  /api/v1/permissions:
     post:
       consumes:
       - application/json
@@ -735,7 +790,7 @@ paths:
       summary: List Permissions
       tags:
       - Permissions
-  /permissions/{permissionId}:
+  /api/v1/permissions/{permissionId}:
     get:
       consumes:
       - application/json
@@ -756,7 +811,7 @@ paths:
       summary: Get a Permission
       tags:
       - Permissions
-  /policies:
+  /api/v1/policies:
     post:
       consumes:
       - application/json
@@ -785,7 +840,7 @@ paths:
       summary: List Policies
       tags:
       - Policies
-  /policies/{policyId}:
+  /api/v1/policies/{policyId}:
     get:
       consumes:
       - application/json
@@ -813,7 +868,7 @@ paths:
       summary: Get a Policy
       tags:
       - Policies
-  /policyframeworks/{pfwmId}:
+  /api/v1/policyframeworks/{pfwmId}:
     get:
       consumes:
       - application/json
@@ -841,7 +896,7 @@ paths:
       summary: Get a PolicyFrameworkManager
       tags:
       - PolicyFrameworkManagers
-  /policymanagers:
+  /api/v1/policymanagers:
     post:
       consumes:
       - application/json
@@ -870,7 +925,7 @@ paths:
       summary: List PolicyFrameworkManagers
       tags:
       - PolicyFrameworkManagers
-  /royalties:
+  /api/v1/royalties:
     post:
       consumes:
       - application/json
@@ -899,7 +954,7 @@ paths:
       summary: List Royalties
       tags:
       - Royalties
-  /royalties/{royaltyId}:
+  /api/v1/royalties/{royaltyId}:
     get:
       consumes:
       - application/json
@@ -912,7 +967,7 @@ paths:
         type: string
       - description: Royalty ID
         in: path
-        name: policyId
+        name: royaltyId
         required: true
         type: string
       produces:
@@ -927,7 +982,7 @@ paths:
       summary: Get a Royalty
       tags:
       - Royalties
-  /royaltypays:
+  /api/v1/royaltypays:
     post:
       consumes:
       - application/json
@@ -956,7 +1011,7 @@ paths:
       summary: List RoyaltyPays
       tags:
       - RoyaltyPays
-  /royaltypays/{royaltyPayId}:
+  /api/v1/royaltypays/{royaltyPayId}:
     get:
       consumes:
       - application/json
@@ -984,7 +1039,7 @@ paths:
       summary: Get a RoyaltyPay
       tags:
       - RoyaltyPays
-  /tags:
+  /api/v1/tags:
     post:
       consumes:
       - application/json
@@ -1013,7 +1068,7 @@ paths:
       summary: List Tags
       tags:
       - Tags
-  /tags/{tagId}:
+  /api/v1/tags/{tagId}:
     get:
       consumes:
       - application/json

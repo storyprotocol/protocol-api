@@ -24,7 +24,7 @@ import (
 // @param X-API-Key header string true "API Key"
 // @Param        frameworkId   path      string  true  "Framework ID"
 // @Success 200 {object} LicenseFrameworkResponse
-// @Router /licenseframeworks/{frameworkId} [get]
+// @Router /api/v1/licenseframeworks/{frameworkId} [get]
 func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		licenseId := c.Param("frameworkId")
@@ -55,7 +55,7 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 // @param X-API-Key header string true "API Key"
 // @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Success 200 {object} LicenseFrameworksResponse
-// @Router /licenseframeworks [post]
+// @Router /api/v1/licenseframeworks [post]
 func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

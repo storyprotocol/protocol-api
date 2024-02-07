@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        ipaPolicyId   path      string  true  "IPAPolicy ID"
 // @Success 200 {object} IPAPolicyResponse
-// @Router /ipapolicies/{ipaPolicyId} [get]
+// @Router /api/v1/ipapolicies/{ipaPolicyId} [get]
 func NewGetIPAPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		ipaPolicyId := c.Param("ipaPolicyId")
@@ -55,7 +55,7 @@ func NewGetIPAPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 // @Accept json
 // @Produce json
 // @Success 200 {object} IPAPoliciesResponse
-// @Router /ipapolicies [post]
+// @Router /api/v1/ipapolicies [post]
 func NewListIPAPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

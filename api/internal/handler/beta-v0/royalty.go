@@ -22,9 +22,9 @@ import (
 // @Tags Royalties
 // @Accept json
 // @Produce json
-// @Param        policyId   path      string  true  "Royalty ID"
+// @Param        royaltyId   path      string  true  "Royalty ID"
 // @Success 200 {object} RoyaltyResponse
-// @Router /royalties/{royaltyId} [get]
+// @Router /api/v1/royalties/{royaltyId} [get]
 func NewGetRoyalty(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		royaltyId := c.Param("royaltyId")
@@ -55,7 +55,7 @@ func NewGetRoyalty(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Accept json
 // @Produce json
 // @Success 200 {object} RoyaltiesResponse
-// @Router /royalties [post]
+// @Router /api/v1/royalties [post]
 func NewListRoyalties(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

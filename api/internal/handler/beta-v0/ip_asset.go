@@ -24,7 +24,7 @@ import (
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Success 200 {object} IPAssetResponse
-// @Router /assets/{assetId} [get]
+// @Router /api/v1/assets/{assetId} [get]
 func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		assetId := c.Param("assetId")
@@ -47,14 +47,14 @@ func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Summary List IPAssets
 // @Schemes
 // @Description Retrieve a paginated, filtered list of IPAssets
-// @Tags Assets
+// @Tags IPAssets
 // @Accept json
 // @Produce json
 // @Success 200 {object} IPAssetsResponse
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
-// @Router /assets [post]
+// @Router /api/v1/assets [post]
 func NewListIPAssets(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

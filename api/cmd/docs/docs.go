@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/assets": {
+        "/api/v1/assets": {
             "post": {
                 "security": [
                     {
@@ -30,7 +30,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Assets"
+                    "IPAssets"
                 ],
                 "summary": "List IPAssets",
                 "parameters": [
@@ -61,7 +61,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/assets/{assetId}": {
+        "/api/v1/assets/{assetId}": {
             "get": {
                 "security": [
                     {
@@ -105,7 +105,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/disputes": {
+        "/api/v1/disputes": {
             "post": {
                 "security": [
                     {
@@ -151,7 +151,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/disputes/{disputeId}": {
+        "/api/v1/disputes/{disputeId}": {
             "get": {
                 "security": [
                     {
@@ -195,7 +195,97 @@ const docTemplate = `{
                 }
             }
         },
-        "/licenseframeworks": {
+        "/api/v1/ipapolicies": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of Policies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IPAPolicies"
+                ],
+                "summary": "List IPAPolicies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.IPAPoliciesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ipapolicies/{ipaPolicyId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a IPAPolicy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IPAPolicies"
+                ],
+                "summary": "Get a IPAPolicy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "IPAPolicy ID",
+                        "name": "ipaPolicyId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.IPAPolicyResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/licenseframeworks": {
             "post": {
                 "security": [
                     {
@@ -241,7 +331,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/licenseframeworks/{frameworkId}": {
+        "/api/v1/licenseframeworks/{frameworkId}": {
             "get": {
                 "security": [
                     {
@@ -285,7 +375,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/licenses": {
+        "/api/v1/licenses": {
             "post": {
                 "security": [
                     {
@@ -331,7 +421,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/licenses/{licenseId}": {
+        "/api/v1/licenses/{licenseId}": {
             "get": {
                 "security": [
                     {
@@ -375,7 +465,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/modules": {
+        "/api/v1/modules": {
             "post": {
                 "security": [
                     {
@@ -421,7 +511,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/modules/{moduleId}": {
+        "/api/v1/modules/{moduleId}": {
             "get": {
                 "security": [
                     {
@@ -465,7 +555,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/permissions": {
+        "/api/v1/permissions": {
             "post": {
                 "security": [
                     {
@@ -511,7 +601,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/permissions/{permissionId}": {
+        "/api/v1/permissions/{permissionId}": {
             "get": {
                 "description": "Retrieve a Permission",
                 "consumes": [
@@ -543,7 +633,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/policies": {
+        "/api/v1/policies": {
             "post": {
                 "security": [
                     {
@@ -589,7 +679,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/policies/{policyId}": {
+        "/api/v1/policies/{policyId}": {
             "get": {
                 "security": [
                     {
@@ -633,7 +723,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/policyframeworks/{pfwmId}": {
+        "/api/v1/policyframeworks/{pfwmId}": {
             "get": {
                 "security": [
                     {
@@ -677,7 +767,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/policymanagers": {
+        "/api/v1/policymanagers": {
             "post": {
                 "security": [
                     {
@@ -723,7 +813,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/royalties": {
+        "/api/v1/royalties": {
             "post": {
                 "security": [
                     {
@@ -769,7 +859,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/royalties/{royaltyId}": {
+        "/api/v1/royalties/{royaltyId}": {
             "get": {
                 "security": [
                     {
@@ -798,7 +888,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Royalty ID",
-                        "name": "policyId",
+                        "name": "royaltyId",
                         "in": "path",
                         "required": true
                     }
@@ -813,7 +903,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/royaltypays": {
+        "/api/v1/royaltypays": {
             "post": {
                 "security": [
                     {
@@ -859,7 +949,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/royaltypays/{royaltyPayId}": {
+        "/api/v1/royaltypays/{royaltyPayId}": {
             "get": {
                 "security": [
                     {
@@ -903,7 +993,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/tags": {
+        "/api/v1/tags": {
             "post": {
                 "security": [
                     {
@@ -949,7 +1039,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/tags/{tagId}": {
+        "/api/v1/tags/{tagId}": {
             "get": {
                 "security": [
                     {
@@ -1096,6 +1186,54 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "beta_v0.IPAPoliciesResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/beta_v0.IPAPolicy"
+                    }
+                }
+            }
+        },
+        "beta_v0.IPAPolicy": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "blockNumber": {
+                    "type": "string"
+                },
+                "blockTimestamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "string"
+                },
+                "inherited": {
+                    "type": "boolean"
+                },
+                "ipId": {
+                    "type": "string"
+                },
+                "policyId": {
+                    "type": "string"
+                }
+            }
+        },
+        "beta_v0.IPAPolicyResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/beta_v0.IPAPolicy"
                 }
             }
         },
@@ -1341,17 +1479,17 @@ const docTemplate = `{
                 "blockTimestamp": {
                     "type": "string"
                 },
-                "data": {
+                "id": {
                     "type": "string"
                 },
-                "frameworkManagerAddress": {
+                "policy": {
+                    "type": "string"
+                },
+                "policyFrameworkManager": {
                     "type": "string"
                 },
                 "policyId": {
                     "type": "string"
-                },
-                "umlPolicy": {
-                    "$ref": "#/definitions/beta_v0.UMLPolicy"
                 }
             }
         },
@@ -1537,56 +1675,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/beta_v0.Tag"
                     }
-                }
-            }
-        },
-        "beta_v0.UMLPolicy": {
-            "type": "object",
-            "properties": {
-                "attribution": {
-                    "type": "string"
-                },
-                "commercialAttribution": {
-                    "type": "string"
-                },
-                "commercialUse": {
-                    "type": "string"
-                },
-                "commercializers": {
-                    "type": "string"
-                },
-                "derivativesAllowed": {
-                    "type": "string"
-                },
-                "derivativesApproval": {
-                    "type": "string"
-                },
-                "derivativesAttribution": {
-                    "type": "string"
-                },
-                "derivativesReciprocal": {
-                    "type": "string"
-                },
-                "derivativesRevShare": {
-                    "type": "string"
-                },
-                "distributionChannels": {
-                    "type": "string"
-                },
-                "frameworkManagerAddress": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "royaltyPolicy": {
-                    "type": "string"
-                },
-                "territories": {
-                    "type": "string"
-                },
-                "transferable": {
-                    "type": "string"
                 }
             }
         },
