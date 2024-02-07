@@ -19,7 +19,7 @@ compileswag:
 
 updatereadme:
 	rdme openapi --version=v0.1-beta \
-      --key=rdme_xn8s9h4f2fb37d2b8939711a4231fb837cd3f763c26c1475c08afcef03bfee675a2dc3
+      --key=rdme_xn8s9h3e5cb26106448296f9d6b812c0bf6347db950d48fde9554d4819f7a25b0899d6
 
 buildserver:
 	cd api && CGO_ENABLED=0 go build --ldflags "-extldflags '-static -s'" -o build/server cmd/api/main.go

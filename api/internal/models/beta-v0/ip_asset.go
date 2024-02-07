@@ -2,23 +2,23 @@ package beta_v0
 
 // Get IP ACCOUNT
 type IPAsset struct {
-	ID             string `json:"id,omitempty"`
-	IPID           string `json:"ipId,omitempty"`
-	ChainId        string `json:"chainId,omitempty"`
-	TokenContract  string `json:"tokenContract,omitempty"`
-	TokenId        string `json:"tokenId,omitempty"`
-	Resolver       string `json:"metadataResolverAddress,omitempty"`
-	Metadata       string `json:"metadata,omitempty"`
-	BlockNumber    string `json:"blockNumber,omitempty"`
-	BlockTimestamp string `json:"blockTimestamp,omitempty"`
+	ID             string   `json:"id,omitempty"`
+	ChainId        string   `json:"chainId,omitempty"`
+	ParentIpIds    []string `json:"parentIpIds,omitempty"`
+	TokenContract  string   `json:"tokenContract,omitempty"`
+	TokenId        string   `json:"tokenId,omitempty"`
+	Resolver       string   `json:"metadataResolverAddress,omitempty"`
+	Metadata       Metadata `json:"metadata,omitempty"`
+	BlockNumber    string   `json:"blockNumber,omitempty"`
+	BlockTimestamp string   `json:"blockTimestamp,omitempty"`
 }
 
 type Metadata struct {
-	Name             string `json:"name,omitempty"`
-	Hash             string `json:"hash,omitempty"`
-	RegistrationDate string `json:"registrationDate,omitempty"`
-	Registrant       string `json:"registrant,omitempty"`
-	URI              string `json:"uri,omitempty"`
+	Name             string `json:"name"`
+	Hash             string `json:"hash"`
+	RegistrationDate string `json:"registrationDate"`
+	Registrant       string `json:"registrant"`
+	URI              string `json:"uri"`
 }
 
 type IPAssetsTheGraphResponse struct {

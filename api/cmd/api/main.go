@@ -53,7 +53,7 @@ func main() {
 		c.JSON(http.StatusOK, "OK")
 	})
 
-	docs.SwaggerInfo.BasePath = "/api/v1"
+	docs.SwaggerInfo.BasePath = "/"
 	v1 := r.Group("/api/v1")
 
 	{

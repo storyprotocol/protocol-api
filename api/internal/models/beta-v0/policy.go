@@ -1,30 +1,31 @@
 package beta_v0
 
 type Policy struct {
-	ID                     string `json:"id,omitempty"`
-	PolicyID               string `json:"policyId,omitempty"`
-	PolicyFrameworkManager string `json:"policyFrameworkManager,omitempty"`
-	Policy                 string `json:"policy,omitempty"`
-	BlockNumber            string `json:"blockNumber,omitempty"`
-	BlockTimestamp         string `json:"blockTimestamp,omitempty"`
+	ID                     string    `json:"id,omitempty"`
+	PolicyID               string    `json:"policyId,omitempty"`
+	PolicyFrameworkManager string    `json:"policyFrameworkManager,omitempty"`
+	Policy                 string    `json:"policy,omitempty"`
+	BlockNumber            string    `json:"blockNumber,omitempty"`
+	BlockTimestamp         string    `json:"blockTimestamp,omitempty"`
+	UML                    UMLPolicy `json:"uml,omitempty"`
 }
 
 type UMLPolicy struct {
-	ID                      string `json:"id,omitempty"`
-	FrameworkManagerAddress string `json:"frameworkManagerAddress,omitempty"`
-	Attribution             string `json:"attribution,omitempty"`
-	Transferable            string `json:"transferable,omitempty"`
-	CommercialUse           string `json:"commercialUse,omitempty"`
-	CommercialAttribution   string `json:"commercialAttribution,omitempty"`
-	Commercializers         string `json:"commercializers,omitempty"`
-	DerivativesAllowed      string `json:"derivativesAllowed,omitempty"`
-	DerivativesAttribution  string `json:"derivativesAttribution,omitempty"`
-	DerivativesApproval     string `json:"derivativesApproval,omitempty"`
-	DerivativesReciprocal   string `json:"derivativesReciprocal,omitempty"`
-	DerivativesRevShare     string `json:"derivativesRevShare,omitempty"`
-	Territories             string `json:"territories,omitempty"`
-	DistributionChannels    string `json:"distributionChannels,omitempty"`
-	RoyaltyPolicy           string `json:"royaltyPolicy,omitempty"`
+	ID                      string   `json:"id"`
+	FrameworkManagerAddress string   `json:"frameworkManagerAddress"`
+	Attribution             bool     `json:"attribution"`
+	Transferable            bool     `json:"transferable"`
+	CommercialUse           bool     `json:"commercialUse"`
+	CommercialAttribution   bool     `json:"commercialAttribution"`
+	Commercializers         []string `json:"commercializers"`
+	DerivativesAllowed      bool     `json:"derivativesAllowed"`
+	DerivativesAttribution  bool     `json:"derivativesAttribution"`
+	DerivativesApproval     bool     `json:"derivativesApproval"`
+	DerivativesReciprocal   bool     `json:"derivativesReciprocal"`
+	DerivativesRevShare     string   `json:"derivativesRevShare"`
+	Territories             []string `json:"territories"`
+	DistributionChannels    []string `json:"distributionChannels"`
+	RoyaltyPolicy           string   `json:"royaltyPolicy"`
 }
 
 type PoliciesTheGraphResponse struct {

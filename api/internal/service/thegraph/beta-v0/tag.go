@@ -33,6 +33,7 @@ func (c *ServiceBetaImpl) GetTag(tagId string) (*beta_v0.Tag, error) {
 	for _, tag := range tagRes.Tags {
 		tag.ID = tag.UUID
 		tags = append(tags, tag)
+		tag.UUID = ""
 	}
 
 	return tags[0], nil
@@ -64,6 +65,8 @@ func (c *ServiceBetaImpl) ListTag(options *thegraph.TheGraphQueryOptions) ([]*be
 	for _, tag := range tagRes.Tags {
 		tag.ID = tag.UUID
 		tags = append(tags, tag)
+		tag.UUID = ""
+
 	}
 
 	return tags, nil

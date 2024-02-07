@@ -13,28 +13,23 @@ func (c *ServiceBetaImpl) GetIPAsset(assetId string) (*beta_v0.IPAsset, error) {
 	query {
 		ipasset(id: "%s") {
 			id
-			ipId
 			chainId
 			tokenContract
 			tokenId
+			parentIpIds
 			metadataResolverAddress
-			metadata
 			blockNumber
 			blockTimestamp
+			metadata {
+				name
+				hash
+				registrationDate
+				registrant
+				uri
+			}
 	  	}	
 	}
     `, assetId)
-	//query := fmt.Sprintf(`
-	//query {
-	//	ipassetRegistered(id: "%s") {
-	//		asset
-	//		implementation
-	//		chainId
-	//		tokenContract
-	//		tokenId
-	//  	}
-	//}
-	//`, assetId)
 
 	req := graphql.NewRequest(query)
 
@@ -53,13 +48,20 @@ func (c *ServiceBetaImpl) ListIPAssets(options *beta_graph.TheGraphQueryOptions)
 	query(%s) {
 		ipassets (%s, where:{%s}) {
 			id
-			ipId
 			chainId
+			parentIpIds	
 			tokenContract
 			tokenId
 			metadataResolverAddress
 			blockNumber
 			blockTimestamp
+			metadata {
+				name
+				hash
+				registrationDate
+				registrant
+				uri
+			}
 		}
     }
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

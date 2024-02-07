@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        royaltyPayId   path      string  true  "RoyaltyPay ID"
 // @Success 200 {object} RoyaltyPayResponse
-// @Router /api/v1/royaltypays/{royaltyPayId} [get]
+// @Router /royaltypays/{royaltyPayId} [get]
 func NewGetRoyaltyPay(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		royaltyPayId := c.Param("royaltyPayId")
@@ -55,7 +55,7 @@ func NewGetRoyaltyPay(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Accept json
 // @Produce json
 // @Success 200 {object} RoyaltyPaysResponse
-// @Router /api/v1/royaltypays [post]
+// @Router /royaltypays [post]
 func NewListRoyaltyPays(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

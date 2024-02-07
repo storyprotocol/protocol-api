@@ -13,11 +13,28 @@ func (c *ServiceBetaImpl) GetPolicy(policyId string) (*beta_v0.Policy, error) {
 		query {
 		  policy(id: "%s") {
 			id
-			policyId
 			policyFrameworkManager
-			policy
+			uml
 			blockTimestamp
 			blockNumber
+			uml {
+			  attribution
+			  commercialAttribution
+			  commercialRevShare
+			  commercialUse
+			  commercializers
+			  transferable
+			  territories
+			  id
+			  distributionChannels
+			  derivativesRevShare
+			  derivativesReciprocal
+			  royaltyPolicy
+			  derivativesAttribution
+			  derivativesApproval
+			  derivativesAllowed
+			  contentRestrictions
+			}
 		  }
 		}
     `, policyId)
@@ -46,13 +63,29 @@ func (c *ServiceBetaImpl) ListPolicies(options *thegraph.TheGraphQueryOptions) (
 	query(%s){
 	  policies(%s, where:{%s}) {
 			id
-			policyId
 			policyFrameworkManager
-			policy
 			blockTimestamp
 			blockNumber
-	  }
-		
+			
+			uml {
+			  attribution
+			  commercialAttribution
+			  commercialRevShare
+			  commercialUse
+			  commercializers
+			  transferable
+			  territories
+			  id
+			  distributionChannels
+			  derivativesRevShare
+			  derivativesReciprocal
+			  royaltyPolicy
+			  derivativesAttribution
+			  derivativesApproval
+			  derivativesAllowed
+			  contentRestrictions
+			}
+		  }
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 	//policyData {

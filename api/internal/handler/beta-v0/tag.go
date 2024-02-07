@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        tagId   path      string  true  "Tag ID"
 // @Success 200 {object} TagResponse
-// @Router /api/v1/tags/{tagId} [get]
+// @Router /tags/{tagId} [get]
 func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		ipId := c.Param("tagId")
@@ -55,7 +55,7 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 // @Accept json
 // @Produce json
 // @Success 200 {object} TagsResponse
-// @Router /api/v1/tags [post]
+// @Router /tags [post]
 func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

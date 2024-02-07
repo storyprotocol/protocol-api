@@ -15,546 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/assets": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of IPAssets",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "IPAssets"
-                ],
-                "summary": "List IPAssets",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.IPAssetsResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/assets/{assetId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve an IPAsset",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "IPAssets"
-                ],
-                "summary": "Get an IPAsset",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Asset ID",
-                        "name": "assetId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.IPAssetResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/disputes": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of Disputes",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Disputes"
-                ],
-                "summary": "List Disputes",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.DisputesResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/disputes/{disputeId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a Dispute",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Disputes"
-                ],
-                "summary": "Get a Dispute",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Dispute ID",
-                        "name": "disputeId",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.DisputeResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/ipapolicies": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of Policies",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "IPAPolicies"
-                ],
-                "summary": "List IPAPolicies",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.IPAPoliciesResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/ipapolicies/{ipaPolicyId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a IPAPolicy",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "IPAPolicies"
-                ],
-                "summary": "Get a IPAPolicy",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "IPAPolicy ID",
-                        "name": "ipaPolicyId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.IPAPolicyResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/licenseframeworks": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of LicenseFrameworks",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "LicenseFrameworks"
-                ],
-                "summary": "List LicenseFrameworks",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.LicenseFrameworksResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/licenseframeworks/{frameworkId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a LicenseFramework",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "LicenseFrameworks"
-                ],
-                "summary": "Get a LicenseFramework",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Framework ID",
-                        "name": "frameworkId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.LicenseFrameworkResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/licenses": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of Licenses",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Licenses"
-                ],
-                "summary": "List Licenses",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.LicensesResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/licenses/{licenseId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a License",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Licenses"
-                ],
-                "summary": "Get an License",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "License ID",
-                        "name": "licenseId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.LicenseResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/modules": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of Modules",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Modules"
-                ],
-                "summary": "List Modules",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.ModulesResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/modules/{moduleId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a Module",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Modules"
-                ],
-                "summary": "Get a GetModule",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Module ID",
-                        "name": "moduleId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/beta_v0.ModuleResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/permissions": {
             "post": {
                 "security": [
@@ -633,7 +93,547 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/policies": {
+        "/assets": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of IPAssets",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IPAssets"
+                ],
+                "summary": "List IPAssets",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.IPAssetsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/assets/{assetId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve an IPAsset",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IPAssets"
+                ],
+                "summary": "Get an IPAsset",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Asset ID",
+                        "name": "assetId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.IPAssetResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/disputes": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of Disputes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Disputes"
+                ],
+                "summary": "List Disputes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.DisputesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/disputes/{disputeId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a Dispute",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Disputes"
+                ],
+                "summary": "Get a Dispute",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Dispute ID",
+                        "name": "disputeId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.DisputeResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipapolicies": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of Policies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IPAPolicies"
+                ],
+                "summary": "List IPAPolicies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.IPAPoliciesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ipapolicies/{ipaPolicyId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a IPAPolicy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IPAPolicies"
+                ],
+                "summary": "Get a IPAPolicy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "IPAPolicy ID",
+                        "name": "ipaPolicyId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.IPAPolicyResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/licenseframeworks": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of LicenseFrameworks",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LicenseFrameworks"
+                ],
+                "summary": "List LicenseFrameworks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.LicenseFrameworksResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/licenseframeworks/{frameworkId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a LicenseFramework",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LicenseFrameworks"
+                ],
+                "summary": "Get a LicenseFramework",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Framework ID",
+                        "name": "frameworkId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.LicenseFrameworkResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/licenses": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of Licenses",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Licenses"
+                ],
+                "summary": "List Licenses",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.LicensesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/licenses/{licenseId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a License",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Licenses"
+                ],
+                "summary": "Get an License",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "License ID",
+                        "name": "licenseId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.LicenseResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/modules": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of Modules",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Modules"
+                ],
+                "summary": "List Modules",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/options.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.ModulesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/modules/{moduleId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a Module",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Modules"
+                ],
+                "summary": "Get a GetModule",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Module ID",
+                        "name": "moduleId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/beta_v0.ModuleResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/policies": {
             "post": {
                 "security": [
                     {
@@ -679,7 +679,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/policies/{policyId}": {
+        "/policies/{policyId}": {
             "get": {
                 "security": [
                     {
@@ -723,7 +723,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/policyframeworks/{pfwmId}": {
+        "/policyframeworks/{pfwmId}": {
             "get": {
                 "security": [
                     {
@@ -767,7 +767,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/policymanagers": {
+        "/policymanagers": {
             "post": {
                 "security": [
                     {
@@ -813,7 +813,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/royalties": {
+        "/royalties": {
             "post": {
                 "security": [
                     {
@@ -859,7 +859,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/royalties/{royaltyId}": {
+        "/royalties/{royaltyId}": {
             "get": {
                 "security": [
                     {
@@ -903,7 +903,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/royaltypays": {
+        "/royaltypays": {
             "post": {
                 "security": [
                     {
@@ -949,7 +949,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/royaltypays/{royaltyPayId}": {
+        "/royaltypays/{royaltyPayId}": {
             "get": {
                 "security": [
                     {
@@ -993,7 +993,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/tags": {
+        "/tags": {
             "post": {
                 "security": [
                     {
@@ -1039,7 +1039,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/tags/{tagId}": {
+        "/tags/{tagId}": {
             "get": {
                 "security": [
                     {
@@ -1252,14 +1252,17 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "ipId": {
-                    "type": "string"
-                },
                 "metadata": {
-                    "type": "string"
+                    "$ref": "#/definitions/beta_v0.Metadata"
                 },
                 "metadataResolverAddress": {
                     "type": "string"
+                },
+                "parentIpIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "tokenContract": {
                     "type": "string"
@@ -1366,6 +1369,26 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/beta_v0.License"
                     }
+                }
+            }
+        },
+        "beta_v0.Metadata": {
+            "type": "object",
+            "properties": {
+                "hash": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "registrant": {
+                    "type": "string"
+                },
+                "registrationDate": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
                 }
             }
         },
@@ -1490,6 +1513,9 @@ const docTemplate = `{
                 },
                 "policyId": {
                     "type": "string"
+                },
+                "uml": {
+                    "$ref": "#/definitions/beta_v0.UMLPolicy"
                 }
             }
         },
@@ -1675,6 +1701,65 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/beta_v0.Tag"
                     }
+                }
+            }
+        },
+        "beta_v0.UMLPolicy": {
+            "type": "object",
+            "properties": {
+                "attribution": {
+                    "type": "boolean"
+                },
+                "commercialAttribution": {
+                    "type": "boolean"
+                },
+                "commercialUse": {
+                    "type": "boolean"
+                },
+                "commercializers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "derivativesAllowed": {
+                    "type": "boolean"
+                },
+                "derivativesApproval": {
+                    "type": "boolean"
+                },
+                "derivativesAttribution": {
+                    "type": "boolean"
+                },
+                "derivativesReciprocal": {
+                    "type": "boolean"
+                },
+                "derivativesRevShare": {
+                    "type": "string"
+                },
+                "distributionChannels": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "frameworkManagerAddress": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "royaltyPolicy": {
+                    "type": "string"
+                },
+                "territories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "transferable": {
+                    "type": "boolean"
                 }
             }
         },

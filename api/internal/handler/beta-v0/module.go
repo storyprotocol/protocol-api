@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        moduleId   path      string  true  "Module ID"
 // @Success 200 {object} ModuleResponse
-// @Router /api/v1/modules/{moduleId} [get]
+// @Router /modules/{moduleId} [get]
 func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		moduleId := c.Param("moduleId")
@@ -55,7 +55,7 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 // @Accept json
 // @Produce json
 // @Success 200 {object} ModulesResponse
-// @Router /api/v1/modules [post]
+// @Router /modules [post]
 func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

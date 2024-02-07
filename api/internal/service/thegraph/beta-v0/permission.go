@@ -35,6 +35,7 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 	for _, perm := range permsRes.Permissions {
 		perm.ID = perm.UUID
 		perms = append(perms, perm)
+		perm.UUID = ""
 	}
 	return perms[0], nil
 }
@@ -67,6 +68,7 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 	for _, perm := range permsRes.Permissions {
 		perm.ID = perm.UUID
 		perms = append(perms, perm)
+		perm.UUID = ""
 	}
 
 	return perms, nil

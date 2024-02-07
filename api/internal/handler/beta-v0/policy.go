@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        policyId   path      string  true  "Policy ID"
 // @Success 200 {object} PolicyResponse
-// @Router /api/v1/policies/{policyId} [get]
+// @Router /policies/{policyId} [get]
 func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		policyId := c.Param("policyId")
@@ -55,7 +55,7 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 // @Accept json
 // @Produce json
 // @Success 200 {object} PoliciesResponse
-// @Router /api/v1/policies [post]
+// @Router /policies [post]
 func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody
