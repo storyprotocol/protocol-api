@@ -19,6 +19,7 @@ type TheGraphServiceBeta interface {
 	GetRoyalty(royaltyId string) (*beta_v0.Royalty, error)
 	GetRoyaltyPay(royaltyPayId string) (*beta_v0.RoyaltyPay, error)
 	GetPolicyFrameworkManager(pfwmId string) (*beta_v0.PolicyFrameworkManager, error)
+	GetCollection(colId string) (*beta_v0.Collection, error)
 
 	// LISTS
 	ListIPAssets(options *TheGraphQueryOptions) ([]*beta_v0.IPAsset, error)
@@ -34,6 +35,7 @@ type TheGraphServiceBeta interface {
 	ListRoyalties(options *TheGraphQueryOptions) ([]*beta_v0.Royalty, error)
 	ListRoyaltyPays(options *TheGraphQueryOptions) ([]*beta_v0.RoyaltyPay, error)
 	ListPolicyFrameworkManagers(options *TheGraphQueryOptions) ([]*beta_v0.PolicyFrameworkManager, error)
+	ListCollections(options *TheGraphQueryOptions) ([]*beta_v0.Collection, error)
 }
 
 type TheGraphQueryOptions struct {

@@ -1,4 +1,27 @@
 definitions:
+  beta_v0.Collection:
+    properties:
+      assetCount:
+        type: string
+      blockNumber:
+        type: string
+      blockTimestamp:
+        type: string
+      id:
+        type: string
+    type: object
+  beta_v0.CollectionResponse:
+    properties:
+      data:
+        $ref: '#/definitions/beta_v0.Collection'
+    type: object
+  beta_v0.CollectionsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/beta_v0.Collection'
+        type: array
+    type: object
   beta_v0.Dispute:
     properties:
       arbitrationPolicy:
@@ -582,6 +605,63 @@ paths:
       summary: Get an IPAsset
       tags:
       - IPAssets
+  /collections:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Collections
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/options.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.CollectionsResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List Collections
+      tags:
+      - Collections
+  /collections/{collectionId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Collection
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Collection ID
+        in: path
+        name: collectionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/beta_v0.CollectionResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get an Collection
+      tags:
+      - Collections
   /disputes:
     post:
       consumes:

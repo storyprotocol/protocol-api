@@ -74,6 +74,7 @@ func main() {
 			protocol.GET("/royalties/:royaltyId", betaHandlers.NewGetRoyalty(theGraphBetaService, httpClient))
 			protocol.GET("/royaltypays/:royaltyPayId", betaHandlers.NewGetRoyaltyPay(theGraphBetaService, httpClient))
 			protocol.GET("/policyframeworks/:pfwmId", betaHandlers.NewGetPolicyFrameworkManager(theGraphBetaService, httpClient))
+			protocol.GET("/collections/:collectionId", betaHandlers.NewGetCollection(theGraphBetaService, httpClient))
 
 			protocol.POST("/assets", betaHandlers.NewListIPAssets(theGraphBetaService, httpClient))
 			protocol.POST("/modules", betaHandlers.NewListModules(theGraphBetaService, httpClient))
@@ -87,6 +88,7 @@ func main() {
 			protocol.POST("/royalties", betaHandlers.NewListRoyalties(theGraphBetaService, httpClient))
 			protocol.POST("/royaltypays", betaHandlers.NewListRoyaltyPays(theGraphBetaService, httpClient))
 			protocol.POST("/policyframeworks", betaHandlers.NewListPolicyFrameworkManagers(theGraphBetaService, httpClient))
+			protocol.POST("/collections", betaHandlers.NewListCollections(theGraphBetaService, httpClient))
 		}
 
 	}
