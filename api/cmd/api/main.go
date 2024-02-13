@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/machinebox/graphql"
 	"github.com/storyprotocol/protocol-api/api/cmd/docs"
@@ -53,12 +52,13 @@ func main() {
 		c.JSON(http.StatusOK, "OK")
 	})
 
+	r.Use(CORSMiddleware())
+
 	docs.SwaggerInfo.BasePath = "/"
 	v1 := r.Group("/api/v1")
 
 	{
 		protocol := v1.Group("/")
-		protocol.Use(cors.Default())
 		protocol.Use(AuthMiddleware())
 		// BETA
 		{
@@ -105,6 +105,22 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		if !slices.Contains(ApiKeys, apiKey) {
 			c.AbortWithStatusJSON(401, gin.H{"error": "Unauthorized"})
+			return
+		}
+
+		c.Next()
+	}
+}
+
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, X-API-Key, x-api-key, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
 			return
 		}
 
