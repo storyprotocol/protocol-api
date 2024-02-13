@@ -8,8 +8,8 @@ import (
 	"github.com/machinebox/graphql"
 	"github.com/storyprotocol/protocol-api/api/cmd/docs"
 	"github.com/storyprotocol/protocol-api/api/internal/config"
-	betaHandlers "github.com/storyprotocol/protocol-api/api/internal/handler/beta-v0"
-	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph/beta-v0"
+	betaHandlers "github.com/storyprotocol/protocol-api/api/internal/handler/betav0"
+	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph/betav0"
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	swaggerFiles "github.com/swaggo/files"
@@ -43,7 +43,7 @@ func main() {
 
 	// theGraphBeta
 	theGraphBetaClient := graphql.NewClient(cfg.TheGraphBetaEndpoint)
-	theGraphBetaService := beta_v0.NewTheGraphServiceBetaImpl(theGraphBetaClient)
+	theGraphBetaService := betav0.NewTheGraphServiceBetaImpl(theGraphBetaClient)
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Hello")
