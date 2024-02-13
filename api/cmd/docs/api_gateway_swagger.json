@@ -1074,7 +1074,7 @@
         }
       }
     },
-    "/tags": {
+    "/api/v1/tags": {
       "post": {
         "security": [
           {
@@ -1120,7 +1120,7 @@
         }
       }
     },
-    "/tags/{tagId}": {
+    "/api/v1/tags/{tagId}": {
       "get": {
         "security": [
           {

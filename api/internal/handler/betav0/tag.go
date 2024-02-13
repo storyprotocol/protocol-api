@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-// @BasePath /api/v1
+// @BasePath /
 
 // GetTag Example godoc
 // @Summary Get a Tag
@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        tagId   path      string  true  "Tag ID"
 // @Success 200 {object} TagResponse
-// @Router /tags/{tagId} [get]
+// @Router /api/v1/tags/{tagId} [get]
 func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		ipId := c.Param("tagId")
@@ -42,7 +42,7 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 	}
 }
 
-// @BasePath /api/v1
+// @BasePath /
 
 // ListTags Example godoc
 // @Summary List Tags
@@ -55,7 +55,7 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 // @Accept json
 // @Produce json
 // @Success 200 {object} TagsResponse
-// @Router /tags [post]
+// @Router /api/v1/tags [post]
 func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody options2.RequestBody

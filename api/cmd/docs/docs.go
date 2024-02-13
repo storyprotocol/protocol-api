@@ -1083,7 +1083,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/tags": {
+        "/api/v1/tags": {
             "post": {
                 "security": [
                     {
@@ -1129,7 +1129,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/tags/{tagId}": {
+        "/api/v1/tags/{tagId}": {
             "get": {
                 "security": [
                     {

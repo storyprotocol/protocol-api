@@ -1183,7 +1183,7 @@ paths:
       summary: Get a RoyaltyPay
       tags:
       - RoyaltyPays
-  /tags:
+  /api/v1/tags:
     post:
       consumes:
       - application/json
@@ -1212,7 +1212,7 @@ paths:
       summary: List Tags
       tags:
       - Tags
-  /tags/{tagId}:
+  /api/v1/tags/{tagId}:
     get:
       consumes:
       - application/json
