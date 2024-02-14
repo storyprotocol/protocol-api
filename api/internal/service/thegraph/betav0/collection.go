@@ -18,7 +18,7 @@ func (c *ServiceBetaImpl) GetCollection(collectionId string) (*beta_v0.Collectio
 			resolvedDisputeCount
 			cancelledDisputeCount
 			raisedDisputeCount
-			judgedDisputesCount
+			judgedDisputeCount
 			assetCount
 			blockNumber
 			blockTimestamp
