@@ -38,3 +38,9 @@ push-%: ecr-auth
 
 lint:
 	golangci-lint run
+
+push-stg:
+	PROFILE=staging REPO=story-stg-example REGION=us-west-2 ECR=478656756051.dkr.ecr.us-west-2.amazonaws.com make push-api
+
+push-prod:
+	PROFILE=prod REPO=story-prd-edge REGION=us-west-2 ECR=243963068353.dkr.ecr.us-west-2.amazonaws.com make push-api

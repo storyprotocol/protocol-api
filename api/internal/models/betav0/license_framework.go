@@ -1,23 +1,23 @@
 package betav0
 
 type LicenseFramework struct {
-	Creator                 string                  `json:"creator,omitempty"`
-	ID                      string                  `json:"id,omitempty"`
-	FrameworkCreationParams FrameworkCreationParams `json:"frameworkCreationParams,omitempty"`
-	BlockNumber             string                  `json:"blockNumber,omitempty"`
-	BlockTimestamp          string                  `json:"blockTimestamp,omitempty"`
+	Creator                 string                  `json:"creator"`
+	ID                      string                  `json:"id"`
+	FrameworkCreationParams FrameworkCreationParams `json:"frameworkCreationParams"`
+	BlockNumber             string                  `json:"blockNumber"`
+	BlockTimestamp          string                  `json:"blockTimestamp"`
 }
 
 type FrameworkCreationParams struct {
-	ID                           string   `json:"id,omitempty"`
-	ActivationParamDefaultValues []string `json:"activationParamDefaultValues,omitempty"`
-	ActivationParamVerifiers     []string `json:"activationParamVerifiers,omitempty"`
-	DefaultNeedsActivation       bool     `json:"defaultNeedsActivation,omitempty"`
-	LinkParentParamDefaultValues []string `json:"linkParentParamDefaultValues,omitempty"`
-	LinkParentParamVerifiers     []string `json:"linkParentParamVerifiers,omitempty"`
-	MintingParamDefaultValues    []string `json:"mintingParamDefaultValues,omitempty"`
-	MintingParamVerifiers        []string `json:"mintingParamVerifiers,omitempty"`
-	LicenseUrl                   string   `json:"licenseUrl,omitempty"`
+	ID                           string   `json:"id"`
+	ActivationParamDefaultValues []string `json:"activationParamDefaultValues"`
+	ActivationParamVerifiers     []string `json:"activationParamVerifiers"`
+	DefaultNeedsActivation       bool     `json:"defaultNeedsActivation"`
+	LinkParentParamDefaultValues []string `json:"linkParentParamDefaultValues"`
+	LinkParentParamVerifiers     []string `json:"linkParentParamVerifiers"`
+	MintingParamDefaultValues    []string `json:"mintingParamDefaultValues"`
+	MintingParamVerifiers        []string `json:"mintingParamVerifiers"`
+	LicenseUrl                   string   `json:"licenseUrl"`
 }
 
 type LicenseFrameworkTheGraphResponse struct {
@@ -34,4 +34,20 @@ type LicenseFrameworkResponse struct {
 
 type LicenseFrameworksResponse struct {
 	Data []*LicenseFramework `json:"data"`
+}
+
+type LicenseFrameworkRequestBody struct {
+	Options *LFWQueryOptions `json:"options"`
+}
+
+type LFWQueryOptions struct {
+	Pagination struct {
+		Offset int `json:"offset"`
+		Limit  int `json:"limit"`
+	} `json:"pagination"`
+	Where struct {
+		Creator string `json:"creator"`
+	} `json:"where"`
+	OrderBy        string `json:"orderBy"`
+	OrderDirection string `json:"orderDirection"`
 }

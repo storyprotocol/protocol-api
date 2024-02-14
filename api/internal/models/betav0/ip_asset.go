@@ -2,17 +2,17 @@ package betav0
 
 // Get IP ACCOUNT
 type IPAsset struct {
-	ID             string   `json:"id,omitempty"`
-	ChainId        string   `json:"chainId,omitempty"`
-	ParentIpIds    []string `json:"parentIpIds,omitempty"`
-	ChildIpIds     []string `json:"childIpIds,omitempty"`
-	RootIpIds      []string `json:"rootIpIds,omitempty"`
-	TokenContract  string   `json:"tokenContract,omitempty"`
-	TokenId        string   `json:"tokenId,omitempty"`
-	Resolver       string   `json:"metadataResolverAddress,omitempty"`
-	Metadata       Metadata `json:"metadata,omitempty"`
-	BlockNumber    string   `json:"blockNumber,omitempty"`
-	BlockTimestamp string   `json:"blockTimestamp,omitempty"`
+	ID             string   `json:"id"`
+	ChainId        string   `json:"chainId"`
+	ParentIpIds    []string `json:"parentIpIds"`
+	ChildIpIds     []string `json:"childIpIds"`
+	RootIpIds      []string `json:"rootIpIds"`
+	TokenContract  string   `json:"tokenContract"`
+	TokenId        string   `json:"tokenId"`
+	Resolver       string   `json:"metadataResolverAddress"`
+	Metadata       Metadata `json:"metadata"`
+	BlockNumber    string   `json:"blockNumber"`
+	BlockTimestamp string   `json:"blockTimestamp"`
 }
 
 type Metadata struct {
@@ -38,24 +38,21 @@ type IPAssetResponse struct {
 type IPAssetsResponse struct {
 	Data []*IPAsset `json:"data"`
 }
+type IpAssetRequestBody struct {
+	Options *IpAssetQueryOptions `json:"options"`
+}
 
-// Get IP ACCOUNT
-//type IPAsset struct {
-//	IPAssetAddress string `json:"asset,omitempty"`
-//	IPAssetImpl    string `json:"implementation,omitempty"`
-//	ChainId          string `json:"chainId,omitempty"`
-//	TokenContract    string `json:"tokenContract,omitempty"`
-//	TokenId          string `json:"tokenId,omitempty"`
-//}
-//
-//type IPAssetsTheGraphResponse struct {
-//	IPAssets []*IPAsset `json:"ipassetRegistereds"`
-//}
-//
-//type IPAssetTheGraphResponse struct {
-//	IPAsset *IPAsset `json:"ipassetRegistered"`
-//}
-//
-//type IPAssetsResponse struct {
-//	Data []*IPAsset `json:"data"`
-//}
+type IpAssetQueryOptions struct {
+	Pagination struct {
+		Offset int `json:"offset"`
+		Limit  int `json:"limit"`
+	} `json:"pagination"`
+	Where struct {
+		MetadataResolverAddress string `json:"metadataResolverAddress"`
+		TokenContract           string `json:"tokenContract"`
+		TokenId                 string `json:"tokenId"`
+		ChainId                 string `json:"chainId"`
+	} `json:"where"`
+	OrderBy        string `json:"orderBy"`
+	OrderDirection string `json:"orderDirection"`
+}

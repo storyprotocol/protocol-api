@@ -1,16 +1,16 @@
 package betav0
 
 type Dispute struct {
-	ID                string `json:"id,omitempty"`
-	TargetIpId        string `json:"targetIpId,omitempty"`
-	TargetTag         string `json:"targetTag,omitempty"`
-	CurrentTag        string `json:"currentTag,omitempty"`
-	ArbitrationPolicy string `json:"arbitrationPolicy,omitempty"`
-	EvidenceLink      string `json:"evidenceLink,omitempty"`
-	Initiator         string `json:"initiator,omitempty"`
-	Data              string `json:"data,omitempty"`
-	BlockNumber       string `json:"blockNumber,omitempty"`
-	BlockTimestamp    string `json:"blockTimestamp,omitempty"`
+	ID                string `json:"id"`
+	TargetIpId        string `json:"targetIpId"`
+	TargetTag         string `json:"targetTag"`
+	CurrentTag        string `json:"currentTag"`
+	ArbitrationPolicy string `json:"arbitrationPolicy"`
+	EvidenceLink      string `json:"evidenceLink"`
+	Initiator         string `json:"initiator"`
+	Data              string `json:"data"`
+	BlockNumber       string `json:"blockNumber"`
+	BlockTimestamp    string `json:"blockTimestamp"`
 }
 
 type DisputeTheGraphResponse struct {
@@ -27,4 +27,22 @@ type DisputeResponse struct {
 
 type DisputesResponse struct {
 	Data []*Dispute `json:"data"`
+}
+
+type DisputeRequestBody struct {
+	Options *DisputeQueryOptions `json:"options"`
+}
+type DisputeQueryOptions struct {
+	Pagination struct {
+		Offset int `json:"offset"`
+		Limit  int `json:"limit"`
+	} `json:"pagination"`
+	Where struct {
+		TargetIpId string `json:"targetIpId"`
+		TargetTag  string `json:"targetTag"`
+		CurrentTag string `json:"currentTag"`
+		Initiator  string `json:"initiator"`
+	} `json:"where"`
+	OrderBy        string `json:"orderBy"`
+	OrderDirection string `json:"orderDirection"`
 }

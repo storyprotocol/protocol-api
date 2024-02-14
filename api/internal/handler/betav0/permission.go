@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/storyprotocol/protocol-api/api/internal/handler/betav0/messages"
 	beta_v0 "github.com/storyprotocol/protocol-api/api/internal/models/betav0"
-	options2 "github.com/storyprotocol/protocol-api/api/internal/models/betav0/options"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
@@ -48,7 +47,7 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Description Retrieve a paginated, filtered list of Permissions
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
-// @Param data body options.RequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
+// @Param data body betav0.PermissionRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Tags Permissions
 // @Accept json
 // @Produce json
@@ -56,13 +55,13 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Router /api/v1/permissions [post]
 func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody options2.RequestBody
+		var requestBody beta_v0.PermissionRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = options2.RequestBody{}
+			requestBody = beta_v0.PermissionRequestBody{}
 		}
 
-		perms, err := graphService.ListPermissions(thegraph.FromRequestQueryOptions(requestBody.Options))
+		perms, err := graphService.ListPermissions(fromPermissionRequestQueryOptions(requestBody.Options))
 		if err != nil {
 			logger.Errorf("Failed to list permissions: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -73,4 +72,27 @@ func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xh
 			Data: perms,
 		})
 	}
+}
+
+func fromPermissionRequestQueryOptions(options *beta_v0.PermissionQueryOptions) *thegraph.TheGraphQueryOptions {
+	if options == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
+
+	var queryOptions = &thegraph.TheGraphQueryOptions{}
+
+	if options.Pagination.Limit == 0 {
+		options.Pagination.Limit = 100
+	}
+
+	queryOptions.First = options.Pagination.Limit
+	queryOptions.Skip = options.Pagination.Offset
+
+	queryOptions.Where.Signer = options.Where.Signer
+	queryOptions.Where.To = options.Where.To
+
+	return queryOptions
 }

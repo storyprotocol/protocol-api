@@ -1,15 +1,15 @@
 package betav0
 
 type Collection struct {
-	ID                     string `json:"id,omitempty"`
-	AssetCount             string `json:"assetCount,omitempty"`
-	LicensesCount          string `json:"licensesCount,omitempty"`
-	ResolvedDisputesCount  string `json:"resolvedDisputeCount,omitempty"`
-	CancelledDisputesCount string `json:"cancelledDisputeCount,omitempty"`
-	RaisedDisputesCount    string `json:"raisedDisputeCount,omitempty"`
-	JudgedDisputesCount    string `json:"judgedDisputeCount,omitempty"`
-	BlockNumber            string `json:"blockNumber,omitempty"`
-	BlockTimestamp         string `json:"blockTimestamp,omitempty"`
+	ID                     string `json:"id"`
+	AssetCount             string `json:"assetCount"`
+	LicensesCount          string `json:"licensesCount"`
+	ResolvedDisputesCount  string `json:"resolvedDisputeCount"`
+	CancelledDisputesCount string `json:"cancelledDisputeCount"`
+	RaisedDisputesCount    string `json:"raisedDisputeCount"`
+	JudgedDisputesCount    string `json:"judgedDisputeCount"`
+	BlockNumber            string `json:"blockNumber"`
+	BlockTimestamp         string `json:"blockTimestamp"`
 }
 
 type CollectionTheGraphResponse struct {
@@ -26,4 +26,19 @@ type CollectionResponse struct {
 
 type CollectionsResponse struct {
 	Data []*Collection `json:"data"`
+}
+
+type CollectionsRequestBody struct {
+	Options *CollectionQueryOptions `json:"options"`
+}
+
+type CollectionQueryOptions struct {
+	Pagination struct {
+		Offset int `json:"offset"`
+		Limit  int `json:"limit"`
+	} `json:"pagination"`
+	Where struct {
+	} `json:"where"`
+	OrderBy        string `json:"orderBy"`
+	OrderDirection string `json:"orderDirection"`
 }

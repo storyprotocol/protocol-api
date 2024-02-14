@@ -20,10 +20,31 @@ definitions:
       resolvedDisputeCount:
         type: string
     type: object
+  betav0.CollectionQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        type: object
+    type: object
   betav0.CollectionResponse:
     properties:
       data:
         $ref: '#/definitions/betav0.Collection'
+    type: object
+  betav0.CollectionsRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.CollectionQueryOptions'
     type: object
   betav0.CollectionsResponse:
     properties:
@@ -54,6 +75,36 @@ definitions:
         type: string
       targetTag:
         type: string
+    type: object
+  betav0.DisputeQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          currentTag:
+            type: string
+          initiator:
+            type: string
+          targetIpId:
+            type: string
+          targetTag:
+            type: string
+        type: object
+    type: object
+  betav0.DisputeRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.DisputeQueryOptions'
     type: object
   betav0.DisputeResponse:
     properties:
@@ -100,6 +151,29 @@ definitions:
           type: string
         type: array
     type: object
+  betav0.IPAPQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          active:
+            type: string
+          inherited:
+            type: string
+          policyId:
+            type: string
+        type: object
+    type: object
   betav0.IPAPoliciesResponse:
     properties:
       data:
@@ -125,6 +199,11 @@ definitions:
         type: string
       policyId:
         type: string
+    type: object
+  betav0.IPAPolicyRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.IPAPQueryOptions'
     type: object
   betav0.IPAPolicyResponse:
     properties:
@@ -174,6 +253,55 @@ definitions:
           $ref: '#/definitions/betav0.IPAsset'
         type: array
     type: object
+  betav0.IpAssetQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          chainId:
+            type: string
+          metadataResolverAddress:
+            type: string
+          tokenContract:
+            type: string
+          tokenId:
+            type: string
+        type: object
+    type: object
+  betav0.IpAssetRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.IpAssetQueryOptions'
+    type: object
+  betav0.LFWQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          creator:
+            type: string
+        type: object
+    type: object
   betav0.License:
     properties:
       blockNumber:
@@ -202,6 +330,11 @@ definitions:
       id:
         type: string
     type: object
+  betav0.LicenseFrameworkRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.LFWQueryOptions'
+    type: object
   betav0.LicenseFrameworkResponse:
     properties:
       data:
@@ -213,6 +346,32 @@ definitions:
         items:
           $ref: '#/definitions/betav0.LicenseFramework'
         type: array
+    type: object
+  betav0.LicenseQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          licensorIpdId:
+            type: string
+          policyId:
+            type: string
+        type: object
+    type: object
+  betav0.LicenseRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.LicenseQueryOptions'
     type: object
   betav0.LicenseResponse:
     properties:
@@ -254,6 +413,30 @@ definitions:
       name:
         type: string
     type: object
+  betav0.ModuleQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          name:
+            type: string
+        type: object
+    type: object
+  betav0.ModuleRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.ModuleQueryOptions'
+    type: object
   betav0.ModuleResponse:
     properties:
       data:
@@ -265,6 +448,27 @@ definitions:
         items:
           $ref: '#/definitions/betav0.Module'
         type: array
+    type: object
+  betav0.PFWMQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          address:
+            type: string
+          name:
+            type: string
+        type: object
     type: object
   betav0.Permission:
     properties:
@@ -284,6 +488,32 @@ definitions:
         type: string
       uuid:
         type: string
+    type: object
+  betav0.PermissionQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          signer:
+            type: string
+          to:
+            type: string
+        type: object
+    type: object
+  betav0.PermissionRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.PermissionQueryOptions'
     type: object
   betav0.PermissionResponse:
     properties:
@@ -312,11 +542,7 @@ definitions:
         type: string
       id:
         type: string
-      policy:
-        type: string
       policyFrameworkManager:
-        type: string
-      policyId:
         type: string
       uml:
         $ref: '#/definitions/betav0.UMLPolicy'
@@ -336,6 +562,11 @@ definitions:
       name:
         type: string
     type: object
+  betav0.PolicyFrameworkManagerRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.PFWMQueryOptions'
+    type: object
   betav0.PolicyFrameworkManagerResponse:
     properties:
       data:
@@ -347,6 +578,30 @@ definitions:
         items:
           $ref: '#/definitions/betav0.PolicyFrameworkManager'
         type: array
+    type: object
+  betav0.PolicyQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          policyFrameworkManager:
+            type: string
+        type: object
+    type: object
+  betav0.PolicyRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.PolicyQueryOptions'
     type: object
   betav0.PolicyResponse:
     properties:
@@ -394,6 +649,38 @@ definitions:
       token:
         type: string
     type: object
+  betav0.RoyaltyPayQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          ipId:
+            type: string
+          payerIpId:
+            type: string
+          receiverIpId:
+            type: string
+          sender:
+            type: string
+          token:
+            type: string
+        type: object
+    type: object
+  betav0.RoyaltyPayRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.RoyaltyPayQueryOptions'
+    type: object
   betav0.RoyaltyPayResponse:
     properties:
       data:
@@ -405,6 +692,32 @@ definitions:
         items:
           $ref: '#/definitions/betav0.RoyaltyPay'
         type: array
+    type: object
+  betav0.RoyaltyQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          ipId:
+            type: string
+          royaltyPolicy:
+            type: string
+        type: object
+    type: object
+  betav0.RoyaltyRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.RoyaltyQueryOptions'
     type: object
   betav0.RoyaltyResponse:
     properties:
@@ -428,6 +741,32 @@ definitions:
       uuid:
         type: string
     type: object
+  betav0.TagQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          ipId:
+            type: string
+          tag:
+            type: string
+        type: object
+    type: object
+  betav0.TagRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.TagQueryOptions'
+    type: object
   betav0.TagResponse:
     properties:
       data:
@@ -439,6 +778,61 @@ definitions:
         items:
           $ref: '#/definitions/betav0.Tag'
         type: array
+    type: object
+  betav0.Transaction:
+    properties:
+      actionType:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      initiator:
+        type: string
+      ipId:
+        type: string
+      resourceId:
+        type: string
+      resourceType:
+        type: string
+    type: object
+  betav0.TransactionRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.TrxQueryOptions'
+    type: object
+  betav0.TransactionResponse:
+    properties:
+      data:
+        $ref: '#/definitions/betav0.Transaction'
+    type: object
+  betav0.TransactionsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/betav0.Transaction'
+        type: array
+    type: object
+  betav0.TrxQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          actionType:
+            type: string
+          resourceId:
+            type: string
+        type: object
     type: object
   betav0.UMLPolicy:
     properties:
@@ -479,40 +873,6 @@ definitions:
       transferable:
         type: boolean
     type: object
-  options.QueryOptions:
-    properties:
-      orderBy:
-        type: string
-      orderDirection:
-        type: string
-      pagination:
-        properties:
-          limit:
-            type: integer
-          offset:
-            type: integer
-        type: object
-      where:
-        properties:
-          creator:
-            type: string
-          frameworkId:
-            type: string
-          ipId:
-            type: string
-          licensorIpId:
-            type: string
-          receiver:
-            type: string
-          tokenContract:
-            type: string
-        type: object
-    type: object
-  options.RequestBody:
-    properties:
-      options:
-        $ref: '#/definitions/options.QueryOptions'
-    type: object
 info:
   contact: {}
 paths:
@@ -532,7 +892,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.IpAssetRequestBody'
       produces:
       - application/json
       responses:
@@ -589,7 +949,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.CollectionsRequestBody'
       produces:
       - application/json
       responses:
@@ -646,7 +1006,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.DisputeRequestBody'
       produces:
       - application/json
       responses:
@@ -703,7 +1063,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.IPAPolicyRequestBody'
       produces:
       - application/json
       responses:
@@ -760,7 +1120,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.LicenseFrameworkRequestBody'
       produces:
       - application/json
       responses:
@@ -817,7 +1177,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.LicenseRequestBody'
       produces:
       - application/json
       responses:
@@ -874,7 +1234,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.ModuleRequestBody'
       produces:
       - application/json
       responses:
@@ -931,7 +1291,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.PermissionRequestBody'
       produces:
       - application/json
       responses:
@@ -981,7 +1341,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.PolicyRequestBody'
       produces:
       - application/json
       responses:
@@ -1066,7 +1426,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.PolicyFrameworkManagerRequestBody'
       produces:
       - application/json
       responses:
@@ -1095,7 +1455,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.RoyaltyRequestBody'
       produces:
       - application/json
       responses:
@@ -1152,7 +1512,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.RoyaltyPayRequestBody'
       produces:
       - application/json
       responses:
@@ -1209,7 +1569,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/options.RequestBody'
+          $ref: '#/definitions/betav0.TagRequestBody'
       produces:
       - application/json
       responses:
@@ -1250,4 +1610,61 @@ paths:
       summary: Get a Tag
       tags:
       - Tags
+  /api/v1/transactions:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Transactions
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/betav0.TransactionRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/betav0.TransactionsResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List Transactions
+      tags:
+      - Transactions
+  /api/v1/transactions/{trxId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Transaction
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: trxId
+        required: true
+        type: string
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/betav0.TransactionResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a Dispute
+      tags:
+      - Transactions
 swagger: "2.0"

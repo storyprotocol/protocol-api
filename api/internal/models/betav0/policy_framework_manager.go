@@ -1,12 +1,12 @@
 package betav0
 
 type PolicyFrameworkManager struct {
-	ID             string `json:"id,omitempty"`
-	Address        string `json:"address,omitempty"`
-	Name           string `json:"name,omitempty"`
-	LicenseUrl     string `json:"licenseUrl,omitempty"`
-	BlockNumber    string `json:"blockNumber,omitempty"`
-	BlockTimestamp string `json:"blockTimestamp,omitempty"`
+	ID             string `json:"id"`
+	Address        string `json:"address"`
+	Name           string `json:"name"`
+	LicenseUrl     string `json:"licenseUrl"`
+	BlockNumber    string `json:"blockNumber"`
+	BlockTimestamp string `json:"blockTimestamp"`
 }
 
 type PolicyFrameworkManagersTheGraphResponse struct {
@@ -23,4 +23,20 @@ type PolicyFrameworkManagerResponse struct {
 
 type PolicyFrameworkManagersResponse struct {
 	Data []*PolicyFrameworkManager `json:"data"`
+}
+type PolicyFrameworkManagerRequestBody struct {
+	Options *PFWMQueryOptions `json:"options"`
+}
+
+type PFWMQueryOptions struct {
+	Pagination struct {
+		Offset int `json:"offset"`
+		Limit  int `json:"limit"`
+	} `json:"pagination"`
+	Where struct {
+		Address string `json:"address"`
+		Name    string `json:"name"`
+	} `json:"where"`
+	OrderBy        string `json:"orderBy"`
+	OrderDirection string `json:"orderDirection"`
 }

@@ -8,66 +8,60 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetTransaction(transactionId string) (*beta_v0.Tag, error) {
+func (c *ServiceBetaImpl) GetTransaction(transactionId string) (*beta_v0.Transaction, error) {
 	query := fmt.Sprintf(`
 		query {
-		  tags(where: { uuid:  "%s" }) {
-			uuid
+		  transaction(id: "%s")  {
+			id
+			createdAt
+			actionType
+			initiator
 			ipId
-			tag
-			deletedAt
-			blockNumber
-			blockTimestamp
+			resourceId
+			resourceType
+			txHash
 		  }
 		}
-    `, tagId)
+    `, transactionId)
 
 	req := c.buildNewRequest(nil, query)
 	ctx := context.Background()
-	var tagRes beta_v0.TagsTheGraphResponse
-	if err := c.client.Run(ctx, req, &tagRes); err != nil {
-		return nil, fmt.Errorf("failed to get tags from the graph. error: %v", err)
+	var trxRes beta_v0.TransactionTheGraphResponse
+	if err := c.client.Run(ctx, req, &trxRes); err != nil {
+		return nil, fmt.Errorf("failed to get transaction from the graph. error: %v", err)
 	}
 
-	tags := []*beta_v0.Tag{}
-	for _, tag := range tagRes.Tags {
-		tag.ID = tag.UUID
-		tags = append(tags, tag)
-		tag.UUID = ""
-	}
-
-	return tags[0], nil
+	return trxRes.Transaction, nil
 }
 
-func (c *ServiceBetaImpl) ListTransaction(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Tag, error) {
+func (c *ServiceBetaImpl) ListTransactions(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Transaction, error) {
 	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s) {
-	  tags(%s, where:{%s}) {
-		uuid
+	  transactions (%s, where:{%s}) {
+		id
+		createdAt
+		actionType
+		initiator
 		ipId
-		tag
-		deletedAt
-		blockNumber
-		blockTimestamp
+		resourceId
+		resourceType
+		txHash
 	  }
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
 	req := c.buildNewRequest(options, query)
 	ctx := context.Background()
-	var tagRes beta_v0.TagsTheGraphResponse
-	if err := c.client.Run(ctx, req, &tagRes); err != nil {
-		return nil, fmt.Errorf("failed to get tags from the graph. error: %v", err)
+	var trxRes beta_v0.TransactionsTheGraphResponse
+	if err := c.client.Run(ctx, req, &trxRes); err != nil {
+		return nil, fmt.Errorf("failed to get transactions from the graph. error: %v", err)
 	}
 
-	tags := []*beta_v0.Tag{}
-	for _, tag := range tagRes.Tags {
-		tag.ID = tag.UUID
-		tags = append(tags, tag)
-		tag.UUID = ""
-
+	trxs := []*beta_v0.Transaction{}
+	for _, trx := range trxRes.Transactions {
+		trxs = append(trxs, trx)
 	}
 
-	return tags, nil
+	return trxs, nil
 }

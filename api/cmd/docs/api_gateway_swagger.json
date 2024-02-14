@@ -38,7 +38,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/IpAssetRequestBody"
             }
           }
         ],
@@ -128,7 +128,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/CollectionsRequestBody"
             }
           }
         ],
@@ -218,7 +218,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/DisputeRequestBody"
             }
           }
         ],
@@ -308,7 +308,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/IPAPolicyRequestBody"
             }
           }
         ],
@@ -398,7 +398,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/LicenseFrameworkRequestBody"
             }
           }
         ],
@@ -488,7 +488,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/LicenseRequestBody"
             }
           }
         ],
@@ -578,7 +578,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/ModuleRequestBody"
             }
           }
         ],
@@ -668,7 +668,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/PermissionRequestBody"
             }
           }
         ],
@@ -746,7 +746,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/PolicyRequestBody"
             }
           }
         ],
@@ -880,7 +880,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/PolicyFrameworkManagerRequestBody"
             }
           }
         ],
@@ -926,7 +926,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/RoyaltyRequestBody"
             }
           }
         ],
@@ -1016,7 +1016,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/RoyaltyPayRequestBody"
             }
           }
         ],
@@ -1106,7 +1106,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RequestBody"
+              "$ref": "#/definitions/TagRequestBody"
             }
           }
         ],
@@ -1163,6 +1163,96 @@
           }
         }
       }
+    },
+    "/api/v1/transactions": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Retrieve a paginated, filtered list of Transactions",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "List Transactions",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "API Key",
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Query Parameters (",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/transactions/{trxId}": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Retrieve a Transaction",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get a Dispute",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Transaction ID",
+            "name": "trxId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "API Key",
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1198,11 +1288,44 @@
         }
       }
     },
+    "CollectionQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object"
+        }
+      }
+    },
     "CollectionResponse": {
       "type": "object",
       "properties": {
         "data": {
           "$ref": "#/definitions/Collection"
+        }
+      }
+    },
+    "CollectionsRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/CollectionQueryOptions"
         }
       }
     },
@@ -1249,6 +1372,53 @@
         },
         "targetTag": {
           "type": "string"
+        }
+      }
+    },
+    "DisputeQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "currentTag": {
+              "type": "string"
+            },
+            "initiator": {
+              "type": "string"
+            },
+            "targetIpId": {
+              "type": "string"
+            },
+            "targetTag": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "DisputeRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/DisputeQueryOptions"
         }
       }
     },
@@ -1321,6 +1491,42 @@
         }
       }
     },
+    "IPAPQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "active": {
+              "type": "string"
+            },
+            "inherited": {
+              "type": "string"
+            },
+            "policyId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "IPAPoliciesResponse": {
       "type": "object",
       "properties": {
@@ -1358,6 +1564,14 @@
         },
         "policyId": {
           "type": "string"
+        }
+      }
+    },
+    "IPAPolicyRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/IPAPQueryOptions"
         }
       }
     },
@@ -1435,6 +1649,83 @@
         }
       }
     },
+    "IpAssetQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "chainId": {
+              "type": "string"
+            },
+            "metadataResolverAddress": {
+              "type": "string"
+            },
+            "tokenContract": {
+              "type": "string"
+            },
+            "tokenId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "IpAssetRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/IpAssetQueryOptions"
+        }
+      }
+    },
+    "LFWQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "License": {
       "type": "object",
       "properties": {
@@ -1478,6 +1769,14 @@
         }
       }
     },
+    "LicenseFrameworkRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/LFWQueryOptions"
+        }
+      }
+    },
     "LicenseFrameworkResponse": {
       "type": "object",
       "properties": {
@@ -1494,6 +1793,47 @@
           "items": {
             "$ref": "#/definitions/LicenseFramework"
           }
+        }
+      }
+    },
+    "LicenseQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "licensorIpdId": {
+              "type": "string"
+            },
+            "policyId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "LicenseRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/LicenseQueryOptions"
         }
       }
     },
@@ -1559,6 +1899,44 @@
         }
       }
     },
+    "ModuleQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ModuleRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/ModuleQueryOptions"
+        }
+      }
+    },
     "ModuleResponse": {
       "type": "object",
       "properties": {
@@ -1574,6 +1952,39 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Module"
+          }
+        }
+      }
+    },
+    "PFWMQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
           }
         }
       }
@@ -1604,6 +2015,47 @@
         },
         "uuid": {
           "type": "string"
+        }
+      }
+    },
+    "PermissionQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "signer": {
+              "type": "string"
+            },
+            "to": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "PermissionRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/PermissionQueryOptions"
         }
       }
     },
@@ -1649,13 +2101,7 @@
         "id": {
           "type": "string"
         },
-        "policy": {
-          "type": "string"
-        },
         "policyFrameworkManager": {
-          "type": "string"
-        },
-        "policyId": {
           "type": "string"
         },
         "uml": {
@@ -1686,6 +2132,14 @@
         }
       }
     },
+    "PolicyFrameworkManagerRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/PFWMQueryOptions"
+        }
+      }
+    },
     "PolicyFrameworkManagerResponse": {
       "type": "object",
       "properties": {
@@ -1702,6 +2156,44 @@
           "items": {
             "$ref": "#/definitions/PolicyFrameworkManager"
           }
+        }
+      }
+    },
+    "PolicyQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "policyFrameworkManager": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "PolicyRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/PolicyQueryOptions"
         }
       }
     },
@@ -1776,6 +2268,56 @@
         }
       }
     },
+    "RoyaltyPayQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "ipId": {
+              "type": "string"
+            },
+            "payerIpId": {
+              "type": "string"
+            },
+            "receiverIpId": {
+              "type": "string"
+            },
+            "sender": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "RoyaltyPayRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/RoyaltyPayQueryOptions"
+        }
+      }
+    },
     "RoyaltyPayResponse": {
       "type": "object",
       "properties": {
@@ -1792,6 +2334,47 @@
           "items": {
             "$ref": "#/definitions/RoyaltyPay"
           }
+        }
+      }
+    },
+    "RoyaltyQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "ipId": {
+              "type": "string"
+            },
+            "royaltyPolicy": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "RoyaltyRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/RoyaltyQueryOptions"
         }
       }
     },
@@ -1829,6 +2412,47 @@
         }
       }
     },
+    "TagQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "ipId": {
+              "type": "string"
+            },
+            "tag": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "TagRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/TagQueryOptions"
+        }
+      }
+    },
     "TagResponse": {
       "type": "object",
       "properties": {
@@ -1844,6 +2468,92 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Tag"
+          }
+        }
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "properties": {
+        "actionType": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "initiator": {
+          "type": "string"
+        },
+        "ipId": {
+          "type": "string"
+        },
+        "resourceId": {
+          "type": "string"
+        },
+        "resourceType": {
+          "type": "string"
+        }
+      }
+    },
+    "TransactionRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/TrxQueryOptions"
+        }
+      }
+    },
+    "TransactionResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Transaction"
+        }
+      }
+    },
+    "TransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          }
+        }
+      }
+    },
+    "TrxQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "actionType": {
+              "type": "string"
+            },
+            "resourceId": {
+              "type": "string"
+            }
           }
         }
       }
@@ -1904,59 +2614,6 @@
         },
         "transferable": {
           "type": "boolean"
-        }
-      }
-    },
-    "QueryOptions": {
-      "type": "object",
-      "properties": {
-        "orderBy": {
-          "type": "string"
-        },
-        "orderDirection": {
-          "type": "string"
-        },
-        "pagination": {
-          "type": "object",
-          "properties": {
-            "limit": {
-              "type": "integer"
-            },
-            "offset": {
-              "type": "integer"
-            }
-          }
-        },
-        "where": {
-          "type": "object",
-          "properties": {
-            "creator": {
-              "type": "string"
-            },
-            "frameworkId": {
-              "type": "string"
-            },
-            "ipId": {
-              "type": "string"
-            },
-            "licensorIpId": {
-              "type": "string"
-            },
-            "receiver": {
-              "type": "string"
-            },
-            "tokenContract": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "RequestBody": {
-      "type": "object",
-      "properties": {
-        "options": {
-          "$ref": "#/definitions/QueryOptions"
         }
       }
     }

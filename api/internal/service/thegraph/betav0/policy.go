@@ -14,7 +14,6 @@ func (c *ServiceBetaImpl) GetPolicy(policyId string) (*beta_v0.Policy, error) {
 		  policy(id: "%s") {
 			id
 			policyFrameworkManager
-			uml
 			blockTimestamp
 			blockNumber
 			uml {
@@ -66,7 +65,6 @@ func (c *ServiceBetaImpl) ListPolicies(options *thegraph.TheGraphQueryOptions) (
 			policyFrameworkManager
 			blockTimestamp
 			blockNumber
-			
 			uml {
 			  attribution
 			  commercialAttribution

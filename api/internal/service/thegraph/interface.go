@@ -2,7 +2,6 @@ package thegraph
 
 import (
 	"github.com/storyprotocol/protocol-api/api/internal/models/betav0"
-	"github.com/storyprotocol/protocol-api/api/internal/models/betav0/options"
 )
 
 type TheGraphServiceBeta interface {
@@ -20,6 +19,7 @@ type TheGraphServiceBeta interface {
 	GetRoyaltyPay(royaltyPayId string) (*betav0.RoyaltyPay, error)
 	GetPolicyFrameworkManager(pfwmId string) (*betav0.PolicyFrameworkManager, error)
 	GetCollection(colId string) (*betav0.Collection, error)
+	GetTransaction(trxId string) (*betav0.Transaction, error)
 
 	// LISTS
 	ListIPAssets(options *TheGraphQueryOptions) ([]*betav0.IPAsset, error)
@@ -36,6 +36,7 @@ type TheGraphServiceBeta interface {
 	ListRoyaltyPays(options *TheGraphQueryOptions) ([]*betav0.RoyaltyPay, error)
 	ListPolicyFrameworkManagers(options *TheGraphQueryOptions) ([]*betav0.PolicyFrameworkManager, error)
 	ListCollections(options *TheGraphQueryOptions) ([]*betav0.Collection, error)
+	ListTransactions(options *TheGraphQueryOptions) ([]*betav0.Transaction, error)
 }
 
 type TheGraphQueryOptions struct {
@@ -44,40 +45,33 @@ type TheGraphQueryOptions struct {
 	OrderBy        string
 	OrderDirection string
 	Where          struct {
-		Creator       string
-		Receiver      string
-		TokenContract string
-		FrameworkId   string
-		LicensorIpId  string
-		IPID          string
+		Name                    string `json:"name,omitempty"`
+		Module                  string `json:"module,omitempty"`
+		TargetIpId              string `json:"targetIpId,omitempty"`
+		TargetTag               string `json:"targetTag,omitempty"`
+		CurrentTag              string `json:"currentTag,omitempty"`
+		Initiator               string `json:"initiator,omitempty"`
+		MetadataResolverAddress string `json:"metadataResolverAddress,omitempty"`
+		TokenContract           string `json:"tokenContract,omitempty"`
+		TokenId                 string `json:"tokenId,omitempty"`
+		ChainId                 string `json:"chainId,omitempty"`
+		PolicyId                string `json:"policyId,omitempty"`
+		Active                  string `json:"active,omitempty"`
+		Inherited               string `json:"inherited,omitempty"`
+		LicensorIpdId           string `json:"licensorIpdId,omitempty"`
+		Creator                 string `json:"creator,omitempty"`
+		Signer                  string `json:"signer,omitempty"`
+		To                      string `json:"to,omitempty"`
+		Address                 string `json:"address,omitempty"`
+		IPID                    string `json:"ipId,omitempty"`
+		RoyaltyPolicy           string `json:"royaltyPolicy,omitempty"`
+		ReceiverIpId            string `json:"receiverIpId,omitempty"`
+		PayerIpId               string `json:"payerIpId,omitempty"`
+		Sender                  string `json:"sender,omitempty"`
+		Token                   string `json:"token,omitempty"`
+		Tag                     string `json:"tag,omitempty"`
+		ActionType              string `json:"actionType,omitempty"`
+		ResourceId              string `json:"resourceId,omitempty"`
+		PolicyFrameworkManager  string `json:"policyFrameworkManager,omitempty"`
 	}
-}
-
-func FromRequestQueryOptions(options *options.QueryOptions) *TheGraphQueryOptions {
-	if options == nil {
-		return &TheGraphQueryOptions{
-			First: 100,
-			Skip:  0,
-		}
-	}
-
-	var queryOptions = &TheGraphQueryOptions{}
-
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
-	}
-
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
-
-	queryOptions.Where = struct {
-		Creator       string
-		Receiver      string
-		TokenContract string
-		FrameworkId   string
-		LicensorIpId  string
-		IPID          string
-	}(options.Where)
-
-	return queryOptions
 }

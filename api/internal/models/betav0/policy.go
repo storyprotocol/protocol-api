@@ -1,13 +1,11 @@
 package betav0
 
 type Policy struct {
-	ID                     string    `json:"id,omitempty"`
-	PolicyID               string    `json:"policyId,omitempty"`
-	PolicyFrameworkManager string    `json:"policyFrameworkManager,omitempty"`
-	Policy                 string    `json:"policy,omitempty"`
-	BlockNumber            string    `json:"blockNumber,omitempty"`
-	BlockTimestamp         string    `json:"blockTimestamp,omitempty"`
-	UML                    UMLPolicy `json:"uml,omitempty"`
+	ID                     string    `json:"id"`
+	PolicyFrameworkManager string    `json:"policyFrameworkManager"`
+	BlockNumber            string    `json:"blockNumber"`
+	BlockTimestamp         string    `json:"blockTimestamp"`
+	UML                    UMLPolicy `json:"uml"`
 }
 
 type UMLPolicy struct {
@@ -42,4 +40,20 @@ type PolicyResponse struct {
 
 type PoliciesResponse struct {
 	Data []*Policy `json:"data"`
+}
+
+type PolicyRequestBody struct {
+	Options *PolicyQueryOptions `json:"options"`
+}
+
+type PolicyQueryOptions struct {
+	Pagination struct {
+		Offset int `json:"offset"`
+		Limit  int `json:"limit"`
+	} `json:"pagination"`
+	Where struct {
+		PolicyFrameworkManager string `json:"policyFrameworkManager"`
+	} `json:"where"`
+	OrderBy        string `json:"orderBy"`
+	OrderDirection string `json:"orderDirection"`
 }

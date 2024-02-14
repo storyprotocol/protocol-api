@@ -1,14 +1,14 @@
 package betav0
 
 type RoyaltyPay struct {
-	ID             string `json:"id,omitempty"`
-	ReceiverIpId   string `json:"receiverIpId,omitempty"`
-	PayerIpId      string `json:"payerIpId,omitempty"`
-	Sender         string `json:"sender,omitempty"`
-	Token          string `json:"token,omitempty"`
-	Amount         string `json:"amount,omitempty"`
-	BlockNumber    string `json:"blockNumber,omitempty"`
-	BlockTimestamp string `json:"blockTimestamp,omitempty"`
+	ID             string `json:"id"`
+	ReceiverIpId   string `json:"receiverIpId"`
+	PayerIpId      string `json:"payerIpId"`
+	Sender         string `json:"sender"`
+	Token          string `json:"token"`
+	Amount         string `json:"amount"`
+	BlockNumber    string `json:"blockNumber"`
+	BlockTimestamp string `json:"blockTimestamp"`
 }
 
 type RoyaltyPayTheGraphResponse struct {
@@ -25,4 +25,24 @@ type RoyaltyPayResponse struct {
 
 type RoyaltyPaysResponse struct {
 	Data []*RoyaltyPay `json:"data"`
+}
+
+type RoyaltyPayRequestBody struct {
+	Options *RoyaltyPayQueryOptions `json:"options"`
+}
+
+type RoyaltyPayQueryOptions struct {
+	Pagination struct {
+		Offset int `json:"offset"`
+		Limit  int `json:"limit"`
+	} `json:"pagination"`
+	Where struct {
+		IPID         string `json:"ipId"`
+		ReceiverIpId string `json:"receiverIpId"`
+		PayerIpId    string `json:"payerIpId"`
+		Sender       string `json:"sender"`
+		Token        string `json:"token"`
+	} `json:"where"`
+	OrderBy        string `json:"orderBy"`
+	OrderDirection string `json:"orderDirection"`
 }

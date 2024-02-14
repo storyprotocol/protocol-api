@@ -12,7 +12,7 @@ func (c *ServiceBetaImpl) ListAccessControlPermissions(options *thegraph.TheGrap
 	query := fmt.Sprintf(`
 	query(%s){
 		modules (%s, where:{%s}) {
-		id
+			id
 			name
 			module
 			blockNumber

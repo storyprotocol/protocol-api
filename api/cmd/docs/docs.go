@@ -47,7 +47,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.IpAssetRequestBody"
                         }
                     }
                 ],
@@ -137,7 +137,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.CollectionsRequestBody"
                         }
                     }
                 ],
@@ -227,7 +227,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.DisputeRequestBody"
                         }
                     }
                 ],
@@ -317,7 +317,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.IPAPolicyRequestBody"
                         }
                     }
                 ],
@@ -407,7 +407,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.LicenseFrameworkRequestBody"
                         }
                     }
                 ],
@@ -497,7 +497,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.LicenseRequestBody"
                         }
                     }
                 ],
@@ -587,7 +587,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.ModuleRequestBody"
                         }
                     }
                 ],
@@ -677,7 +677,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.PermissionRequestBody"
                         }
                     }
                 ],
@@ -755,7 +755,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.PolicyRequestBody"
                         }
                     }
                 ],
@@ -889,7 +889,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.PolicyFrameworkManagerRequestBody"
                         }
                     }
                 ],
@@ -935,7 +935,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.RoyaltyRequestBody"
                         }
                     }
                 ],
@@ -1025,7 +1025,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.RoyaltyPayRequestBody"
                         }
                     }
                 ],
@@ -1115,7 +1115,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/options.RequestBody"
+                            "$ref": "#/definitions/betav0.TagRequestBody"
                         }
                     }
                 ],
@@ -1172,6 +1172,96 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/transactions": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of Transactions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "List Transactions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/betav0.TransactionRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.TransactionsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/transactions/{trxId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a Transaction",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get a Dispute",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Transaction ID",
+                        "name": "trxId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.TransactionResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1207,11 +1297,44 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.CollectionQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object"
+                }
+            }
+        },
         "betav0.CollectionResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "$ref": "#/definitions/betav0.Collection"
+                }
+            }
+        },
+        "betav0.CollectionsRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.CollectionQueryOptions"
                 }
             }
         },
@@ -1258,6 +1381,53 @@ const docTemplate = `{
                 },
                 "targetTag": {
                     "type": "string"
+                }
+            }
+        },
+        "betav0.DisputeQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "currentTag": {
+                            "type": "string"
+                        },
+                        "initiator": {
+                            "type": "string"
+                        },
+                        "targetIpId": {
+                            "type": "string"
+                        },
+                        "targetTag": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.DisputeRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.DisputeQueryOptions"
                 }
             }
         },
@@ -1330,6 +1500,42 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.IPAPQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "active": {
+                            "type": "string"
+                        },
+                        "inherited": {
+                            "type": "string"
+                        },
+                        "policyId": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "betav0.IPAPoliciesResponse": {
             "type": "object",
             "properties": {
@@ -1367,6 +1573,14 @@ const docTemplate = `{
                 },
                 "policyId": {
                     "type": "string"
+                }
+            }
+        },
+        "betav0.IPAPolicyRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.IPAPQueryOptions"
                 }
             }
         },
@@ -1444,6 +1658,83 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.IpAssetQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "chainId": {
+                            "type": "string"
+                        },
+                        "metadataResolverAddress": {
+                            "type": "string"
+                        },
+                        "tokenContract": {
+                            "type": "string"
+                        },
+                        "tokenId": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.IpAssetRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.IpAssetQueryOptions"
+                }
+            }
+        },
+        "betav0.LFWQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "creator": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "betav0.License": {
             "type": "object",
             "properties": {
@@ -1487,6 +1778,14 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.LicenseFrameworkRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.LFWQueryOptions"
+                }
+            }
+        },
         "betav0.LicenseFrameworkResponse": {
             "type": "object",
             "properties": {
@@ -1503,6 +1802,47 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/betav0.LicenseFramework"
                     }
+                }
+            }
+        },
+        "betav0.LicenseQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "licensorIpdId": {
+                            "type": "string"
+                        },
+                        "policyId": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.LicenseRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.LicenseQueryOptions"
                 }
             }
         },
@@ -1568,6 +1908,44 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.ModuleQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.ModuleRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.ModuleQueryOptions"
+                }
+            }
+        },
         "betav0.ModuleResponse": {
             "type": "object",
             "properties": {
@@ -1583,6 +1961,39 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/betav0.Module"
+                    }
+                }
+            }
+        },
+        "betav0.PFWMQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "address": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
                     }
                 }
             }
@@ -1613,6 +2024,47 @@ const docTemplate = `{
                 },
                 "uuid": {
                     "type": "string"
+                }
+            }
+        },
+        "betav0.PermissionQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "signer": {
+                            "type": "string"
+                        },
+                        "to": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.PermissionRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.PermissionQueryOptions"
                 }
             }
         },
@@ -1658,13 +2110,7 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "policy": {
-                    "type": "string"
-                },
                 "policyFrameworkManager": {
-                    "type": "string"
-                },
-                "policyId": {
                     "type": "string"
                 },
                 "uml": {
@@ -1695,6 +2141,14 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.PolicyFrameworkManagerRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.PFWMQueryOptions"
+                }
+            }
+        },
         "betav0.PolicyFrameworkManagerResponse": {
             "type": "object",
             "properties": {
@@ -1711,6 +2165,44 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/betav0.PolicyFrameworkManager"
                     }
+                }
+            }
+        },
+        "betav0.PolicyQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "policyFrameworkManager": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.PolicyRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.PolicyQueryOptions"
                 }
             }
         },
@@ -1785,6 +2277,56 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.RoyaltyPayQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "ipId": {
+                            "type": "string"
+                        },
+                        "payerIpId": {
+                            "type": "string"
+                        },
+                        "receiverIpId": {
+                            "type": "string"
+                        },
+                        "sender": {
+                            "type": "string"
+                        },
+                        "token": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.RoyaltyPayRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.RoyaltyPayQueryOptions"
+                }
+            }
+        },
         "betav0.RoyaltyPayResponse": {
             "type": "object",
             "properties": {
@@ -1801,6 +2343,47 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/betav0.RoyaltyPay"
                     }
+                }
+            }
+        },
+        "betav0.RoyaltyQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "ipId": {
+                            "type": "string"
+                        },
+                        "royaltyPolicy": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.RoyaltyRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.RoyaltyQueryOptions"
                 }
             }
         },
@@ -1838,6 +2421,47 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.TagQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "ipId": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.TagRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.TagQueryOptions"
+                }
+            }
+        },
         "betav0.TagResponse": {
             "type": "object",
             "properties": {
@@ -1853,6 +2477,92 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/betav0.Tag"
+                    }
+                }
+            }
+        },
+        "betav0.Transaction": {
+            "type": "object",
+            "properties": {
+                "actionType": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "initiator": {
+                    "type": "string"
+                },
+                "ipId": {
+                    "type": "string"
+                },
+                "resourceId": {
+                    "type": "string"
+                },
+                "resourceType": {
+                    "type": "string"
+                }
+            }
+        },
+        "betav0.TransactionRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.TrxQueryOptions"
+                }
+            }
+        },
+        "betav0.TransactionResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/betav0.Transaction"
+                }
+            }
+        },
+        "betav0.TransactionsResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/betav0.Transaction"
+                    }
+                }
+            }
+        },
+        "betav0.TrxQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "actionType": {
+                            "type": "string"
+                        },
+                        "resourceId": {
+                            "type": "string"
+                        }
                     }
                 }
             }
@@ -1913,59 +2623,6 @@ const docTemplate = `{
                 },
                 "transferable": {
                     "type": "boolean"
-                }
-            }
-        },
-        "options.QueryOptions": {
-            "type": "object",
-            "properties": {
-                "orderBy": {
-                    "type": "string"
-                },
-                "orderDirection": {
-                    "type": "string"
-                },
-                "pagination": {
-                    "type": "object",
-                    "properties": {
-                        "limit": {
-                            "type": "integer"
-                        },
-                        "offset": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "where": {
-                    "type": "object",
-                    "properties": {
-                        "creator": {
-                            "type": "string"
-                        },
-                        "frameworkId": {
-                            "type": "string"
-                        },
-                        "ipId": {
-                            "type": "string"
-                        },
-                        "licensorIpId": {
-                            "type": "string"
-                        },
-                        "receiver": {
-                            "type": "string"
-                        },
-                        "tokenContract": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "options.RequestBody": {
-            "type": "object",
-            "properties": {
-                "options": {
-                    "$ref": "#/definitions/options.QueryOptions"
                 }
             }
         }
