@@ -72,15 +72,6 @@
         "summary": "Get an IPAsset",
         "parameters": [
           {
-            "in": "query",
-            "name": "NewParameter",
-            "description": "New parameter",
-            "required": "true",
-            "schema": {
-              "": ""
-            }
-          },
-          {
             "type": "string",
             "description": "Asset ID",
             "name": "assetId",
@@ -1187,7 +1178,22 @@
         "blockTimestamp": {
           "type": "string"
         },
+        "cancelledDisputeCount": {
+          "type": "string"
+        },
         "id": {
+          "type": "string"
+        },
+        "judgedDisputesCount": {
+          "type": "string"
+        },
+        "licensesCount": {
+          "type": "string"
+        },
+        "raisedDisputeCount": {
+          "type": "string"
+        },
+        "resolvedDisputeCount": {
           "type": "string"
         }
       }

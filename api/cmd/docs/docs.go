@@ -1187,7 +1187,22 @@ const docTemplate = `{
                 "blockTimestamp": {
                     "type": "string"
                 },
+                "cancelledDisputeCount": {
+                    "type": "string"
+                },
                 "id": {
+                    "type": "string"
+                },
+                "judgedDisputesCount": {
+                    "type": "string"
+                },
+                "licensesCount": {
+                    "type": "string"
+                },
+                "raisedDisputeCount": {
+                    "type": "string"
+                },
+                "resolvedDisputeCount": {
                     "type": "string"
                 }
             }
