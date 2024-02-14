@@ -1184,7 +1184,7 @@
         "id": {
           "type": "string"
         },
-        "judgedDisputesCount": {
+        "judgedDisputeCount": {
           "type": "string"
         },
         "licensesCount": {
@@ -1936,10 +1936,10 @@
             "frameworkId": {
               "type": "string"
             },
-            "ipAsset": {
+            "ipId": {
               "type": "string"
             },
-            "ipId": {
+            "licensorIpId": {
               "type": "string"
             },
             "receiver": {

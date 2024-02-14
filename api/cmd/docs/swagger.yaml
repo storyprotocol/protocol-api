@@ -11,7 +11,7 @@ definitions:
         type: string
       id:
         type: string
-      judgedDisputesCount:
+      judgedDisputeCount:
         type: string
       licensesCount:
         type: string
@@ -498,9 +498,9 @@ definitions:
             type: string
           frameworkId:
             type: string
-          ipAsset:
-            type: string
           ipId:
+            type: string
+          licensorIpId:
             type: string
           receiver:
             type: string

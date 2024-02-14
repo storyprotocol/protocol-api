@@ -1193,7 +1193,7 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "judgedDisputesCount": {
+                "judgedDisputeCount": {
                     "type": "string"
                 },
                 "licensesCount": {
@@ -1945,10 +1945,10 @@ const docTemplate = `{
                         "frameworkId": {
                             "type": "string"
                         },
-                        "ipAsset": {
+                        "ipId": {
                             "type": "string"
                         },
-                        "ipId": {
+                        "licensorIpId": {
                             "type": "string"
                         },
                         "receiver": {
