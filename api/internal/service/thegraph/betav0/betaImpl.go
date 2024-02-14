@@ -46,8 +46,8 @@ func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOp
 	if options.Where.IPID != "" && options.Where.IPID != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("ipId: \"%s\",", options.Where.IPID)
 	}
-	if options.Where.IPAsset != "" && options.Where.IPAsset != QUERY_PLACEHOLDER {
-		whereString = whereString + fmt.Sprintf("ipAsset: \"%s\",", options.Where.IPAsset)
+	if options.Where.LicensorIpId != "" && options.Where.LicensorIpId != QUERY_PLACEHOLDER {
+		whereString = whereString + fmt.Sprintf("licensorIpId: \"%s\",", options.Where.LicensorIpId)
 	}
 	if options.Where.TokenContract != "" && options.Where.TokenContract != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("tokenContract: \"%s\",", options.Where.TokenContract)
@@ -61,6 +61,8 @@ func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOp
 	if options.Where.Receiver != "" && options.Where.Receiver != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("receiver: \"%s\",", options.Where.Receiver)
 	}
+
+	fmt.Println(whereString)
 
 	return whereString
 }

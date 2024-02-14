@@ -48,7 +48,7 @@ type TheGraphQueryOptions struct {
 		Receiver      string
 		TokenContract string
 		FrameworkId   string
-		IPAsset       string
+		LicensorIpId  string
 		IPID          string
 	}
 }
@@ -75,7 +75,7 @@ func FromRequestQueryOptions(options *options.QueryOptions) *TheGraphQueryOption
 		Receiver      string
 		TokenContract string
 		FrameworkId   string
-		IPAsset       string
+		LicensorIpId  string
 		IPID          string
 	}(options.Where)
 

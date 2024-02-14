@@ -10,7 +10,7 @@ type QueryOptions struct {
 		Receiver      string `json:"receiver"`
 		TokenContract string `json:"tokenContract"`
 		FrameworkId   string `json:"frameworkId"`
-		IPAsset       string `json:"ipAsset"`
+		LicensorIpId  string `json:"licensorIpId"`
 		IPID          string `json:"ipId"`
 	} `json:"where"`
 	OrderBy        string `json:"orderBy"`

@@ -46,6 +46,8 @@ func (c *ServiceBetaImpl) ListLicenses(options *thegraph.TheGraphQueryOptions) (
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
+	fmt.Println(query)
+
 	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()

@@ -7,7 +7,7 @@ type Collection struct {
 	ResolvedDisputesCount  string `json:"resolvedDisputeCount,omitempty"`
 	CancelledDisputesCount string `json:"cancelledDisputeCount,omitempty"`
 	RaisedDisputesCount    string `json:"raisedDisputeCount,omitempty"`
-	JudgedDisputesCount    string `json:"judgedDisputesCount,omitempty"`
+	JudgedDisputesCount    string `json:"judgedDisputeCount,omitempty"`
 	BlockNumber            string `json:"blockNumber,omitempty"`
 	BlockTimestamp         string `json:"blockTimestamp,omitempty"`
 }

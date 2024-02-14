@@ -14,6 +14,12 @@ func (c *ServiceBetaImpl) GetCollection(collectionId string) (*beta_v0.Collectio
 		  collection(id: "%s") {
 			id
 			assetCount
+			licensesCount
+			resolvedDisputeCount
+			cancelledDisputeCount
+			raisedDisputeCount
+			judgedDisputesCount
+			assetCount
 			blockNumber
 			blockTimestamp
 		  }
@@ -37,6 +43,11 @@ func (c *ServiceBetaImpl) ListCollections(options *thegraph.TheGraphQueryOptions
 		collections (%s, where:{%s}) {
 			id
 			assetCount
+			licensesCount
+			resolvedDisputeCount
+			cancelledDisputeCount
+			raisedDisputeCount
+			judgedDisputeCount
 			blockNumber
 			blockTimestamp
 		}
