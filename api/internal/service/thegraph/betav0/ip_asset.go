@@ -14,13 +14,14 @@ func (c *ServiceBetaImpl) GetIPAsset(assetId string) (*beta_v0.IPAsset, error) {
 		ipasset(id: "%s") {
 			id
 			chainId
+			parentIpIds	
+			childIpIds
+			rootIpIds
 			tokenContract
 			tokenId
-			parentIpIds
 			metadataResolverAddress
 			blockNumber
 			blockTimestamp
-			metadata {
 				name
 				hash
 				registrationDate
