@@ -18,7 +18,7 @@ compileswag:
 	swag init -g ./api/cmd/api/main.go -o api/cmd/docs
 
 buildserver:
-	cd api && CGO_ENABLED=0 go build --ldflags "-extldflags '-static -s'" -o build/server cmd/api/main.go
+	cd api && CGO_ENABLED=0 GOARCH=arm64 GOOS=linux go build --ldflags "-extldflags '-static -s'" -o build/server cmd/api/main.go
 
 runserver:
 	cd api && ./build/server --config=config/local.yaml
@@ -27,7 +27,7 @@ server:
 	make buildserver && make runserver
 
 build:
-	docker-compose build $*
+	docker compose build $*
 
 push-%: ecr-auth
 	docker tag $* ${ECR}/${REPO}:${TAG}

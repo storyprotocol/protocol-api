@@ -16,6 +16,7 @@ import (
 // @Summary Get an IPAsset
 // @Schemes
 // @Description Retrieve an IPAsset
+// @Host https://edge.stg.storyprotocol.net
 // @Tags IPAssets
 // @Accept json
 // @Produce json
@@ -46,6 +47,7 @@ func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Summary List IPAssets
 // @Schemes
 // @Description Retrieve a paginated, filtered list of IPAssets
+// @Host https://edge.stg.storyprotocol.net
 // @Tags IPAssets
 // @Accept json
 // @Produce json

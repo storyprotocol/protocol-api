@@ -17,6 +17,7 @@ import (
 // @Summary Get an Collection
 // @Schemes
 // @Description Retrieve a Collection
+// @Host https://edge.stg.storyprotocol.net
 // @Tags Collections
 // @Accept json
 // @Produce json
@@ -48,6 +49,7 @@ func NewGetCollection(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Summary List Collections
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Collections
+// @host https://edge.stg.storyprotocol.net
 // @Tags Collections
 // @Accept json
 // @Produce json

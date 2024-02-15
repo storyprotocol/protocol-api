@@ -15,6 +15,7 @@ import (
 // GetIPAPolicy Example godoc
 // @Summary Get a IPAPolicy
 // @Schemes
+// @Host https://edge.stg.storyprotocol.net
 // @Description Retrieve a IPAPolicy
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
@@ -47,6 +48,7 @@ func NewGetIPAPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 // @Summary List IPAPolicies
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Policies
+// @Host https://edge.stg.storyprotocol.net
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.IPAPolicyRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"

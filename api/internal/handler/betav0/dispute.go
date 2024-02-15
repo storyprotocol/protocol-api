@@ -17,6 +17,7 @@ import (
 // @Schemes
 // @Description Retrieve a Dispute
 // @Tags Disputes
+// @Host https://edge.stg.storyprotocol.net
 // @Accept json
 // @Produce json
 // @Param        disputeId   path      string  true  "Dispute ID"
@@ -47,6 +48,7 @@ func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Summary List Disputes
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Disputes
+// @Host https://edge.stg.storyprotocol.net
 // @Tags Disputes
 // @Accept json
 // @Produce json

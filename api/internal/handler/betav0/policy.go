@@ -17,6 +17,7 @@ import (
 // @Schemes
 // @Description Retrieve a Policy
 // @Security ApiKeyAuth
+// @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
 // @Tags Policies
 // @Accept json
@@ -48,6 +49,7 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Policies
 // @Security ApiKeyAuth
+// @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.PolicyRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Tags Policies

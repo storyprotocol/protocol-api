@@ -16,6 +16,7 @@ import (
 // @Summary Get a RoyaltyPay
 // @Schemes
 // @Description Retrieve a RoyaltyPay
+// @Host https://edge.stg.storyprotocol.net
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Tags RoyaltyPays
@@ -48,6 +49,7 @@ func NewGetRoyaltyPay(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Schemes
 // @Description Retrieve a paginated, filtered list of RoyaltyPays
 // @Security ApiKeyAuth
+// @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.RoyaltyPayRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Tags RoyaltyPays

@@ -21,6 +21,7 @@ type TrxWhere struct {
 // @Schemes
 // @Description Retrieve a Transaction
 // @Tags Transactions
+// @Host https://edge.stg.storyprotocol.net
 // @Accept json
 // @Produce json
 // @Param        trxId   path      string  true  "Transaction ID"
@@ -51,6 +52,7 @@ func NewGetTransaction(graphService thegraph.TheGraphServiceBeta, httpClient xht
 // @Summary List Transactions
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Transactions
+// @Host https://edge.stg.storyprotocol.net
 // @Tags Transactions
 // @Accept json
 // @Produce json

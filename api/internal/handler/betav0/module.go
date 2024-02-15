@@ -17,6 +17,7 @@ import (
 // @Schemes
 // @Description Retrieve a Module
 // @Security ApiKeyAuth
+// @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
 // @Tags Modules
 // @Accept json
@@ -47,6 +48,7 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 // @Summary List Modules
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Modules
+// @Host https://edge.stg.storyprotocol.net
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.ModuleRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"

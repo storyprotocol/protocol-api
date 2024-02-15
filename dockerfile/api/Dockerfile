@@ -13,7 +13,7 @@ RUN make buildserver
 
 EXPOSE 8090
 
-FROM alpine
+FROM arm64v8/alpine
 
 WORKDIR /app
 COPY --from=build /build/api /app/api

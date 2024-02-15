@@ -17,6 +17,7 @@ import (
 // @Schemes
 // @Description Retrieve a PolicyFrameworkManager
 // @Security ApiKeyAuth
+// @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
 // @Tags PolicyFrameworkManagers
 // @Accept json
@@ -47,6 +48,7 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 // @Summary List PolicyFrameworkManagers
 // @Schemes
 // @Description Retrieve a paginated, filtered list of PolicyFrameworkManagers
+// @Host https://edge.stg.storyprotocol.net
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.PolicyFrameworkManagerRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"

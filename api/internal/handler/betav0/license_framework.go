@@ -16,6 +16,7 @@ import (
 // @Summary Get a LicenseFramework
 // @Schemes
 // @Description Retrieve a LicenseFramework
+// @Host https://edge.stg.storyprotocol.net
 // @Tags LicenseFrameworks
 // @Accept json
 // @Produce json
@@ -47,6 +48,7 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 // @Summary List LicenseFrameworks
 // @Schemes
 // @Description Retrieve a paginated, filtered list of LicenseFrameworks
+// @Host https://edge.stg.storyprotocol.net
 // @Tags LicenseFrameworks
 // @Accept json
 // @Produce json

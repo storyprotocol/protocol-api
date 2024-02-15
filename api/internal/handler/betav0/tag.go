@@ -18,6 +18,7 @@ import (
 // @Description Retrieve a Tag
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
+// @Host https://edge.stg.storyprotocol.net
 // @Tags Tags
 // @Accept json
 // @Produce json
@@ -46,6 +47,7 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 // ListTags Example godoc
 // @Summary List Tags
 // @Schemes
+// @Host https://edge.stg.storyprotocol.net
 // @Description Retrieve a paginated, filtered list of Tags
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"

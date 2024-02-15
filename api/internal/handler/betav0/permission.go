@@ -16,6 +16,7 @@ import (
 // @Summary Get a Permission
 // @Schemes
 // @Description Retrieve a Permission
+// @Host https://edge.stg.storyprotocol.net
 // @Tags Permissions
 // @Accept json
 // @Produce json
@@ -45,6 +46,7 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Summary List Permissions
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Permissions
+// @Host https://edge.stg.storyprotocol.net
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.PermissionRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"

@@ -17,6 +17,7 @@ import (
 // @Schemes
 // @Description Retrieve a License
 // @Tags Licenses
+// @Host https://edge.stg.storyprotocol.net
 // @Accept json
 // @Produce json
 // @Security ApiKeyAuth
@@ -47,6 +48,7 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Summary List Licenses
 // @Schemes
 // @Description Retrieve a paginated, filtered list of Licenses
+// @Host https://edge.stg.storyprotocol.net
 // @Tags Licenses
 // @Accept json
 // @Produce json
