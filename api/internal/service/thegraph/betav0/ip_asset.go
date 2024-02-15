@@ -22,12 +22,14 @@ func (c *ServiceBetaImpl) GetIPAsset(assetId string) (*beta_v0.IPAsset, error) {
 			metadataResolverAddress
 			blockNumber
 			blockTimestamp
+			metadata {
 				name
 				hash
 				registrationDate
 				registrant
 				uri
 			}
+			
 	  	}	
 	}
     `, assetId)
