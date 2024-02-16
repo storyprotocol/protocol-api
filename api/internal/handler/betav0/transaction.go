@@ -104,6 +104,7 @@ func fromTrxRequestQueryOptions(options *beta_v0.TrxQueryOptions) *thegraph.TheG
 
 	queryOptions.Where.ActionType = options.Where.ActionType
 	queryOptions.Where.ResourceId = options.Where.ResourceId
+	queryOptions.Where.IPID = options.Where.IPID
 
 	return queryOptions
 }

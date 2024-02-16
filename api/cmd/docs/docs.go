@@ -813,51 +813,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/policyframeworks/{pfwmId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a PolicyFrameworkManager",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "PolicyFrameworkManagers"
-                ],
-                "summary": "Get a PolicyFrameworkManager",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "PolicyFrameworkManager ID",
-                        "name": "pfwmId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/betav0.PolicyFrameworkManagerResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/policymanagers": {
+        "/api/v1/policyframeworks": {
             "post": {
                 "security": [
                     {
@@ -898,6 +854,50 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/betav0.PolicyFrameworkManagersResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/policyframeworks/{pfwmId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a PolicyFrameworkManager",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PolicyFrameworkManagers"
+                ],
+                "summary": "Get a PolicyFrameworkManager",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "PolicyFrameworkManager ID",
+                        "name": "pfwmId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.PolicyFrameworkManagerResponse"
                         }
                     }
                 }
@@ -2558,6 +2558,9 @@ const docTemplate = `{
                     "type": "object",
                     "properties": {
                         "actionType": {
+                            "type": "string"
+                        },
+                        "ipId": {
                             "type": "string"
                         },
                         "resourceId": {

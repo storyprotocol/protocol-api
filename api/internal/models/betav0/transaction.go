@@ -46,6 +46,7 @@ type TrxQueryOptions struct {
 	Where struct {
 		ActionType string `json:"actionType"`
 		ResourceId string `json:"resourceId"`
+		IPID       string `json:"ipId"`
 	} `json:"where"`
 	OrderBy        string `json:"orderBy"`
 	OrderDirection string `json:"orderDirection"`

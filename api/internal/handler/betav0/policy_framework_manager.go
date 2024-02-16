@@ -56,7 +56,7 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 // @Accept json
 // @Produce json
 // @Success 200 {object} PolicyFrameworkManagersResponse
-// @Router /api/v1/policymanagers [post]
+// @Router /api/v1/policyframeworks [post]
 func NewListPolicyFrameworkManagers(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody beta_v0.PolicyFrameworkManagerRequestBody
