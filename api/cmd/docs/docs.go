@@ -465,6 +465,96 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/licensemintingfees": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of LicenseMintingFeePaids",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LicenseMintingFeePaids"
+                ],
+                "summary": "List LicenseMintingFeePays",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/betav0.RoyaltyRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.LicenseMintingFeePaidsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/licensemintingfees/{licenseMintingFeePaidId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a LicenseMintingFeePay",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "LicenseMintingFeePaids"
+                ],
+                "summary": "Get a LicenseMintingFeePay",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "LicenseMintingFeePay ID",
+                        "name": "licenseMintingFeePaidId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.LicenseMintingFeePaidResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/licenses": {
             "post": {
                 "security": [
@@ -1083,6 +1173,96 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/royaltypolicies": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of RoyaltyPolicies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RoyaltyPolicies"
+                ],
+                "summary": "List RoyaltyPolicies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/betav0.RoyaltyRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.RoyaltyPoliciesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/royaltypolicies/{royaltyPolicyId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a RoyaltyPolicy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RoyaltyPolicies"
+                ],
+                "summary": "Get a RoyaltyPolicy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Royalty Policy ID",
+                        "name": "royaltyPolicyId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.RoyaltyPolicyResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/tags": {
             "post": {
                 "security": [
@@ -1607,7 +1787,7 @@ const docTemplate = `{
                 "childIpIds": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/betav0.IPAsset"
                     }
                 },
                 "id": {
@@ -1622,13 +1802,13 @@ const docTemplate = `{
                 "parentIpIds": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/betav0.IPAsset"
                     }
                 },
                 "rootIpIds": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/betav0.IPAsset"
                     }
                 },
                 "tokenContract": {
@@ -1801,6 +1981,51 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/betav0.LicenseFramework"
+                    }
+                }
+            }
+        },
+        "betav0.LicenseMintingFeePaid": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "blockNumber": {
+                    "type": "string"
+                },
+                "blockTimestamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "payer": {
+                    "type": "string"
+                },
+                "receiverIpId": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "betav0.LicenseMintingFeePaidResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/betav0.LicenseMintingFeePaid"
+                }
+            }
+        },
+        "betav0.LicenseMintingFeePaidsResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/betav0.LicenseMintingFeePaid"
                     }
                 }
             }
@@ -1998,6 +2223,62 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.PILPolicy": {
+            "type": "object",
+            "properties": {
+                "attribution": {
+                    "type": "boolean"
+                },
+                "commercialAttribution": {
+                    "type": "boolean"
+                },
+                "commercialRevShare": {
+                    "type": "string"
+                },
+                "commercialUse": {
+                    "type": "boolean"
+                },
+                "commercializerChecker": {
+                    "type": "string"
+                },
+                "commercializerCheckerData": {
+                    "type": "string"
+                },
+                "contentRestrictions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "derivativesAllowed": {
+                    "type": "boolean"
+                },
+                "derivativesApproval": {
+                    "type": "boolean"
+                },
+                "derivativesAttribution": {
+                    "type": "boolean"
+                },
+                "derivativesReciprocal": {
+                    "type": "boolean"
+                },
+                "distributionChannels": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "territories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "betav0.Permission": {
             "type": "object",
             "properties": {
@@ -2107,14 +2388,32 @@ const docTemplate = `{
                 "blockTimestamp": {
                     "type": "string"
                 },
+                "frameworkData": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
+                },
+                "mintingFee": {
+                    "type": "string"
+                },
+                "mintingFeeToken": {
+                    "type": "string"
+                },
+                "pil": {
+                    "$ref": "#/definitions/betav0.PILPolicy"
                 },
                 "policyFrameworkManager": {
                     "type": "string"
                 },
-                "uml": {
-                    "$ref": "#/definitions/betav0.UMLPolicy"
+                "policyId": {
+                    "type": "string"
+                },
+                "royaltyData": {
+                    "type": "string"
+                },
+                "royaltyPolicy": {
+                    "type": "string"
                 }
             }
         },
@@ -2346,6 +2645,60 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.RoyaltyPoliciesResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/betav0.RoyaltyPolicy"
+                    }
+                }
+            }
+        },
+        "betav0.RoyaltyPolicy": {
+            "type": "object",
+            "properties": {
+                "ancestorsVault": {
+                    "type": "string"
+                },
+                "blockNumber": {
+                    "type": "string"
+                },
+                "blockTimestamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "royaltyStack": {
+                    "type": "string"
+                },
+                "splitClone": {
+                    "type": "string"
+                },
+                "targetAncestors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "targetRoyaltyAmount": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "betav0.RoyaltyPolicyResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/betav0.RoyaltyPolicy"
+                }
+            }
+        },
         "betav0.RoyaltyQueryOptions": {
             "type": "object",
             "properties": {
@@ -2567,65 +2920,6 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                }
-            }
-        },
-        "betav0.UMLPolicy": {
-            "type": "object",
-            "properties": {
-                "attribution": {
-                    "type": "boolean"
-                },
-                "commercialAttribution": {
-                    "type": "boolean"
-                },
-                "commercialUse": {
-                    "type": "boolean"
-                },
-                "commercializers": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "derivativesAllowed": {
-                    "type": "boolean"
-                },
-                "derivativesApproval": {
-                    "type": "boolean"
-                },
-                "derivativesAttribution": {
-                    "type": "boolean"
-                },
-                "derivativesReciprocal": {
-                    "type": "boolean"
-                },
-                "derivativesRevShare": {
-                    "type": "string"
-                },
-                "distributionChannels": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "frameworkManagerAddress": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "royaltyPolicy": {
-                    "type": "string"
-                },
-                "territories": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "transferable": {
-                    "type": "boolean"
                 }
             }
         }

@@ -52,9 +52,54 @@ func (c *ServiceBetaImpl) ListIPAssets(options *beta_graph.TheGraphQueryOptions)
 		ipassets (%s, where:{%s}) {
 			id
 			chainId
-			parentIpIds	
-			childIpIds
-			rootIpIds
+			parentIpIds	{
+				id
+				chainId
+				tokenContract
+				tokenId
+				metadataResolverAddress
+				blockNumber
+				blockTimestamp
+				metadata {
+					name
+					hash
+					registrationDate
+					registrant
+					uri
+				}
+			}
+			childIpIds {
+				id
+				chainId
+				tokenContract
+				tokenId
+				metadataResolverAddress
+				blockNumber
+				blockTimestamp
+				metadata {
+					name
+					hash
+					registrationDate
+					registrant
+					uri
+				}
+			}
+			rootIpIds {
+				id
+				chainId
+				tokenContract
+				tokenId
+				metadataResolverAddress
+				blockNumber
+				blockTimestamp
+				metadata {
+					name
+					hash
+					registrationDate
+					registrant
+					uri
+				}
+			}
 			tokenContract
 			tokenId
 			metadataResolverAddress

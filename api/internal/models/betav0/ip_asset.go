@@ -2,17 +2,17 @@ package betav0
 
 // Get IP ACCOUNT
 type IPAsset struct {
-	ID             string   `json:"id"`
-	ChainId        string   `json:"chainId"`
-	ParentIpIds    []string `json:"parentIpIds"`
-	ChildIpIds     []string `json:"childIpIds"`
-	RootIpIds      []string `json:"rootIpIds"`
-	TokenContract  string   `json:"tokenContract"`
-	TokenId        string   `json:"tokenId"`
-	Resolver       string   `json:"metadataResolverAddress"`
-	Metadata       Metadata `json:"metadata"`
-	BlockNumber    string   `json:"blockNumber"`
-	BlockTimestamp string   `json:"blockTimestamp"`
+	ID             string    `json:"id"`
+	ChainId        string    `json:"chainId"`
+	ParentIpIds    []IPAsset `json:"parentIpIds"`
+	ChildIpIds     []IPAsset `json:"childIpIds"`
+	RootIpIds      []IPAsset `json:"rootIpIds"`
+	TokenContract  string    `json:"tokenContract"`
+	TokenId        string    `json:"tokenId"`
+	Resolver       string    `json:"metadataResolverAddress"`
+	Metadata       Metadata  `json:"metadata"`
+	BlockNumber    string    `json:"blockNumber"`
+	BlockTimestamp string    `json:"blockTimestamp"`
 }
 
 type Metadata struct {

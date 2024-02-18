@@ -19,6 +19,8 @@ type TheGraphServiceBeta interface {
 	GetRoyaltyPay(royaltyPayId string) (*betav0.RoyaltyPay, error)
 	GetPolicyFrameworkManager(pfwmId string) (*betav0.PolicyFrameworkManager, error)
 	GetCollection(colId string) (*betav0.Collection, error)
+	GetRoyaltyPolicy(royaltyPolicyId string) (*betav0.RoyaltyPolicy, error)
+	GetLicenseMintingFeePaid(licenseMintingFeePaidId string) (*betav0.LicenseMintingFeePaid, error)
 	GetTransaction(trxId string) (*betav0.Transaction, error)
 
 	// LISTS
@@ -36,6 +38,8 @@ type TheGraphServiceBeta interface {
 	ListRoyaltyPays(options *TheGraphQueryOptions) ([]*betav0.RoyaltyPay, error)
 	ListPolicyFrameworkManagers(options *TheGraphQueryOptions) ([]*betav0.PolicyFrameworkManager, error)
 	ListCollections(options *TheGraphQueryOptions) ([]*betav0.Collection, error)
+	ListRoyaltyPolicies(options *TheGraphQueryOptions) ([]*betav0.RoyaltyPolicy, error)
+	ListLicenseMintingFeePaids(options *TheGraphQueryOptions) ([]*betav0.LicenseMintingFeePaid, error)
 	ListTransactions(options *TheGraphQueryOptions) ([]*betav0.Transaction, error)
 }
 

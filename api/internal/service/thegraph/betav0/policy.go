@@ -14,21 +14,24 @@ func (c *ServiceBetaImpl) GetPolicy(policyId string) (*beta_v0.Policy, error) {
 		  policy(id: "%s") {
 			id
 			policyFrameworkManager
+			frameworkData
+			royaltyPolicy
+			royaltyData
+			mintingFee
+			mintingFeeToken
 			blockTimestamp
 			blockNumber
-			uml {
+			pil {
 			  attribution
 			  commercialAttribution
 			  commercialRevShare
 			  commercialUse
-			  commercializers
-			  transferable
+			  commercializerChecker
+			  commercializerCheckerData
 			  territories
 			  id
 			  distributionChannels
-			  derivativesRevShare
 			  derivativesReciprocal
-			  royaltyPolicy
 			  derivativesAttribution
 			  derivativesApproval
 			  derivativesAllowed
@@ -63,28 +66,31 @@ func (c *ServiceBetaImpl) ListPolicies(options *thegraph.TheGraphQueryOptions) (
 	  policies(%s, where:{%s}) {
 			id
 			policyFrameworkManager
+			frameworkData
+			royaltyPolicy
+			royaltyData
+			mintingFee
+			mintingFeeToken
 			blockTimestamp
 			blockNumber
-			uml {
+			pil {
 			  attribution
 			  commercialAttribution
 			  commercialRevShare
 			  commercialUse
-			  commercializers
-			  transferable
+			  commercializerChecker
+			  commercializerCheckerData
 			  territories
 			  id
 			  distributionChannels
-			  derivativesRevShare
 			  derivativesReciprocal
-			  royaltyPolicy
 			  derivativesAttribution
 			  derivativesApproval
 			  derivativesAllowed
 			  contentRestrictions
 			}
 		  }
-	}
+		}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 	//policyData {
 	//	id
