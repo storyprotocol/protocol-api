@@ -2,7 +2,7 @@ package betav0
 
 type Permission struct {
 	ID             string `json:"id"`
-	UUID           string `json:"uuid"`
+	UUID           string `json:"uuid,omitempty"`
 	Permission     string `json:"permission"`
 	Signer         string `json:"signer"`
 	To             string `json:"to"`

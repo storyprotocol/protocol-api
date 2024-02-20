@@ -95,7 +95,5 @@ func fromRoyaltyPolicyRequestQueryOptions(options *beta_v0.RoyaltyPolicyQueryOpt
 	queryOptions.First = options.Pagination.Limit
 	queryOptions.Skip = options.Pagination.Offset
 
-	queryOptions.Where.IPID = options.Where.IPID
-
 	return queryOptions
 }

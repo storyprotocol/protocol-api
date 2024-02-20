@@ -14,9 +14,54 @@ func (c *ServiceBetaImpl) GetIPAsset(assetId string) (*beta_v0.IPAsset, error) {
 		ipasset(id: "%s") {
 			id
 			chainId
-			parentIpIds	
-			childIpIds
-			rootIpIds
+			parentIpIds	{
+				id
+				chainId
+				tokenContract
+				tokenId
+				metadataResolverAddress
+				blockNumber
+				blockTimestamp
+				metadata {
+					name
+					hash
+					registrationDate
+					registrant
+					uri
+				}
+			}
+			childIpIds {
+				id
+				chainId
+				tokenContract
+				tokenId
+				metadataResolverAddress
+				blockNumber
+				blockTimestamp
+				metadata {
+					name
+					hash
+					registrationDate
+					registrant
+					uri
+				}
+			}
+			rootIpIds {
+				id
+				chainId
+				tokenContract
+				tokenId
+				metadataResolverAddress
+				blockNumber
+				blockTimestamp
+				metadata {
+					name
+					hash
+					registrationDate
+					registrant
+					uri
+				}
+			}
 			tokenContract
 			tokenId
 			metadataResolverAddress
