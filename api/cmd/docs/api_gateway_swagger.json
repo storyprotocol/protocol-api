@@ -456,7 +456,53 @@
         }
       }
     },
-    "/api/v1/licensemintingfees": {
+    "/api/v1/licenses": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Retrieve a paginated, filtered list of Licenses",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Licenses"
+        ],
+        "summary": "List Licenses",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "API Key",
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Query Parameters (",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LicenseRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/LicensesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/licenses/mintingfees": {
       "post": {
         "security": [
           {
@@ -502,7 +548,7 @@
         }
       }
     },
-    "/api/v1/licensemintingfees/{licenseMintingFeePaidId}": {
+    "/api/v1/licenses/mintingfees/{licenseMintingFeePaidId}": {
       "get": {
         "security": [
           {
@@ -541,52 +587,6 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/LicenseMintingFeePaidResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/licenses": {
-      "post": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Retrieve a paginated, filtered list of Licenses",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Licenses"
-        ],
-        "summary": "List Licenses",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "API Key",
-            "name": "X-API-Key",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "Query Parameters (",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/LicenseRequestBody"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/LicensesResponse"
             }
           }
         }
@@ -850,51 +850,7 @@
         }
       }
     },
-    "/api/v1/policies/{policyId}": {
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Retrieve a Policy",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Policies"
-        ],
-        "summary": "Get a Policy",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "API Key",
-            "name": "X-API-Key",
-            "in": "header",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Policy ID",
-            "name": "policyId",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/PolicyResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/policyframeworks": {
+    "/api/v1/policies/frameworks": {
       "post": {
         "security": [
           {
@@ -940,7 +896,7 @@
         }
       }
     },
-    "/api/v1/policyframeworks/{pfwmId}": {
+    "/api/v1/policies/frameworks/{pfwmId}": {
       "get": {
         "security": [
           {
@@ -984,14 +940,14 @@
         }
       }
     },
-    "/api/v1/royalties": {
-      "post": {
+    "/api/v1/policies/{policyId}": {
+      "get": {
         "security": [
           {
             "ApiKeyAuth": []
           }
         ],
-        "description": "Retrieve a paginated, filtered list of Royalties",
+        "description": "Retrieve a Policy",
         "consumes": [
           "application/json"
         ],
@@ -999,9 +955,143 @@
           "application/json"
         ],
         "tags": [
-          "Royalties"
+          "Policies"
         ],
-        "summary": "List Royalties",
+        "summary": "Get a Policy",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "API Key",
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Policy ID",
+            "name": "policyId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PolicyResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/royalties/payments": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Retrieve a paginated, filtered list of RoyaltyPays",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "RoyaltyPays"
+        ],
+        "summary": "List RoyaltyPays",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "API Key",
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Query Parameters (",
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RoyaltyPayRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RoyaltyPaysResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/royalties/payments/{royaltyPayId}": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Retrieve a RoyaltyPay",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "RoyaltyPays"
+        ],
+        "summary": "Get a RoyaltyPay",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "API Key",
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "RoyaltyPay ID",
+            "name": "royaltyPayId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RoyaltyPayResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/royalties/policies": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Retrieve a paginated, filtered list of RoyaltyPolicies",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "RoyaltyPolicies"
+        ],
+        "summary": "List RoyaltyPolicies",
         "parameters": [
           {
             "type": "string",
@@ -1024,7 +1114,51 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/RoyaltiesResponse"
+              "$ref": "#/definitions/RoyaltyPoliciesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/royalties/policies/{royaltyPolicyId}": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Retrieve a RoyaltyPolicy",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "RoyaltyPolicies"
+        ],
+        "summary": "Get a RoyaltyPolicy",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "API Key",
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Royalty Policy ID",
+            "name": "royaltyPolicyId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RoyaltyPolicyResponse"
             }
           }
         }
@@ -1074,14 +1208,14 @@
         }
       }
     },
-    "/api/v1/royaltypays": {
+    "/api/v1/royalty": {
       "post": {
         "security": [
           {
             "ApiKeyAuth": []
           }
         ],
-        "description": "Retrieve a paginated, filtered list of RoyaltyPays",
+        "description": "Retrieve a paginated, filtered list of Royalties",
         "consumes": [
           "application/json"
         ],
@@ -1089,99 +1223,9 @@
           "application/json"
         ],
         "tags": [
-          "RoyaltyPays"
+          "Royalties"
         ],
-        "summary": "List RoyaltyPays",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "API Key",
-            "name": "X-API-Key",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "Query Parameters (",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/RoyaltyPayRequestBody"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/RoyaltyPaysResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/royaltypays/{royaltyPayId}": {
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Retrieve a RoyaltyPay",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "RoyaltyPays"
-        ],
-        "summary": "Get a RoyaltyPay",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "API Key",
-            "name": "X-API-Key",
-            "in": "header",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "RoyaltyPay ID",
-            "name": "royaltyPayId",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/RoyaltyPayResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/royaltypolicies": {
-      "post": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Retrieve a paginated, filtered list of RoyaltyPolicies",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "RoyaltyPolicies"
-        ],
-        "summary": "List RoyaltyPolicies",
+        "summary": "List Royalties",
         "parameters": [
           {
             "type": "string",
@@ -1204,51 +1248,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/RoyaltyPoliciesResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/royaltypolicies/{royaltyPolicyId}": {
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Retrieve a RoyaltyPolicy",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "RoyaltyPolicies"
-        ],
-        "summary": "Get a RoyaltyPolicy",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "API Key",
-            "name": "X-API-Key",
-            "in": "header",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Royalty Policy ID",
-            "name": "royaltyPolicyId",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/RoyaltyPolicyResponse"
+              "$ref": "#/definitions/RoyaltiesResponse"
             }
           }
         }
@@ -1698,6 +1698,9 @@
               "type": "string"
             },
             "inherited": {
+              "type": "string"
+            },
+            "ipId": {
               "type": "string"
             },
             "policyId": {
