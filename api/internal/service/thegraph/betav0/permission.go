@@ -33,6 +33,11 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 
 	perms := []*beta_v0.Permission{}
 	for _, perm := range permsRes.Permissions {
+		name, err := c.openChainClient.GetPermissionName(perm.Func)
+		if err != nil {
+			name = perm.Func
+		}
+		perm.Permission = name
 		perm.ID = perm.UUID
 		perms = append(perms, perm)
 		perm.UUID = ""
@@ -66,6 +71,11 @@ func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions
 
 	perms := []*beta_v0.Permission{}
 	for _, perm := range permsRes.Permissions {
+		name, err := c.openChainClient.GetPermissionName(perm.Func)
+		if err != nil {
+			name = perm.Func
+		}
+		perm.Permission = name
 		perm.ID = perm.UUID
 		perms = append(perms, perm)
 		perm.UUID = ""

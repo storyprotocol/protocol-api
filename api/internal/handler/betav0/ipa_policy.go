@@ -98,6 +98,7 @@ func fromIPAPolicyRequestQueryOptions(options *beta_v0.IPAPQueryOptions) *thegra
 	queryOptions.Where.PolicyId = options.Where.PolicyId
 	queryOptions.Where.Active = options.Where.Active
 	queryOptions.Where.Inherited = options.Where.Inherited
+	queryOptions.Where.IPID = options.Where.IPID
 
 	return queryOptions
 }

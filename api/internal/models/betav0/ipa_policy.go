@@ -39,6 +39,7 @@ type IPAPQueryOptions struct {
 		PolicyId  string `json:"policyId"`
 		Active    string `json:"active"`
 		Inherited string `json:"inherited"`
+		IPID      string `json:"ipId"`
 	} `json:"where"`
 	OrderBy        string `json:"orderBy"`
 	OrderDirection string `json:"orderDirection"`

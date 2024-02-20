@@ -42,7 +42,7 @@ func main() {
 
 	// theGraphBeta
 	theGraphBetaClient := graphql.NewClient(cfg.TheGraphBetaEndpoint)
-	theGraphBetaService := betav0.NewTheGraphServiceBetaImpl(theGraphBetaClient)
+	theGraphBetaService := betav0.NewTheGraphServiceBetaImpl(theGraphBetaClient, cfg.OpenChainLookupEndpoint)
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Hello")

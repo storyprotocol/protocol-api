@@ -3,6 +3,7 @@ package betav0
 import (
 	"fmt"
 	"github.com/machinebox/graphql"
+	"github.com/storyprotocol/protocol-api/api/internal/service/openapi"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
@@ -12,14 +13,17 @@ const (
 	QUERY_PLACEHOLDER = "string"
 )
 
-func NewTheGraphServiceBetaImpl(client *graphql.Client) thegraph.TheGraphServiceBeta {
+func NewTheGraphServiceBetaImpl(client *graphql.Client, openChainUrl string) thegraph.TheGraphServiceBeta {
+	openChainClient := openapi.NewOpenChainClient(openChainUrl)
 	return &ServiceBetaImpl{
-		client: client,
+		client:          client,
+		openChainClient: openChainClient,
 	}
 }
 
 type ServiceBetaImpl struct {
-	client *graphql.Client
+	client          *graphql.Client
+	openChainClient *openapi.OpenchainClient
 }
 
 func (s *ServiceBetaImpl) buildNewRequest(options *thegraph.TheGraphQueryOptions, query string) *graphql.Request {

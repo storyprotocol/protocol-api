@@ -13,6 +13,7 @@ func (c *ServiceBetaImpl) GetIPAPolicy(ipaPolicyId string) (*beta_v0.IPAPolicy, 
 	query {
 		ipapolicy(id: "%s") {
 			id
+			ipId
 			policyId
 			index
 			active
@@ -40,6 +41,7 @@ func (c *ServiceBetaImpl) ListIPAPolicies(options *thegraph.TheGraphQueryOptions
 	query(%s){
 		ipapolicies (%s, where:{%s}) {
 			id
+			ipId
 			policyId
 			index
 			active
