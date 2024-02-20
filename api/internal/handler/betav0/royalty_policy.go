@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        royaltyPolicyId   path      string  true  "Royalty Policy ID"
 // @Success 200 {object} RoyaltyPolicyResponse
-// @Router /api/v1/royaltypolicies/{royaltyPolicyId} [get]
+// @Router /api/v1/royalties/policies/{royaltyPolicyId} [get]
 func NewGetRoyaltyPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		royaltyPolicyId := c.Param("royaltyPolicyId")
@@ -56,7 +56,7 @@ func NewGetRoyaltyPolicy(graphService thegraph.TheGraphServiceBeta, httpClient x
 // @Accept json
 // @Produce json
 // @Success 200 {object} RoyaltyPoliciesResponse
-// @Router /api/v1/royaltypolicies [post]
+// @Router /api/v1/royalties/policies [post]
 func NewListRoyaltyPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody beta_v0.RoyaltyPolicyRequestBody

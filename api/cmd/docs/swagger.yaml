@@ -170,6 +170,8 @@ definitions:
             type: string
           inherited:
             type: string
+          ipId:
+            type: string
           policyId:
             type: string
         type: object
@@ -1237,63 +1239,6 @@ paths:
       summary: Get a LicenseFramework
       tags:
       - LicenseFrameworks
-  /api/v1/licensemintingfees:
-    post:
-      consumes:
-      - application/json
-      description: Retrieve a paginated, filtered list of LicenseMintingFeePaids
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: Query Parameters (
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/betav0.RoyaltyRequestBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.LicenseMintingFeePaidsResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: List LicenseMintingFeePays
-      tags:
-      - LicenseMintingFeePaids
-  /api/v1/licensemintingfees/{licenseMintingFeePaidId}:
-    get:
-      consumes:
-      - application/json
-      description: Retrieve a LicenseMintingFeePay
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: LicenseMintingFeePay ID
-        in: path
-        name: licenseMintingFeePaidId
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.LicenseMintingFeePaidResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get a LicenseMintingFeePay
-      tags:
-      - LicenseMintingFeePaids
   /api/v1/licenses:
     post:
       consumes:
@@ -1351,6 +1296,63 @@ paths:
       summary: Get an License
       tags:
       - Licenses
+  /api/v1/licenses/mintingfees:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of LicenseMintingFeePaids
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/betav0.RoyaltyRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/betav0.LicenseMintingFeePaidsResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List LicenseMintingFeePays
+      tags:
+      - LicenseMintingFeePaids
+  /api/v1/licenses/mintingfees/{licenseMintingFeePaidId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a LicenseMintingFeePay
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: LicenseMintingFeePay ID
+        in: path
+        name: licenseMintingFeePaidId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/betav0.LicenseMintingFeePaidResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a LicenseMintingFeePay
+      tags:
+      - LicenseMintingFeePaids
   /api/v1/modules:
     post:
       consumes:
@@ -1515,7 +1517,7 @@ paths:
       summary: Get a Policy
       tags:
       - Policies
-  /api/v1/policyframeworks:
+  /api/v1/policies/frameworks:
     post:
       consumes:
       - application/json
@@ -1544,7 +1546,7 @@ paths:
       summary: List PolicyFrameworkManagers
       tags:
       - PolicyFrameworkManagers
-  /api/v1/policyframeworks/{pfwmId}:
+  /api/v1/policies/frameworks/{pfwmId}:
     get:
       consumes:
       - application/json
@@ -1572,35 +1574,6 @@ paths:
       summary: Get a PolicyFrameworkManager
       tags:
       - PolicyFrameworkManagers
-  /api/v1/royalties:
-    post:
-      consumes:
-      - application/json
-      description: Retrieve a paginated, filtered list of Royalties
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: Query Parameters (
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/betav0.RoyaltyRequestBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.RoyaltiesResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: List Royalties
-      tags:
-      - Royalties
   /api/v1/royalties/{royaltyId}:
     get:
       consumes:
@@ -1629,7 +1602,7 @@ paths:
       summary: Get a Royalty
       tags:
       - Royalties
-  /api/v1/royaltypays:
+  /api/v1/royalties/payments:
     post:
       consumes:
       - application/json
@@ -1658,7 +1631,7 @@ paths:
       summary: List RoyaltyPays
       tags:
       - RoyaltyPays
-  /api/v1/royaltypays/{royaltyPayId}:
+  /api/v1/royalties/payments/{royaltyPayId}:
     get:
       consumes:
       - application/json
@@ -1686,7 +1659,7 @@ paths:
       summary: Get a RoyaltyPay
       tags:
       - RoyaltyPays
-  /api/v1/royaltypolicies:
+  /api/v1/royalties/policies:
     post:
       consumes:
       - application/json
@@ -1715,7 +1688,7 @@ paths:
       summary: List RoyaltyPolicies
       tags:
       - RoyaltyPolicies
-  /api/v1/royaltypolicies/{royaltyPolicyId}:
+  /api/v1/royalties/policies/{royaltyPolicyId}:
     get:
       consumes:
       - application/json
@@ -1743,6 +1716,35 @@ paths:
       summary: Get a RoyaltyPolicy
       tags:
       - RoyaltyPolicies
+  /api/v1/royalty:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Royalties
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/betav0.RoyaltyRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/betav0.RoyaltiesResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List Royalties
+      tags:
+      - Royalties
   /api/v1/tags:
     post:
       consumes:

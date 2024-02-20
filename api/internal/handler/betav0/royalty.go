@@ -56,7 +56,7 @@ func NewGetRoyalty(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Accept json
 // @Produce json
 // @Success 200 {object} RoyaltiesResponse
-// @Router /api/v1/royalties [post]
+// @Router /api/v1/royalty [post]
 func NewListRoyalties(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody beta_v0.RoyaltyRequestBody

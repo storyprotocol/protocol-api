@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        licenseMintingFeePaidId   path      string  true  "LicenseMintingFeePay ID"
 // @Success 200 {object} LicenseMintingFeePaidResponse
-// @Router /api/v1/licensemintingfees/{licenseMintingFeePaidId} [get]
+// @Router /api/v1/licenses/mintingfees/{licenseMintingFeePaidId} [get]
 func NewGetLicenseMintingFeePay(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		licenseMintingFeePaidId := c.Param("licenseMintingFeePaidId")
@@ -56,7 +56,7 @@ func NewGetLicenseMintingFeePay(graphService thegraph.TheGraphServiceBeta, httpC
 // @Accept json
 // @Produce json
 // @Success 200 {object} LicenseMintingFeePaidsResponse
-// @Router /api/v1/licensemintingfees [post]
+// @Router /api/v1/licenses/mintingfees [post]
 func NewListLicenseMintingFeePaids(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody beta_v0.LicenseMintingFeePaidRequestBody

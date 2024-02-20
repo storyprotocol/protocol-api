@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param        pfwmId   path      string  true  "PolicyFrameworkManager ID"
 // @Success 200 {object} PolicyFrameworkManagerResponse
-// @Router /api/v1/policyframeworks/{pfwmId} [get]
+// @Router /api/v1/policies/frameworks/{pfwmId} [get]
 func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		pfwmId := c.Param("pfwmId")
@@ -56,7 +56,7 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 // @Accept json
 // @Produce json
 // @Success 200 {object} PolicyFrameworkManagersResponse
-// @Router /api/v1/policyframeworks [post]
+// @Router /api/v1/policies/frameworks [post]
 func NewListPolicyFrameworkManagers(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody beta_v0.PolicyFrameworkManagerRequestBody
