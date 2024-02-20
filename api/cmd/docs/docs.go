@@ -375,96 +375,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/licenseframeworks": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of LicenseFrameworks",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "LicenseFrameworks"
-                ],
-                "summary": "List LicenseFrameworks",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/betav0.LicenseFrameworkRequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/betav0.LicenseFrameworksResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/licenseframeworks/{frameworkId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a LicenseFramework",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "LicenseFrameworks"
-                ],
-                "summary": "Get a LicenseFramework",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Framework ID",
-                        "name": "frameworkId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/betav0.LicenseFrameworkResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/licenses": {
             "post": {
                 "security": [
@@ -526,7 +436,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "LicenseMintingFeePaids"
+                    "Licenses"
                 ],
                 "summary": "List LicenseMintingFeePays",
                 "parameters": [
@@ -572,7 +482,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "LicenseMintingFeePaids"
+                    "Licenses"
                 ],
                 "summary": "Get a LicenseMintingFeePay",
                 "parameters": [
@@ -874,7 +784,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PolicyFrameworkManagers"
+                    "Policies"
                 ],
                 "summary": "List PolicyFrameworkManagers",
                 "parameters": [
@@ -920,7 +830,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "PolicyFrameworkManagers"
+                    "Policies"
                 ],
                 "summary": "Get a PolicyFrameworkManager",
                 "parameters": [
@@ -1008,7 +918,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RoyaltyPays"
+                    "Royalties"
                 ],
                 "summary": "List RoyaltyPays",
                 "parameters": [
@@ -1054,7 +964,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RoyaltyPays"
+                    "Royalties"
                 ],
                 "summary": "Get a RoyaltyPay",
                 "parameters": [
@@ -1098,7 +1008,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RoyaltyPolicies"
+                    "Royalties"
                 ],
                 "summary": "List RoyaltyPolicies",
                 "parameters": [
@@ -1144,7 +1054,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "RoyaltyPolicies"
+                    "Royalties"
                 ],
                 "summary": "Get a RoyaltyPolicy",
                 "parameters": [
@@ -1630,56 +1540,6 @@ const docTemplate = `{
                 }
             }
         },
-        "betav0.FrameworkCreationParams": {
-            "type": "object",
-            "properties": {
-                "activationParamDefaultValues": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "activationParamVerifiers": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "defaultNeedsActivation": {
-                    "type": "boolean"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "licenseUrl": {
-                    "type": "string"
-                },
-                "linkParentParamDefaultValues": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "linkParentParamVerifiers": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "mintingParamDefaultValues": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "mintingParamVerifiers": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
         "betav0.IPAPQueryOptions": {
             "type": "object",
             "properties": {
@@ -1888,36 +1748,6 @@ const docTemplate = `{
                 }
             }
         },
-        "betav0.LFWQueryOptions": {
-            "type": "object",
-            "properties": {
-                "orderBy": {
-                    "type": "string"
-                },
-                "orderDirection": {
-                    "type": "string"
-                },
-                "pagination": {
-                    "type": "object",
-                    "properties": {
-                        "limit": {
-                            "type": "integer"
-                        },
-                        "offset": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "where": {
-                    "type": "object",
-                    "properties": {
-                        "creator": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
         "betav0.License": {
             "type": "object",
             "properties": {
@@ -1938,53 +1768,6 @@ const docTemplate = `{
                 },
                 "transferable": {
                     "type": "boolean"
-                }
-            }
-        },
-        "betav0.LicenseFramework": {
-            "type": "object",
-            "properties": {
-                "blockNumber": {
-                    "type": "string"
-                },
-                "blockTimestamp": {
-                    "type": "string"
-                },
-                "creator": {
-                    "type": "string"
-                },
-                "frameworkCreationParams": {
-                    "$ref": "#/definitions/betav0.FrameworkCreationParams"
-                },
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "betav0.LicenseFrameworkRequestBody": {
-            "type": "object",
-            "properties": {
-                "options": {
-                    "$ref": "#/definitions/betav0.LFWQueryOptions"
-                }
-            }
-        },
-        "betav0.LicenseFrameworkResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "$ref": "#/definitions/betav0.LicenseFramework"
-                }
-            }
-        },
-        "betav0.LicenseFrameworksResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/betav0.LicenseFramework"
-                    }
                 }
             }
         },

@@ -19,7 +19,7 @@ import (
 // @Security ApiKeyAuth
 // @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
-// @Tags PolicyFrameworkManagers
+// @Tags Policies
 // @Accept json
 // @Produce json
 // @Param        pfwmId   path      string  true  "PolicyFrameworkManager ID"
@@ -52,7 +52,7 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.PolicyFrameworkManagerRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
-// @Tags PolicyFrameworkManagers
+// @Tags Policies
 // @Accept json
 // @Produce json
 // @Success 200 {object} PolicyFrameworkManagersResponse

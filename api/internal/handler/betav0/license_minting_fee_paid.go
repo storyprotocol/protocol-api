@@ -19,7 +19,7 @@ import (
 // @Security ApiKeyAuth
 // @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
-// @Tags LicenseMintingFeePaids
+// @Tags Licenses
 // @Accept json
 // @Produce json
 // @Param        licenseMintingFeePaidId   path      string  true  "LicenseMintingFeePay ID"
@@ -52,7 +52,7 @@ func NewGetLicenseMintingFeePay(graphService thegraph.TheGraphServiceBeta, httpC
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.RoyaltyRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
-// @Tags LicenseMintingFeePaids
+// @Tags Licenses
 // @Accept json
 // @Produce json
 // @Success 200 {object} LicenseMintingFeePaidsResponse

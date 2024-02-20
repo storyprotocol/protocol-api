@@ -19,7 +19,7 @@ import (
 // @Security ApiKeyAuth
 // @Host https://edge.stg.storyprotocol.net
 // @param X-API-Key header string true "API Key"
-// @Tags RoyaltyPolicies
+// @Tags Royalties
 // @Accept json
 // @Produce json
 // @Param        royaltyPolicyId   path      string  true  "Royalty Policy ID"
@@ -52,7 +52,7 @@ func NewGetRoyaltyPolicy(graphService thegraph.TheGraphServiceBeta, httpClient x
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.RoyaltyRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
-// @Tags RoyaltyPolicies
+// @Tags Royalties
 // @Accept json
 // @Produce json
 // @Success 200 {object} RoyaltyPoliciesResponse
