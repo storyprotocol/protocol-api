@@ -1435,6 +1435,35 @@ paths:
       summary: Get a PolicyFrameworkManager
       tags:
       - Policies
+  /api/v1/royalties:
+    post:
+      consumes:
+      - application/json
+      description: Retrieve a paginated, filtered list of Royalties
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Query Parameters (
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/betav0.RoyaltyRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/betav0.RoyaltiesResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List Royalties
+      tags:
+      - Royalties
   /api/v1/royalties/{royaltyId}:
     get:
       consumes:
@@ -1575,35 +1604,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get a RoyaltyPolicy
-      tags:
-      - Royalties
-  /api/v1/royalty:
-    post:
-      consumes:
-      - application/json
-      description: Retrieve a paginated, filtered list of Royalties
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: Query Parameters (
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/betav0.RoyaltyRequestBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.RoyaltiesResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: List Royalties
       tags:
       - Royalties
   /api/v1/tags:

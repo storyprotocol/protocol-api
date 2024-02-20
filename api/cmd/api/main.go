@@ -60,37 +60,35 @@ func main() {
 	{
 		protocol := v1.Group("/")
 		protocol.Use(AuthMiddleware())
+
 		// BETA
 		{
-			royalties := protocol.Group("/royalties")
 			{
-				royalties.GET("/:royaltyId", betaHandlers.NewGetRoyalty(theGraphBetaService, httpClient))
-				protocol.POST("/", betaHandlers.NewListRoyalties(theGraphBetaService, httpClient))
+				protocol.GET("/royalties/:royaltyId", betaHandlers.NewGetRoyalty(theGraphBetaService, httpClient))
+				protocol.POST("/royalties", betaHandlers.NewListRoyalties(theGraphBetaService, httpClient))
 
-				royalties.GET("/payments/:royaltyPayId", betaHandlers.NewGetRoyaltyPay(theGraphBetaService, httpClient))
-				protocol.POST("/payments", betaHandlers.NewListRoyaltyPays(theGraphBetaService, httpClient))
+				protocol.GET("/royalties/payments/:royaltyPayId", betaHandlers.NewGetRoyaltyPay(theGraphBetaService, httpClient))
+				protocol.POST("/royalties/payments", betaHandlers.NewListRoyaltyPays(theGraphBetaService, httpClient))
 
-				royalties.GET("/policies/:royaltyPolicyId", betaHandlers.NewGetRoyaltyPolicy(theGraphBetaService, httpClient))
-				protocol.POST("/policies", betaHandlers.NewListRoyaltyPolicies(theGraphBetaService, httpClient))
+				protocol.GET("/royalties/policies/:royaltyPolicyId", betaHandlers.NewGetRoyaltyPolicy(theGraphBetaService, httpClient))
+				protocol.POST("/royalties/policies", betaHandlers.NewListRoyaltyPolicies(theGraphBetaService, httpClient))
 
 			}
 
-			licenses := protocol.Group("/licenses")
 			{
-				licenses.GET("/:licenseId", betaHandlers.NewGetLicense(theGraphBetaService, httpClient))
-				protocol.POST("/", betaHandlers.NewListLicenses(theGraphBetaService, httpClient))
+				protocol.GET("/licenses/:licenseId", betaHandlers.NewGetLicense(theGraphBetaService, httpClient))
+				protocol.POST("/licenses", betaHandlers.NewListLicenses(theGraphBetaService, httpClient))
 
-				licenses.GET("/mintingfees/:licenseMintingFeePaidId", betaHandlers.NewGetLicenseMintingFeePay(theGraphBetaService, httpClient))
-				protocol.POST("/mintingfees", betaHandlers.NewListLicenseMintingFeePaids(theGraphBetaService, httpClient))
+				protocol.GET("/licenses/mintingfees/:licenseMintingFeePaidId", betaHandlers.NewGetLicenseMintingFeePay(theGraphBetaService, httpClient))
+				protocol.POST("/licenses/mintingfees", betaHandlers.NewListLicenseMintingFeePaids(theGraphBetaService, httpClient))
 			}
 
-			policies := protocol.Group("/policies")
 			{
-				policies.GET("/:policyId", betaHandlers.NewGetPolicy(theGraphBetaService, httpClient))
-				policies.POST("/", betaHandlers.NewListPolicies(theGraphBetaService, httpClient))
+				protocol.GET("/policies/:policyId", betaHandlers.NewGetPolicy(theGraphBetaService, httpClient))
+				protocol.POST("/policies", betaHandlers.NewListPolicies(theGraphBetaService, httpClient))
 
-				policies.GET("/frameworks/:pfwmId", betaHandlers.NewGetPolicyFrameworkManager(theGraphBetaService, httpClient))
-				policies.POST("/frameworks", betaHandlers.NewListPolicyFrameworkManagers(theGraphBetaService, httpClient))
+				protocol.GET("/policies/frameworks/:pfwmId", betaHandlers.NewGetPolicyFrameworkManager(theGraphBetaService, httpClient))
+				protocol.POST("/policies/frameworks", betaHandlers.NewListPolicyFrameworkManagers(theGraphBetaService, httpClient))
 
 			}
 
