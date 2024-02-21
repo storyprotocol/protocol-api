@@ -284,6 +284,34 @@ definitions:
       token:
         type: string
     type: object
+  betav0.LicenseMintingFeePaidQueryOptions:
+    properties:
+      orderBy:
+        type: string
+      orderDirection:
+        type: string
+      pagination:
+        properties:
+          limit:
+            type: integer
+          offset:
+            type: integer
+        type: object
+      where:
+        properties:
+          payer:
+            type: string
+          receiverIpId:
+            type: string
+          token:
+            type: string
+        type: object
+    type: object
+  betav0.LicenseMintingFeePaidRequestBody:
+    properties:
+      options:
+        $ref: '#/definitions/betav0.LicenseMintingFeePaidQueryOptions'
+    type: object
   betav0.LicenseMintingFeePaidResponse:
     properties:
       data:
@@ -538,8 +566,6 @@ definitions:
         $ref: '#/definitions/betav0.PILPolicy'
       policyFrameworkManager:
         type: string
-      policyId:
-        type: string
       royaltyData:
         type: string
       royaltyPolicy:
@@ -592,7 +618,11 @@ definitions:
         type: object
       where:
         properties:
+          mintingFeeToken:
+            type: string
           policyFrameworkManager:
+            type: string
+          royaltyPolicy:
             type: string
         type: object
     type: object
@@ -662,8 +692,6 @@ definitions:
         type: object
       where:
         properties:
-          ipId:
-            type: string
           payerIpId:
             type: string
           receiverIpId:
@@ -1173,7 +1201,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/betav0.RoyaltyRequestBody'
+          $ref: '#/definitions/betav0.LicenseMintingFeePaidRequestBody'
       produces:
       - application/json
       responses:

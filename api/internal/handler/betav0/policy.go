@@ -96,6 +96,8 @@ func fromPolicuyRequestQueryOptions(options *beta_v0.PolicyQueryOptions) *thegra
 	queryOptions.Skip = options.Pagination.Offset
 
 	queryOptions.Where.PolicyFrameworkManager = options.Where.PolicyFrameworkManager
+	queryOptions.Where.RoyaltyPolicy = options.Where.RoyaltyPolicy
+	queryOptions.Where.MintingFeeToken = options.Where.MintingFeeToken
 
 	return queryOptions
 }

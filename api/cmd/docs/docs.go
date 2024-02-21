@@ -453,7 +453,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/betav0.RoyaltyRequestBody"
+                            "$ref": "#/definitions/betav0.LicenseMintingFeePaidRequestBody"
                         }
                     }
                 ],
@@ -1797,6 +1797,50 @@ const docTemplate = `{
                 }
             }
         },
+        "betav0.LicenseMintingFeePaidQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "payer": {
+                            "type": "string"
+                        },
+                        "receiverIpId": {
+                            "type": "string"
+                        },
+                        "token": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.LicenseMintingFeePaidRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.LicenseMintingFeePaidQueryOptions"
+                }
+            }
+        },
         "betav0.LicenseMintingFeePaidResponse": {
             "type": "object",
             "properties": {
@@ -2192,9 +2236,6 @@ const docTemplate = `{
                 "policyFrameworkManager": {
                     "type": "string"
                 },
-                "policyId": {
-                    "type": "string"
-                },
                 "royaltyData": {
                     "type": "string"
                 },
@@ -2276,7 +2317,13 @@ const docTemplate = `{
                 "where": {
                     "type": "object",
                     "properties": {
+                        "mintingFeeToken": {
+                            "type": "string"
+                        },
                         "policyFrameworkManager": {
+                            "type": "string"
+                        },
+                        "royaltyPolicy": {
                             "type": "string"
                         }
                     }
@@ -2385,9 +2432,6 @@ const docTemplate = `{
                 "where": {
                     "type": "object",
                     "properties": {
-                        "ipId": {
-                            "type": "string"
-                        },
                         "payerIpId": {
                             "type": "string"
                         },

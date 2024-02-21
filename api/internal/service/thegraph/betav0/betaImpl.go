@@ -116,6 +116,9 @@ func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOp
 	if options.Where.Sender != "" && options.Where.Sender != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("sender: \"%s\",", options.Where.Sender)
 	}
+	if options.Where.Payer != "" && options.Where.Payer != QUERY_PLACEHOLDER {
+		whereString = whereString + fmt.Sprintf("payer: \"%s\",", options.Where.Payer)
+	}
 	if options.Where.Token != "" && options.Where.Token != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("token: \"%s\",", options.Where.Token)
 	}
@@ -130,6 +133,9 @@ func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOp
 	}
 	if options.Where.PolicyFrameworkManager != "" && options.Where.PolicyFrameworkManager != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("policyFrameworkManager: \"%s\",", options.Where.PolicyFrameworkManager)
+	}
+	if options.Where.MintingFeeToken != "" && options.Where.MintingFeeToken != QUERY_PLACEHOLDER {
+		whereString = whereString + fmt.Sprintf("mintingFeeToken: \"%s\",", options.Where.MintingFeeToken)
 	}
 
 	return whereString

@@ -444,7 +444,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/betav0.RoyaltyRequestBody"
+                            "$ref": "#/definitions/betav0.LicenseMintingFeePaidRequestBody"
                         }
                     }
                 ],
@@ -1788,6 +1788,50 @@
                 }
             }
         },
+        "betav0.LicenseMintingFeePaidQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "payer": {
+                            "type": "string"
+                        },
+                        "receiverIpId": {
+                            "type": "string"
+                        },
+                        "token": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.LicenseMintingFeePaidRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.LicenseMintingFeePaidQueryOptions"
+                }
+            }
+        },
         "betav0.LicenseMintingFeePaidResponse": {
             "type": "object",
             "properties": {
@@ -2183,9 +2227,6 @@
                 "policyFrameworkManager": {
                     "type": "string"
                 },
-                "policyId": {
-                    "type": "string"
-                },
                 "royaltyData": {
                     "type": "string"
                 },
@@ -2267,7 +2308,13 @@
                 "where": {
                     "type": "object",
                     "properties": {
+                        "mintingFeeToken": {
+                            "type": "string"
+                        },
                         "policyFrameworkManager": {
+                            "type": "string"
+                        },
+                        "royaltyPolicy": {
                             "type": "string"
                         }
                     }
@@ -2376,9 +2423,6 @@
                 "where": {
                     "type": "object",
                     "properties": {
-                        "ipId": {
-                            "type": "string"
-                        },
                         "payerIpId": {
                             "type": "string"
                         },

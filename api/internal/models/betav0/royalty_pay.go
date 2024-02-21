@@ -37,7 +37,6 @@ type RoyaltyPayQueryOptions struct {
 		Limit  int `json:"limit"`
 	} `json:"pagination"`
 	Where struct {
-		IPID         string `json:"ipId"`
 		ReceiverIpId string `json:"receiverIpId"`
 		PayerIpId    string `json:"payerIpId"`
 		Sender       string `json:"sender"`

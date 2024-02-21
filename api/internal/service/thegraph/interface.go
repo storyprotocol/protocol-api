@@ -73,9 +73,11 @@ type TheGraphQueryOptions struct {
 		PayerIpId               string `json:"payerIpId,omitempty"`
 		Sender                  string `json:"sender,omitempty"`
 		Token                   string `json:"token,omitempty"`
+		Payer                   string `json:"payer,omitempty"`
 		Tag                     string `json:"tag,omitempty"`
 		ActionType              string `json:"actionType,omitempty"`
 		ResourceId              string `json:"resourceId,omitempty"`
 		PolicyFrameworkManager  string `json:"policyFrameworkManager,omitempty"`
+		MintingFeeToken         string `json:"mintingFeeToken,omitempty"`
 	}
 }

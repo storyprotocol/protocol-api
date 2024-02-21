@@ -2183,9 +2183,6 @@
         "policyFrameworkManager": {
           "type": "string"
         },
-        "policyId": {
-          "type": "string"
-        },
         "royaltyData": {
           "type": "string"
         },
@@ -2267,7 +2264,13 @@
         "where": {
           "type": "object",
           "properties": {
+            "mintingFeeToken": {
+              "type": "string"
+            },
             "policyFrameworkManager": {
+              "type": "string"
+            },
+            "royaltyPolicy": {
               "type": "string"
             }
           }
@@ -2376,9 +2379,6 @@
         "where": {
           "type": "object",
           "properties": {
-            "ipId": {
-              "type": "string"
-            },
             "payerIpId": {
               "type": "string"
             },

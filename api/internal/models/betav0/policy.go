@@ -3,7 +3,6 @@ package betav0
 type Policy struct {
 	ID                     string `json:"id"`
 	PolicyFrameworkManager string `json:"policyFrameworkManager"`
-	PolicyId               string `json:"policyId"`
 	FrameworkData          string `json:"frameworkData"`
 	RoyaltyPolicy          string `json:"royaltyPolicy"`
 	RoyaltyData            string `json:"royaltyData"`
@@ -59,6 +58,8 @@ type PolicyQueryOptions struct {
 	} `json:"pagination"`
 	Where struct {
 		PolicyFrameworkManager string `json:"policyFrameworkManager"`
+		MintingFeeToken        string `json:"mintingFeeToken"`
+		RoyaltyPolicy          string `json:"royaltyPolicy"`
 	} `json:"where"`
 	OrderBy        string `json:"orderBy"`
 	OrderDirection string `json:"orderDirection"`

@@ -51,7 +51,7 @@ func NewGetLicenseMintingFeePay(graphService thegraph.TheGraphServiceBeta, httpC
 // @Host https://edge.stg.storyprotocol.net
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
-// @Param data body betav0.RoyaltyRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
+// @Param data body betav0.LicenseMintingFeePaidRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
 // @Tags Licenses
 // @Accept json
 // @Produce json
@@ -95,7 +95,9 @@ func fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(options *beta_v0.Li
 	queryOptions.First = options.Pagination.Limit
 	queryOptions.Skip = options.Pagination.Offset
 
-	queryOptions.Where.IPID = options.Where.IPID
+	queryOptions.Where.ReceiverIpId = options.Where.ReceiverIpId
+	queryOptions.Where.Token = options.Where.Token
+	queryOptions.Where.Payer = options.Where.Payer
 
 	return queryOptions
 }
