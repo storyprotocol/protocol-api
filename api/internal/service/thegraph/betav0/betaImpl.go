@@ -81,10 +81,10 @@ func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOp
 		whereString = whereString + fmt.Sprintf("policyId: \"%s\",", options.Where.PolicyId)
 	}
 	if options.Where.Active != "" && options.Where.Active != QUERY_PLACEHOLDER {
-		whereString = whereString + fmt.Sprintf("active: \"%s\",", options.Where.Active)
+		whereString = whereString + fmt.Sprintf("active: %v,", options.Where.Active)
 	}
 	if options.Where.Inherited != "" && options.Where.Inherited != QUERY_PLACEHOLDER {
-		whereString = whereString + fmt.Sprintf("inherited: \"%s\",", options.Where.Inherited)
+		whereString = whereString + fmt.Sprintf("inherited: %v,", options.Where.Inherited)
 	}
 	if options.Where.LicensorIpdId != "" && options.Where.LicensorIpdId != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("licensorIpId: \"%s\",", options.Where.LicensorIpdId)
