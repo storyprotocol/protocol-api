@@ -444,7 +444,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RoyaltyRequestBody"
+              "$ref": "#/definitions/LicenseMintingFeePaidRequestBody"
             }
           }
         ],
@@ -1742,6 +1742,9 @@
     "License": {
       "type": "object",
       "properties": {
+        "amount": {
+          "type": "string"
+        },
         "blockNumber": {
           "type": "string"
         },
@@ -1785,6 +1788,50 @@
         },
         "token": {
           "type": "string"
+        }
+      }
+    },
+    "LicenseMintingFeePaidQueryOptions": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string"
+        },
+        "orderDirection": {
+          "type": "string"
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "where": {
+          "type": "object",
+          "properties": {
+            "payer": {
+              "type": "string"
+            },
+            "receiverIpId": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "LicenseMintingFeePaidRequestBody": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "$ref": "#/definitions/LicenseMintingFeePaidQueryOptions"
         }
       }
     },
@@ -1834,6 +1881,9 @@
               "type": "string"
             },
             "policyId": {
+              "type": "string"
+            },
+            "transferable": {
               "type": "string"
             }
           }

@@ -12,31 +12,31 @@ import (
 
 // @BasePath /
 
-// GetLicense Example godoc
-// @Summary Get an License
+// GetLicenseOwner Example godoc
+// @Summary Get a LicenseOwner
 // @Schemes
-// @Description Retrieve a License
+// @Description Retrieve a LicenseOwner
 // @Tags Licenses
 // @Host https://edge.stg.storyprotocol.net
 // @Accept json
 // @Produce json
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
-// @Param        licenseId   path      string  true  "License ID"
-// @Success 200 {object} LicenseResponse
-// @Router /api/v1/licenses/{licenseId} [get]
-func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+// @Param        licenseOwnerId   path      string  true  "LicenseOwner ID"
+// @Success 200 {object} LicenseOwnerResponse
+// @Router /api/v1/licenses/owners/{licenseId} [get]
+func NewGetLicenseOwner(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		licenseId := c.Param("licenseId")
+		licenseOwnerId := c.Param("licenseOwnerId")
 
-		licenses, err := graphService.GetLicense(licenseId)
+		licenses, err := graphService.GetLicenseOwner(licenseOwnerId)
 		if err != nil {
-			logger.Errorf("Failed to get license: %v", err)
+			logger.Errorf("Failed to get license owner: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseResponse{
+		c.JSON(http.StatusOK, beta_v0.LicenseOwnerResponse{
 			Data: licenses,
 		})
 	}
@@ -44,41 +44,41 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 
 // @BasePath /
 
-// ListLicenses Example godoc
-// @Summary List Licenses
+// ListLicenseOwners Example godoc
+// @Summary List LicenseOwners
 // @Schemes
-// @Description Retrieve a paginated, filtered list of Licenses
+// @Description Retrieve a paginated, filtered list of LicenseOwners
 // @Host https://edge.stg.storyprotocol.net
 // @Tags Licenses
 // @Accept json
 // @Produce json
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
-// @Param data body betav0.LicenseRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
-// @Success 200 {object} LicensesResponse
-// @Router /api/v1/licenses [post]
-func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
+// @Param data body betav0.LicenseOwnersRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
+// @Success 200 {object} LicenseOwnersResponse
+// @Router /api/v1/licenses/owners [post]
+func NewListLicenseOwners(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.LicenseRequestBody
+		var requestBody beta_v0.LicenseOwnerRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.LicenseRequestBody{}
+			requestBody = beta_v0.LicenseOwnerRequestBody{}
 		}
 
-		licenses, err := graphService.ListLicenses(fromLicenseRequestQueryOptions(requestBody.Options))
+		licenses, err := graphService.ListLicenseOwners(fromLicenseOwnerRequestQueryOptions(requestBody.Options))
 		if err != nil {
-			logger.Errorf("Failed to list licenses: %v", err)
+			logger.Errorf("Failed to list license owners: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.LicensesResponse{
+		c.JSON(http.StatusOK, beta_v0.LicenseOwnersResponse{
 			Data: licenses,
 		})
 	}
 }
 
-func fromLicenseRequestQueryOptions(options *beta_v0.LicenseQueryOptions) *thegraph.TheGraphQueryOptions {
+func fromLicenseOwnerRequestQueryOptions(options *beta_v0.LicenseOwnerQueryOptions) *thegraph.TheGraphQueryOptions {
 	if options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
@@ -96,8 +96,7 @@ func fromLicenseRequestQueryOptions(options *beta_v0.LicenseQueryOptions) *thegr
 	queryOptions.Skip = options.Pagination.Offset
 
 	queryOptions.Where.PolicyId = options.Where.PolicyId
-	queryOptions.Where.LicensorIpdId = options.Where.LicensorIpdId
-	queryOptions.Where.Transferable = options.Where.Transferable
+	queryOptions.Where.Owner = options.Where.Owner
 
 	return queryOptions
 }

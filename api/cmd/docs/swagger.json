@@ -1742,6 +1742,9 @@
         "betav0.License": {
             "type": "object",
             "properties": {
+                "amount": {
+                    "type": "string"
+                },
                 "blockNumber": {
                     "type": "string"
                 },
@@ -1878,6 +1881,9 @@
                             "type": "string"
                         },
                         "policyId": {
+                            "type": "string"
+                        },
+                        "transferable": {
                             "type": "string"
                         }
                     }

@@ -21,6 +21,7 @@ type TheGraphServiceBeta interface {
 	GetCollection(colId string) (*betav0.Collection, error)
 	GetRoyaltyPolicy(royaltyPolicyId string) (*betav0.RoyaltyPolicy, error)
 	GetLicenseMintingFeePaid(licenseMintingFeePaidId string) (*betav0.LicenseMintingFeePaid, error)
+	GetLicenseOwner(licenseOwnerId string) (*betav0.LicenseOwner, error)
 	GetTransaction(trxId string) (*betav0.Transaction, error)
 
 	// LISTS
@@ -40,6 +41,7 @@ type TheGraphServiceBeta interface {
 	ListCollections(options *TheGraphQueryOptions) ([]*betav0.Collection, error)
 	ListRoyaltyPolicies(options *TheGraphQueryOptions) ([]*betav0.RoyaltyPolicy, error)
 	ListLicenseMintingFeePaids(options *TheGraphQueryOptions) ([]*betav0.LicenseMintingFeePaid, error)
+	ListLicenseOwners(options *TheGraphQueryOptions) ([]*betav0.LicenseOwner, error)
 	ListTransactions(options *TheGraphQueryOptions) ([]*betav0.Transaction, error)
 }
 
@@ -79,5 +81,7 @@ type TheGraphQueryOptions struct {
 		ResourceId              string `json:"resourceId,omitempty"`
 		PolicyFrameworkManager  string `json:"policyFrameworkManager,omitempty"`
 		MintingFeeToken         string `json:"mintingFeeToken,omitempty"`
+		Transferable            string `json:"transferable,omitempty"`
+		Owner                   string `json:"owner,omitempty"`
 	}
 }

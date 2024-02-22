@@ -81,6 +81,9 @@ func main() {
 
 				protocol.GET("/licenses/mintingfees/:licenseMintingFeePaidId", betaHandlers.NewGetLicenseMintingFeePay(theGraphBetaService, httpClient))
 				protocol.POST("/licenses/mintingfees", betaHandlers.NewListLicenseMintingFeePaids(theGraphBetaService, httpClient))
+
+				protocol.GET("/licenses/owners/:licenseOwnerId", betaHandlers.NewGetLicenseOwner(theGraphBetaService, httpClient))
+				protocol.POST("/licenses/owners", betaHandlers.NewListLicenseOwners(theGraphBetaService, httpClient))
 			}
 
 			{

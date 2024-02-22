@@ -8,60 +8,56 @@ import (
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
 
-func (c *ServiceBetaImpl) GetLicense(licenseId string) (*beta_v0.License, error) {
+func (c *ServiceBetaImpl) GetLicenseOwner(licenseOwnerId string) (*beta_v0.LicenseOwner, error) {
 	query := fmt.Sprintf(`
 		query {
-		  license(id: "%s") {
+		  licenseOwner(id: "%s") {
 			id
 			policyId
-			licensorIpId
+			owner
 			amount
-			transferable
 			blockNumber
 			blockTimestamp
 		  }
 		}
-    `, licenseId)
+    `, licenseOwnerId)
 
 	req := graphql.NewRequest(query)
 	ctx := context.Background()
-	var licensesRes beta_v0.LicenseTheGraphResponse
+	var licensesRes beta_v0.LicenseOwnerTheGraphResponse
 	if err := c.client.Run(ctx, req, &licensesRes); err != nil {
-		return nil, fmt.Errorf("failed to get license from the graph. error: %v", err)
+		return nil, fmt.Errorf("failed to get license owner from the graph. error: %v", err)
 	}
 
-	return licensesRes.License, nil
+	return licensesRes.LicenseOwner, nil
 
 }
 
-func (c *ServiceBetaImpl) ListLicenses(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.License, error) {
+func (c *ServiceBetaImpl) ListLicenseOwners(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.LicenseOwner, error) {
 	whereString := c.buildWhereConditions(options)
 	query := fmt.Sprintf(`
 	query(%s){
-	  licenses (%s, where:{%s}) {
+	  licenseOwners (%s, where:{%s}) {
 		id
 		policyId
-		licensorIpId
+		owner
 		amount
-		transferable
-		blockTimestamp
 		blockNumber
+		blockTimestamp
 	  }
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)
 
-	fmt.Println(query)
-
 	req := c.buildNewRequest(options, query)
 
 	ctx := context.Background()
-	var licensesRes beta_v0.LicensesTheGraphResponse
+	var licensesRes beta_v0.LicenseOwnersTheGraphResponse
 	if err := c.client.Run(ctx, req, &licensesRes); err != nil {
-		return nil, fmt.Errorf("failed to get licenses from the graph. error: %v", err)
+		return nil, fmt.Errorf("failed to get licenses owners from the graph. error: %v", err)
 	}
 
-	licenses := []*beta_v0.License{}
-	for _, license := range licensesRes.Licenses {
+	licenses := []*beta_v0.LicenseOwner{}
+	for _, license := range licensesRes.LicenseOwners {
 		licenses = append(licenses, license)
 	}
 

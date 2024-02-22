@@ -137,6 +137,9 @@ func (s *ServiceBetaImpl) buildWhereConditions(options *thegraph.TheGraphQueryOp
 	if options.Where.MintingFeeToken != "" && options.Where.MintingFeeToken != QUERY_PLACEHOLDER {
 		whereString = whereString + fmt.Sprintf("mintingFeeToken: \"%s\",", options.Where.MintingFeeToken)
 	}
+	if options.Where.Owner != "" && options.Where.Owner != QUERY_PLACEHOLDER {
+		whereString = whereString + fmt.Sprintf("owner: \"%s\",", options.Where.Owner)
+	}
 
 	return whereString
 }

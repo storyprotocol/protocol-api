@@ -1751,6 +1751,9 @@ const docTemplate = `{
         "betav0.License": {
             "type": "object",
             "properties": {
+                "amount": {
+                    "type": "string"
+                },
                 "blockNumber": {
                     "type": "string"
                 },
@@ -1887,6 +1890,9 @@ const docTemplate = `{
                             "type": "string"
                         },
                         "policyId": {
+                            "type": "string"
+                        },
+                        "transferable": {
                             "type": "string"
                         }
                     }

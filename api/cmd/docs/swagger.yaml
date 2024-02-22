@@ -254,6 +254,8 @@ definitions:
     type: object
   betav0.License:
     properties:
+      amount:
+        type: string
       blockNumber:
         type: string
       blockTimestamp:
@@ -342,6 +344,8 @@ definitions:
           licensorIpdId:
             type: string
           policyId:
+            type: string
+          transferable:
             type: string
         type: object
     type: object
