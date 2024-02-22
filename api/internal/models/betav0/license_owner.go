@@ -26,7 +26,7 @@ type LicenseOwnersResponse struct {
 	Data []*LicenseOwner `json:"data"`
 }
 
-type LicenseOwnerRequestBody struct {
+type LicenseOwnersRequestBody struct {
 	Options *LicenseOwnerQueryOptions `json:"options"`
 }
 type LicenseOwnerQueryOptions struct {

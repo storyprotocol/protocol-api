@@ -502,6 +502,96 @@
                 }
             }
         },
+        "/api/v1/licenses/owners": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a paginated, filtered list of LicenseOwners",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Licenses"
+                ],
+                "summary": "List LicenseOwners",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Query Parameters (",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/betav0.LicenseOwnersRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.LicenseOwnersResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/licenses/owners/{licenseOwnerId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a LicenseOwner",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Licenses"
+                ],
+                "summary": "Get a LicenseOwner",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "LicenseOwner ID",
+                        "name": "licenseOwnerId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.LicenseOwnerResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/licenses/{licenseId}": {
             "get": {
                 "security": [
@@ -1850,6 +1940,89 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/betav0.LicenseMintingFeePaid"
+                    }
+                }
+            }
+        },
+        "betav0.LicenseOwner": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "blockNumber": {
+                    "type": "string"
+                },
+                "blockTimestamp": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "owner": {
+                    "type": "string"
+                },
+                "policyId": {
+                    "type": "string"
+                }
+            }
+        },
+        "betav0.LicenseOwnerQueryOptions": {
+            "type": "object",
+            "properties": {
+                "orderBy": {
+                    "type": "string"
+                },
+                "orderDirection": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer"
+                        },
+                        "offset": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "where": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "policyId": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "betav0.LicenseOwnerResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/betav0.LicenseOwner"
+                }
+            }
+        },
+        "betav0.LicenseOwnersRequestBody": {
+            "type": "object",
+            "properties": {
+                "options": {
+                    "$ref": "#/definitions/betav0.LicenseOwnerQueryOptions"
+                }
+            }
+        },
+        "betav0.LicenseOwnersResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/betav0.LicenseOwner"
                     }
                 }
             }

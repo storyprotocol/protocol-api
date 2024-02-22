@@ -24,7 +24,7 @@ import (
 // @param X-API-Key header string true "API Key"
 // @Param        licenseOwnerId   path      string  true  "LicenseOwner ID"
 // @Success 200 {object} LicenseOwnerResponse
-// @Router /api/v1/licenses/owners/{licenseId} [get]
+// @Router /api/v1/licenses/owners/{licenseOwnerId} [get]
 func NewGetLicenseOwner(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		licenseOwnerId := c.Param("licenseOwnerId")
@@ -59,10 +59,10 @@ func NewGetLicenseOwner(graphService thegraph.TheGraphServiceBeta, httpClient xh
 // @Router /api/v1/licenses/owners [post]
 func NewListLicenseOwners(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.LicenseOwnerRequestBody
+		var requestBody beta_v0.LicenseOwnersRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.LicenseOwnerRequestBody{}
+			requestBody = beta_v0.LicenseOwnersRequestBody{}
 		}
 
 		licenses, err := graphService.ListLicenseOwners(fromLicenseOwnerRequestQueryOptions(requestBody.Options))
