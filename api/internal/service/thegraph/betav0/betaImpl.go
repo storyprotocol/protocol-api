@@ -13,16 +13,18 @@ const (
 	QUERY_PLACEHOLDER = "string"
 )
 
-func NewTheGraphServiceBetaImpl(client *graphql.Client, openChainUrl string) thegraph.TheGraphServiceBeta {
+func NewTheGraphServiceBetaImpl(client *graphql.Client, splitClient *graphql.Client, openChainUrl string) thegraph.TheGraphServiceBeta {
 	openChainClient := openapi.NewOpenChainClient(openChainUrl)
 	return &ServiceBetaImpl{
 		client:          client,
+		splitClient:     splitClient,
 		openChainClient: openChainClient,
 	}
 }
 
 type ServiceBetaImpl struct {
 	client          *graphql.Client
+	splitClient     *graphql.Client
 	openChainClient *openapi.OpenchainClient
 }
 

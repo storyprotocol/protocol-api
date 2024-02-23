@@ -5,6 +5,7 @@
         "version": "v0.1-beta",
         "title": "Story Protocol API Reference"
     },
+    "host": "edge.stg.storyprotocol.net",
     "paths": {
         "/api/v1/assets": {
             "post": {
@@ -1210,6 +1211,50 @@
                 }
             }
         },
+        "/api/v1/royalties/splits/{royaltySplitId}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Retrieve a Royalty Split",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Royalties"
+                ],
+                "summary": "Get a Royalty Split",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Royalty Split ID",
+                        "name": "royaltySplitId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/betav0.RoyaltySplitResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/royalties/{royaltyId}": {
             "get": {
                 "security": [
@@ -1618,6 +1663,17 @@
                     "items": {
                         "$ref": "#/definitions/betav0.Dispute"
                     }
+                }
+            }
+        },
+        "betav0.Holder": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "ownership": {
+                    "type": "string"
                 }
             }
         },
@@ -2745,6 +2801,28 @@
             "properties": {
                 "data": {
                     "$ref": "#/definitions/betav0.Royalty"
+                }
+            }
+        },
+        "betav0.RoyaltySplit": {
+            "type": "object",
+            "properties": {
+                "holders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/betav0.Holder"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "betav0.RoyaltySplitResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/betav0.RoyaltySplit"
                 }
             }
         },

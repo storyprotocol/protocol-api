@@ -42,7 +42,8 @@ func main() {
 
 	// theGraphBeta
 	theGraphBetaClient := graphql.NewClient(cfg.TheGraphBetaEndpoint)
-	theGraphBetaService := betav0.NewTheGraphServiceBetaImpl(theGraphBetaClient, cfg.OpenChainLookupEndpoint)
+	theGraph0xSplitBetaClient := graphql.NewClient(cfg.TheGraph0xSplitBetaEndpoint)
+	theGraphBetaService := betav0.NewTheGraphServiceBetaImpl(theGraphBetaClient, theGraph0xSplitBetaClient, cfg.OpenChainLookupEndpoint)
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "Hello")
@@ -72,6 +73,8 @@ func main() {
 
 				protocol.GET("/royalties/policies/:royaltyPolicyId", betaHandlers.NewGetRoyaltyPolicy(theGraphBetaService, httpClient))
 				protocol.POST("/royalties/policies", betaHandlers.NewListRoyaltyPolicies(theGraphBetaService, httpClient))
+
+				protocol.GET("/royalties/splits/:royaltySplitId", betaHandlers.NewGetRoyaltyLiquidSplit(theGraphBetaService, httpClient))
 
 			}
 

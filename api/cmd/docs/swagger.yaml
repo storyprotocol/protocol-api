@@ -118,6 +118,13 @@ definitions:
           $ref: '#/definitions/betav0.Dispute'
         type: array
     type: object
+  betav0.Holder:
+    properties:
+      id:
+        type: string
+      ownership:
+        type: string
+    type: object
   betav0.IPAPQueryOptions:
     properties:
       orderBy:
@@ -841,6 +848,20 @@ definitions:
     properties:
       data:
         $ref: '#/definitions/betav0.Royalty'
+    type: object
+  betav0.RoyaltySplit:
+    properties:
+      holders:
+        items:
+          $ref: '#/definitions/betav0.Holder'
+        type: array
+      id:
+        type: string
+    type: object
+  betav0.RoyaltySplitResponse:
+    properties:
+      data:
+        $ref: '#/definitions/betav0.RoyaltySplit'
     type: object
   betav0.Tag:
     properties:
@@ -1746,6 +1767,34 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Get a RoyaltyPolicy
+      tags:
+      - Royalties
+  /api/v1/royalties/splits/{royaltySplitId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a Royalty Split
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Royalty Split ID
+        in: path
+        name: royaltySplitId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/betav0.RoyaltySplitResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a Royalty Split
       tags:
       - Royalties
   /api/v1/tags:

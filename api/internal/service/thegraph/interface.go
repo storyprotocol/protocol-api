@@ -16,6 +16,7 @@ type TheGraphServiceBeta interface {
 	GetPermission(permissionId string) (*betav0.Permission, error)
 	GetTag(tagId string) (*betav0.Tag, error)
 	GetRoyalty(royaltyId string) (*betav0.Royalty, error)
+	GetRoyaltyLiquidSplit(royaltySplitId string) (*betav0.RoyaltySplit, error)
 	GetRoyaltyPay(royaltyPayId string) (*betav0.RoyaltyPay, error)
 	GetPolicyFrameworkManager(pfwmId string) (*betav0.PolicyFrameworkManager, error)
 	GetCollection(colId string) (*betav0.Collection, error)
