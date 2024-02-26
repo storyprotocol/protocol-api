@@ -5,6 +5,7 @@
         "version": "v0.1-beta",
         "title": "Story Protocol API Reference"
     },
+    "host": "api.storyprotocol.net",
     "paths": {
         "/api/v1/assets": {
             "post": {

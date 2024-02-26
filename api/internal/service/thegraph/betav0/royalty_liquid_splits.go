@@ -56,7 +56,6 @@ func (c *ServiceBetaImpl) formatHolder(_holder beta_v0.Holder) beta_v0.Holder {
 	var holder beta_v0.Holder
 	splitId := strings.Split(_holder.ID, "-")
 	holder.ID = splitId[1]
-	holder.Ownership = strings.Trim(_holder.Ownership, "000")
-
+	holder.Ownership = _holder.Ownership[:3]
 	return holder
 }
