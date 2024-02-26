@@ -47,6 +47,8 @@ func fromACPRequestQueryOptions(requestBody *beta_v0.AccessControlPermissionsReq
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.Module = requestBody.Options.Where.Module
 	queryOptions.Where.Name = requestBody.Options.Where.Name

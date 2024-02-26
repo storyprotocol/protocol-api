@@ -94,7 +94,8 @@ func fromPolicyFWMRequestQueryOptions(body *beta_v0.PolicyFrameworkManagerReques
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-
+	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderBy = body.Options.OrderBy
 	queryOptions.Where.Address = body.Options.Where.Address
 	queryOptions.Where.Name = body.Options.Where.Name
 

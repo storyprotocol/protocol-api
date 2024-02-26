@@ -92,6 +92,8 @@ func fromDisputeRequestQueryOptions(requestBody *beta_v0.DisputeRequestBody) *th
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.TargetTag = requestBody.Options.Where.TargetTag
 	queryOptions.Where.TargetIpId = requestBody.Options.Where.TargetIpId

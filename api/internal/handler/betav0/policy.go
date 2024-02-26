@@ -92,7 +92,8 @@ func fromPolicuyRequestQueryOptions(body *beta_v0.PolicyRequestBody) *thegraph.T
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-
+	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderBy = body.Options.OrderBy
 	queryOptions.Where.PolicyFrameworkManager = body.Options.Where.PolicyFrameworkManager
 	queryOptions.Where.RoyaltyPolicy = body.Options.Where.RoyaltyPolicy
 	queryOptions.Where.MintingFeeToken = body.Options.Where.MintingFeeToken

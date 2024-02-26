@@ -94,6 +94,7 @@ func fromRoyaltyPolicyRequestQueryOptions(body *beta_v0.RoyaltyPolicyRequestBody
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-
+	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderBy = body.Options.OrderBy
 	return queryOptions
 }

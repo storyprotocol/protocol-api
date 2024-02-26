@@ -92,6 +92,8 @@ func fromPermissionRequestQueryOptions(requestBody *beta_v0.PermissionRequestBod
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.Signer = requestBody.Options.Where.Signer
 	queryOptions.Where.To = requestBody.Options.Where.To

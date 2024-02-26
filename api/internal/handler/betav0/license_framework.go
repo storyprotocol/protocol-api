@@ -62,6 +62,8 @@ func fromLicenseFWRequestQueryOptions(requestBody *beta_v0.LicenseFrameworkReque
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.Creator = requestBody.Options.Where.Creator
 

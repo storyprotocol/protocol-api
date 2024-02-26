@@ -93,6 +93,8 @@ func fromCollectionsRequestQueryOptions(requestBody *beta_v0.CollectionsRequestB
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	return queryOptions
 }

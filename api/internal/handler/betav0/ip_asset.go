@@ -93,6 +93,8 @@ func fromIPARequestQueryOptions(body *beta_v0.IpAssetRequestBody) *thegraph.TheG
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
+	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderBy = body.Options.OrderBy
 
 	queryOptions.Where.MetadataResolverAddress = body.Options.Where.MetadataResolverAddress
 	queryOptions.Where.TokenContract = body.Options.Where.TokenContract

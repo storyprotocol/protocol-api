@@ -99,6 +99,8 @@ func fromTrxRequestQueryOptions(requestBody *beta_v0.TransactionRequestBody) *th
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.ActionType = requestBody.Options.Where.ActionType
 	queryOptions.Where.ResourceId = requestBody.Options.Where.ResourceId

@@ -94,7 +94,8 @@ func fromRoyaltyPayRequestQueryOptions(body *beta_v0.RoyaltyPayRequestBody) *the
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-
+	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderBy = body.Options.OrderBy
 	queryOptions.Where.ReceiverIpId = body.Options.Where.ReceiverIpId
 	queryOptions.Where.Sender = body.Options.Where.Sender
 	queryOptions.Where.Token = body.Options.Where.Token

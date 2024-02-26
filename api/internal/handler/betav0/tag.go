@@ -94,7 +94,8 @@ func fromTagRequestQueryOptions(body *beta_v0.TagRequestBody) *thegraph.TheGraph
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-
+	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderBy = body.Options.OrderBy
 	queryOptions.Where.IPID = body.Options.Where.IPID
 	queryOptions.Where.Tag = body.Options.Where.Tag
 

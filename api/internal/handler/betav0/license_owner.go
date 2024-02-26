@@ -93,6 +93,8 @@ func fromLicenseOwnerRequestQueryOptions(requestBody *beta_v0.LicenseOwnersReque
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.PolicyId = requestBody.Options.Where.PolicyId
 	queryOptions.Where.Owner = requestBody.Options.Where.Owner

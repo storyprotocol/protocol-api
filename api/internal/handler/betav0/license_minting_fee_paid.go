@@ -92,6 +92,8 @@ func fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody *beta_v
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
+	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.ReceiverIpId = requestBody.Options.Where.ReceiverIpId
 	queryOptions.Where.Token = requestBody.Options.Where.Token
