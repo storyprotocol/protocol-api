@@ -28,10 +28,12 @@ func (c *ServiceBetaImpl) GetRoyaltyLiquidSplit(royaltySplitId string) (*beta_v0
 		return nil, fmt.Errorf("failed to get royalty split from the graph. error: %v", err)
 	}
 
+	var holders []beta_v0.Holder
 	claimFromIpPoolArg := "["
 
 	for i, holder := range royRes.RoyaltySplit.Holders {
 		sHolder := c.formatHolder(holder)
+		holders = append(holders, sHolder)
 		if sHolder.Ownership != "1000" {
 			claimFromIpPoolArg = claimFromIpPoolArg + fmt.Sprintf("%v", sHolder.ID)
 
@@ -44,6 +46,7 @@ func (c *ServiceBetaImpl) GetRoyaltyLiquidSplit(royaltySplitId string) (*beta_v0
 	claimFromIpPoolArg = claimFromIpPoolArg + "]"
 
 	royRes.RoyaltySplit.ClaimFromIPPoolArg = claimFromIpPoolArg
+	royRes.RoyaltySplit.Holders = holders
 
 	return royRes.RoyaltySplit, nil
 
