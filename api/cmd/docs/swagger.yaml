@@ -700,28 +700,6 @@ definitions:
       data:
         $ref: '#/definitions/betav0.Policy'
     type: object
-  betav0.RoyaltiesResponse:
-    properties:
-      data:
-        items:
-          $ref: '#/definitions/betav0.Royalty'
-        type: array
-    type: object
-  betav0.Royalty:
-    properties:
-      blockNumber:
-        type: string
-      blockTimestamp:
-        type: string
-      data:
-        type: string
-      id:
-        type: string
-      ipId:
-        type: string
-      royaltyPolicy:
-        type: string
-    type: object
   betav0.RoyaltyPay:
     properties:
       amount:
@@ -844,13 +822,10 @@ definitions:
       options:
         $ref: '#/definitions/betav0.RoyaltyQueryOptions'
     type: object
-  betav0.RoyaltyResponse:
-    properties:
-      data:
-        $ref: '#/definitions/betav0.Royalty'
-    type: object
   betav0.RoyaltySplit:
     properties:
+      claimFromIPPoolArg:
+        type: string
       holders:
         items:
           $ref: '#/definitions/betav0.Holder'
@@ -1431,7 +1406,7 @@ paths:
             $ref: '#/definitions/betav0.ModuleResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get a GetModule
+      summary: Get a Module
       tags:
       - Modules
   /api/v1/permissions:
@@ -1469,6 +1444,11 @@ paths:
       - application/json
       description: Retrieve a Permission
       parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
       - description: Permission ID
         in: path
         name: permissionId
@@ -1481,6 +1461,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/betav0.PermissionResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get a Permission
       tags:
       - Permissions
@@ -1598,63 +1580,6 @@ paths:
       summary: Get a PolicyFrameworkManager
       tags:
       - Policies
-  /api/v1/royalties:
-    post:
-      consumes:
-      - application/json
-      description: Retrieve a paginated, filtered list of Royalties
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: Query Parameters (
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/betav0.RoyaltyRequestBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.RoyaltiesResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: List Royalties
-      tags:
-      - Royalties
-  /api/v1/royalties/{royaltyId}:
-    get:
-      consumes:
-      - application/json
-      description: Retrieve a Royalty
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: Royalty ID
-        in: path
-        name: royaltyId
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.RoyaltyResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get a Royalty
-      tags:
-      - Royalties
   /api/v1/royalties/payments:
     post:
       consumes:

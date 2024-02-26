@@ -708,7 +708,7 @@ const docTemplate = `{
                 "tags": [
                     "Modules"
                 ],
-                "summary": "Get a GetModule",
+                "summary": "Get a Module",
                 "parameters": [
                     {
                         "type": "string",
@@ -783,6 +783,11 @@ const docTemplate = `{
         },
         "/api/v1/permissions/{permissionId}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Retrieve a Permission",
                 "consumes": [
                     "application/json"
@@ -795,6 +800,13 @@ const docTemplate = `{
                 ],
                 "summary": "Get a Permission",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key",
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Permission ID",
@@ -988,52 +1000,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/betav0.PolicyResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/royalties": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a paginated, filtered list of Royalties",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Royalties"
-                ],
-                "summary": "List Royalties",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Query Parameters (",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/betav0.RoyaltyRequestBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/betav0.RoyaltiesResponse"
                         }
                     }
                 }
@@ -1258,50 +1224,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/betav0.RoyaltySplitResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/royalties/{royaltyId}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Retrieve a Royalty",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Royalties"
-                ],
-                "summary": "Get a Royalty",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key",
-                        "name": "X-API-Key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Royalty ID",
-                        "name": "royaltyId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/betav0.RoyaltyResponse"
                         }
                     }
                 }
@@ -2580,40 +2502,6 @@ const docTemplate = `{
                 }
             }
         },
-        "betav0.RoyaltiesResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/betav0.Royalty"
-                    }
-                }
-            }
-        },
-        "betav0.Royalty": {
-            "type": "object",
-            "properties": {
-                "blockNumber": {
-                    "type": "string"
-                },
-                "blockTimestamp": {
-                    "type": "string"
-                },
-                "data": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "ipId": {
-                    "type": "string"
-                },
-                "royaltyPolicy": {
-                    "type": "string"
-                }
-            }
-        },
         "betav0.RoyaltyPay": {
             "type": "object",
             "properties": {
@@ -2804,17 +2692,12 @@ const docTemplate = `{
                 }
             }
         },
-        "betav0.RoyaltyResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "$ref": "#/definitions/betav0.Royalty"
-                }
-            }
-        },
         "betav0.RoyaltySplit": {
             "type": "object",
             "properties": {
+                "claimFromIPPoolArg": {
+                    "type": "string"
+                },
                 "holders": {
                     "type": "array",
                     "items": {
