@@ -63,13 +63,11 @@ func NewGetTransaction(graphService thegraph.TheGraphServiceBeta, httpClient xht
 // @Router /api/v1/transactions [post]
 func NewListTransactions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.TransactionRequestBody
+		var requestBody *beta_v0.TransactionRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.TransactionRequestBody{}
 		}
 
-		options := fromTrxRequestQueryOptions(requestBody.Options)
+		options := fromTrxRequestQueryOptions(requestBody)
 
 		fmt.Println(options)
 		trxs, err := graphService.ListTransactions(options)
@@ -85,8 +83,8 @@ func NewListTransactions(graphService thegraph.TheGraphServiceBeta, httpClient x
 	}
 }
 
-func fromTrxRequestQueryOptions(options *beta_v0.TrxQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromTrxRequestQueryOptions(requestBody *beta_v0.TransactionRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -95,16 +93,16 @@ func fromTrxRequestQueryOptions(options *beta_v0.TrxQueryOptions) *thegraph.TheG
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if requestBody.Options.Pagination.Limit == 0 {
+		requestBody.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Skip = requestBody.Options.Pagination.Offset
 
-	queryOptions.Where.ActionType = options.Where.ActionType
-	queryOptions.Where.ResourceId = options.Where.ResourceId
-	queryOptions.Where.IPID = options.Where.IPID
+	queryOptions.Where.ActionType = requestBody.Options.Where.ActionType
+	queryOptions.Where.ResourceId = requestBody.Options.Where.ResourceId
+	queryOptions.Where.IPID = requestBody.Options.Where.IPID
 
 	return queryOptions
 }

@@ -29,13 +29,11 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 
 func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.LicenseFrameworkRequestBody
+		var requestBody *beta_v0.LicenseFrameworkRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.LicenseFrameworkRequestBody{}
 		}
 
-		licenses, err := graphService.ListLicenseFrameworks(fromLicenseFWRequestQueryOptions(requestBody.Options))
+		licenses, err := graphService.ListLicenseFrameworks(fromLicenseFWRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get license frameworks: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -48,8 +46,8 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 	}
 }
 
-func fromLicenseFWRequestQueryOptions(options *beta_v0.LFWQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromLicenseFWRequestQueryOptions(requestBody *beta_v0.LicenseFrameworkRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -58,14 +56,14 @@ func fromLicenseFWRequestQueryOptions(options *beta_v0.LFWQueryOptions) *thegrap
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if requestBody.Options.Pagination.Limit == 0 {
+		requestBody.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Skip = requestBody.Options.Pagination.Offset
 
-	queryOptions.Where.Creator = options.Where.Creator
+	queryOptions.Where.Creator = requestBody.Options.Where.Creator
 
 	return queryOptions
 }

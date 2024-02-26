@@ -57,13 +57,11 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Router /api/v1/permissions [post]
 func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.PermissionRequestBody
+		var requestBody *beta_v0.PermissionRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.PermissionRequestBody{}
 		}
 
-		perms, err := graphService.ListPermissions(fromPermissionRequestQueryOptions(requestBody.Options))
+		perms, err := graphService.ListPermissions(fromPermissionRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list permissions: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -76,8 +74,8 @@ func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xh
 	}
 }
 
-func fromPermissionRequestQueryOptions(options *beta_v0.PermissionQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromPermissionRequestQueryOptions(requestBody *beta_v0.PermissionRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -86,15 +84,15 @@ func fromPermissionRequestQueryOptions(options *beta_v0.PermissionQueryOptions) 
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if requestBody.Options.Pagination.Limit == 0 {
+		requestBody.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Skip = requestBody.Options.Pagination.Offset
 
-	queryOptions.Where.Signer = options.Where.Signer
-	queryOptions.Where.To = options.Where.To
+	queryOptions.Where.Signer = requestBody.Options.Where.Signer
+	queryOptions.Where.To = requestBody.Options.Where.To
 
 	return queryOptions
 }

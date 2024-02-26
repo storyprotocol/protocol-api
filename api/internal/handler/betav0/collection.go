@@ -60,13 +60,11 @@ func NewGetCollection(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Router /api/v1/collections [post]
 func NewListCollections(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.CollectionsRequestBody
+		var requestBody *beta_v0.CollectionsRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.CollectionsRequestBody{}
 		}
 
-		cols, err := graphService.ListCollections(fromCollectionsRequestQueryOptions(requestBody.Options))
+		cols, err := graphService.ListCollections(fromCollectionsRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list collections: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -79,8 +77,8 @@ func NewListCollections(graphService thegraph.TheGraphServiceBeta, httpClient xh
 	}
 }
 
-func fromCollectionsRequestQueryOptions(options *beta_v0.CollectionQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromCollectionsRequestQueryOptions(requestBody *beta_v0.CollectionsRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -89,12 +87,12 @@ func fromCollectionsRequestQueryOptions(options *beta_v0.CollectionQueryOptions)
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if requestBody.Options.Pagination.Limit == 0 {
+		requestBody.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Skip = requestBody.Options.Pagination.Offset
 
 	return queryOptions
 }

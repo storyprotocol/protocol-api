@@ -59,13 +59,13 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 // @Router /api/v1/policies/frameworks [post]
 func NewListPolicyFrameworkManagers(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.PolicyFrameworkManagerRequestBody
+		var requestBody *beta_v0.PolicyFrameworkManagerRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.PolicyFrameworkManagerRequestBody{}
+			requestBody = &beta_v0.PolicyFrameworkManagerRequestBody{}
 		}
 
-		pfwms, err := graphService.ListPolicyFrameworkManagers(fromPolicyFWMRequestQueryOptions(requestBody.Options))
+		pfwms, err := graphService.ListPolicyFrameworkManagers(fromPolicyFWMRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list policy framework managers : %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +78,8 @@ func NewListPolicyFrameworkManagers(graphService thegraph.TheGraphServiceBeta, h
 	}
 }
 
-func fromPolicyFWMRequestQueryOptions(options *beta_v0.PFWMQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromPolicyFWMRequestQueryOptions(body *beta_v0.PolicyFrameworkManagerRequestBody) *thegraph.TheGraphQueryOptions {
+	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,15 +88,15 @@ func fromPolicyFWMRequestQueryOptions(options *beta_v0.PFWMQueryOptions) *thegra
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if body.Options.Pagination.Limit == 0 {
+		body.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Skip = body.Options.Pagination.Offset
 
-	queryOptions.Where.Address = options.Where.Address
-	queryOptions.Where.Name = options.Where.Name
+	queryOptions.Where.Address = body.Options.Where.Address
+	queryOptions.Where.Name = body.Options.Where.Name
 
 	return queryOptions
 }

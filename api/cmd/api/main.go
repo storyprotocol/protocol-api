@@ -65,9 +65,6 @@ func main() {
 		// BETA
 		{
 			{
-				protocol.GET("/royalties/:royaltyId", betaHandlers.NewGetRoyalty(theGraphBetaService, httpClient))
-				protocol.POST("/royalties", betaHandlers.NewListRoyalties(theGraphBetaService, httpClient))
-
 				protocol.GET("/royalties/payments/:royaltyPayId", betaHandlers.NewGetRoyaltyPay(theGraphBetaService, httpClient))
 				protocol.POST("/royalties/payments", betaHandlers.NewListRoyaltyPays(theGraphBetaService, httpClient))
 

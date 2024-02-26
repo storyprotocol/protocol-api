@@ -59,13 +59,13 @@ func NewGetRoyaltyPolicy(graphService thegraph.TheGraphServiceBeta, httpClient x
 // @Router /api/v1/royalties/policies [post]
 func NewListRoyaltyPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.RoyaltyPolicyRequestBody
+		var requestBody *beta_v0.RoyaltyPolicyRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.RoyaltyPolicyRequestBody{}
+			requestBody = &beta_v0.RoyaltyPolicyRequestBody{}
 		}
 
-		roys, err := graphService.ListRoyaltyPolicies(fromRoyaltyPolicyRequestQueryOptions(requestBody.Options))
+		roys, err := graphService.ListRoyaltyPolicies(fromRoyaltyPolicyRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list royalties: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +78,8 @@ func NewListRoyaltyPolicies(graphService thegraph.TheGraphServiceBeta, httpClien
 	}
 }
 
-func fromRoyaltyPolicyRequestQueryOptions(options *beta_v0.RoyaltyPolicyQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromRoyaltyPolicyRequestQueryOptions(body *beta_v0.RoyaltyPolicyRequestBody) *thegraph.TheGraphQueryOptions {
+	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,12 +88,12 @@ func fromRoyaltyPolicyRequestQueryOptions(options *beta_v0.RoyaltyPolicyQueryOpt
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if body.Options.Pagination.Limit == 0 {
+		body.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Skip = body.Options.Pagination.Offset
 
 	return queryOptions
 }

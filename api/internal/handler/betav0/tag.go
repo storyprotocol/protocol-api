@@ -59,13 +59,13 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 // @Router /api/v1/tags [post]
 func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.TagRequestBody
+		var requestBody *beta_v0.TagRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.TagRequestBody{}
+			requestBody = &beta_v0.TagRequestBody{}
 		}
 
-		tags, err := graphService.ListTag(fromTagRequestQueryOptions(requestBody.Options))
+		tags, err := graphService.ListTag(fromTagRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list tags: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +78,8 @@ func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cli
 	}
 }
 
-func fromTagRequestQueryOptions(options *beta_v0.TagQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromTagRequestQueryOptions(body *beta_v0.TagRequestBody) *thegraph.TheGraphQueryOptions {
+	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,15 +88,15 @@ func fromTagRequestQueryOptions(options *beta_v0.TagQueryOptions) *thegraph.TheG
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if body.Options.Pagination.Limit == 0 {
+		body.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Skip = body.Options.Pagination.Offset
 
-	queryOptions.Where.IPID = options.Where.IPID
-	queryOptions.Where.Tag = options.Where.Tag
+	queryOptions.Where.IPID = body.Options.Where.IPID
+	queryOptions.Where.Tag = body.Options.Where.Tag
 
 	return queryOptions
 }

@@ -58,13 +58,13 @@ func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Router /api/v1/assets [post]
 func NewListIPAssets(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.IpAssetRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.IpAssetRequestBody{}
+		var requestBody *beta_v0.IpAssetRequestBody
+		err := c.ShouldBindJSON(&requestBody)
+		if err != nil {
+			logger.Info(err)
 		}
 
-		ipAssets, err := graphService.ListIPAssets(fromIPARequestQueryOptions(requestBody.Options))
+		ipAssets, err := graphService.ListIPAssets(fromIPARequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get registered IP Assets: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -77,27 +77,27 @@ func NewListIPAssets(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 	}
 }
 
-func fromIPARequestQueryOptions(options *beta_v0.IpAssetQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromIPARequestQueryOptions(body *beta_v0.IpAssetRequestBody) *thegraph.TheGraphQueryOptions {
+	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
-			First: 100,
+			First: 10,
 			Skip:  0,
 		}
 	}
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if body.Options.Pagination.Limit == 0 {
+		body.Options.Pagination.Limit = 10
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Skip = body.Options.Pagination.Offset
 
-	queryOptions.Where.MetadataResolverAddress = options.Where.MetadataResolverAddress
-	queryOptions.Where.TokenContract = options.Where.TokenContract
-	queryOptions.Where.TokenId = options.Where.TokenId
-	queryOptions.Where.ChainId = options.Where.ChainId
+	queryOptions.Where.MetadataResolverAddress = body.Options.Where.MetadataResolverAddress
+	queryOptions.Where.TokenContract = body.Options.Where.TokenContract
+	queryOptions.Where.TokenId = body.Options.Where.TokenId
+	queryOptions.Where.ChainId = body.Options.Where.ChainId
 
 	return queryOptions
 }

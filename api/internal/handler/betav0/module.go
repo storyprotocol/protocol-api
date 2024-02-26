@@ -59,13 +59,11 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 // @Router /api/v1/modules [post]
 func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.ModuleRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.ModuleRequestBody{}
+		var requestBody *beta_v0.ModuleRequestBody
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		mods, err := graphService.ListModules(fromModuleRequestQueryOptions(requestBody.Options))
+		mods, err := graphService.ListModules(fromModuleRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get added modules: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +76,8 @@ func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.
 	}
 }
 
-func fromModuleRequestQueryOptions(options *beta_v0.ModuleQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromModuleRequestQueryOptions(body *beta_v0.ModuleRequestBody) *thegraph.TheGraphQueryOptions {
+	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,14 +86,14 @@ func fromModuleRequestQueryOptions(options *beta_v0.ModuleQueryOptions) *thegrap
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if body.Options.Pagination.Limit == 0 {
+		body.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Skip = body.Options.Pagination.Offset
 
-	queryOptions.Where.Name = options.Where.Name
+	queryOptions.Where.Name = body.Options.Where.Name
 
 	return queryOptions
 }

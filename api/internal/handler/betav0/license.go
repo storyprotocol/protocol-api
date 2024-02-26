@@ -59,13 +59,11 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Router /api/v1/licenses [post]
 func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.LicenseRequestBody
+		var requestBody *beta_v0.LicenseRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.LicenseRequestBody{}
 		}
 
-		licenses, err := graphService.ListLicenses(fromLicenseRequestQueryOptions(requestBody.Options))
+		licenses, err := graphService.ListLicenses(fromLicenseRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list licenses: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +76,8 @@ func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 	}
 }
 
-func fromLicenseRequestQueryOptions(options *beta_v0.LicenseQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromLicenseRequestQueryOptions(requestBody *beta_v0.LicenseRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,16 +86,16 @@ func fromLicenseRequestQueryOptions(options *beta_v0.LicenseQueryOptions) *thegr
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if requestBody.Options.Pagination.Limit == 0 {
+		requestBody.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Skip = requestBody.Options.Pagination.Offset
 
-	queryOptions.Where.PolicyId = options.Where.PolicyId
-	queryOptions.Where.LicensorIpdId = options.Where.LicensorIpdId
-	queryOptions.Where.Transferable = options.Where.Transferable
+	queryOptions.Where.PolicyId = requestBody.Options.Where.PolicyId
+	queryOptions.Where.LicensorIpdId = requestBody.Options.Where.LicensorIpdId
+	queryOptions.Where.Transferable = requestBody.Options.Where.Transferable
 
 	return queryOptions
 }

@@ -59,13 +59,12 @@ func NewGetLicenseOwner(graphService thegraph.TheGraphServiceBeta, httpClient xh
 // @Router /api/v1/licenses/owners [post]
 func NewListLicenseOwners(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.LicenseOwnersRequestBody
+		var requestBody *beta_v0.LicenseOwnersRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.LicenseOwnersRequestBody{}
+
 		}
 
-		licenses, err := graphService.ListLicenseOwners(fromLicenseOwnerRequestQueryOptions(requestBody.Options))
+		licenses, err := graphService.ListLicenseOwners(fromLicenseOwnerRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list license owners: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +77,8 @@ func NewListLicenseOwners(graphService thegraph.TheGraphServiceBeta, httpClient 
 	}
 }
 
-func fromLicenseOwnerRequestQueryOptions(options *beta_v0.LicenseOwnerQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromLicenseOwnerRequestQueryOptions(requestBody *beta_v0.LicenseOwnersRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,15 +87,15 @@ func fromLicenseOwnerRequestQueryOptions(options *beta_v0.LicenseOwnerQueryOptio
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if requestBody.Options.Pagination.Limit == 0 {
+		requestBody.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Skip = requestBody.Options.Pagination.Offset
 
-	queryOptions.Where.PolicyId = options.Where.PolicyId
-	queryOptions.Where.Owner = options.Where.Owner
+	queryOptions.Where.PolicyId = requestBody.Options.Where.PolicyId
+	queryOptions.Where.Owner = requestBody.Options.Where.Owner
 
 	return queryOptions
 }

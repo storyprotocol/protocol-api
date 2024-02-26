@@ -59,13 +59,11 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 // @Router /api/v1/policies [post]
 func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.PolicyRequestBody
+		var requestBody *beta_v0.PolicyRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
-			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.PolicyRequestBody{}
 		}
 
-		pols, err := graphService.ListPolicies(fromPolicuyRequestQueryOptions(requestBody.Options))
+		pols, err := graphService.ListPolicies(fromPolicuyRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list policies: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +76,8 @@ func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 	}
 }
 
-func fromPolicuyRequestQueryOptions(options *beta_v0.PolicyQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromPolicuyRequestQueryOptions(body *beta_v0.PolicyRequestBody) *thegraph.TheGraphQueryOptions {
+	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,16 +86,16 @@ func fromPolicuyRequestQueryOptions(options *beta_v0.PolicyQueryOptions) *thegra
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if body.Options.Pagination.Limit == 0 {
+		body.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Skip = body.Options.Pagination.Offset
 
-	queryOptions.Where.PolicyFrameworkManager = options.Where.PolicyFrameworkManager
-	queryOptions.Where.RoyaltyPolicy = options.Where.RoyaltyPolicy
-	queryOptions.Where.MintingFeeToken = options.Where.MintingFeeToken
+	queryOptions.Where.PolicyFrameworkManager = body.Options.Where.PolicyFrameworkManager
+	queryOptions.Where.RoyaltyPolicy = body.Options.Where.RoyaltyPolicy
+	queryOptions.Where.MintingFeeToken = body.Options.Where.MintingFeeToken
 
 	return queryOptions
 }

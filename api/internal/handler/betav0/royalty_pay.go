@@ -59,13 +59,13 @@ func NewGetRoyaltyPay(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 // @Router /api/v1/royalties/payments [post]
 func NewListRoyaltyPays(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		var requestBody beta_v0.RoyaltyPayRequestBody
+		var requestBody *beta_v0.RoyaltyPayRequestBody
 		if err := c.BindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
-			requestBody = beta_v0.RoyaltyPayRequestBody{}
+			requestBody = &beta_v0.RoyaltyPayRequestBody{}
 		}
 
-		roys, err := graphService.ListRoyaltyPays(fromRoyaltyPayRequestQueryOptions(requestBody.Options))
+		roys, err := graphService.ListRoyaltyPays(fromRoyaltyPayRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list royalty pays: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
@@ -78,8 +78,8 @@ func NewListRoyaltyPays(graphService thegraph.TheGraphServiceBeta, httpClient xh
 	}
 }
 
-func fromRoyaltyPayRequestQueryOptions(options *beta_v0.RoyaltyPayQueryOptions) *thegraph.TheGraphQueryOptions {
-	if options == nil {
+func fromRoyaltyPayRequestQueryOptions(body *beta_v0.RoyaltyPayRequestBody) *thegraph.TheGraphQueryOptions {
+	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -88,17 +88,17 @@ func fromRoyaltyPayRequestQueryOptions(options *beta_v0.RoyaltyPayQueryOptions) 
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 
-	if options.Pagination.Limit == 0 {
-		options.Pagination.Limit = 100
+	if body.Options.Pagination.Limit == 0 {
+		body.Options.Pagination.Limit = 100
 	}
 
-	queryOptions.First = options.Pagination.Limit
-	queryOptions.Skip = options.Pagination.Offset
+	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Skip = body.Options.Pagination.Offset
 
-	queryOptions.Where.ReceiverIpId = options.Where.ReceiverIpId
-	queryOptions.Where.Sender = options.Where.Sender
-	queryOptions.Where.Token = options.Where.Token
-	queryOptions.Where.PayerIpId = options.Where.PayerIpId
+	queryOptions.Where.ReceiverIpId = body.Options.Where.ReceiverIpId
+	queryOptions.Where.Sender = body.Options.Where.Sender
+	queryOptions.Where.Token = body.Options.Where.Token
+	queryOptions.Where.PayerIpId = body.Options.Where.PayerIpId
 
 	return queryOptions
 }
