@@ -13,7 +13,7 @@ import (
 // @BasePath /
 
 // GetModule Example godoc
-// @Summary Get a GetModule
+// @Summary Get a Module
 // @Schemes
 // @Description Retrieve a Module
 // @Security ApiKeyAuth

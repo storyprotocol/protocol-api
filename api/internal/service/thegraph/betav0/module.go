@@ -15,6 +15,9 @@ func (c *ServiceBetaImpl) GetModule(moduleId string) (*beta_v0.Module, error) {
 			id
 			name
 			module
+			blockNumber
+			blockTimestamp
+			deletedAt
 	  	}
 	}
     `, moduleId)
@@ -38,6 +41,9 @@ func (c *ServiceBetaImpl) ListModules(options *thegraph.TheGraphQueryOptions) ([
 			id
 			name
 			module
+			blockNumber
+			blockTimestamp
+			deletedAt
 		}
 	}
     `, QUERY_INTERFACE, QUERY_VALUE, whereString)

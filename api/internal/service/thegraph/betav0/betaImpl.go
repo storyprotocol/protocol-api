@@ -158,8 +158,13 @@ func (s *ServiceBetaImpl) setQueryOptions(options *thegraph.TheGraphQueryOptions
 		options.First = 100
 	}
 
-	options.OrderBy = "blockTimestamp"
-	options.OrderDirection = "desc"
+	if options.OrderBy == "" {
+		options.OrderBy = "blockNumber"
+	}
+
+	if options.OrderDirection == "" {
+		options.OrderDirection = "desc"
+	}
 
 	return options
 }

@@ -20,6 +20,8 @@ import (
 // @Tags Permissions
 // @Accept json
 // @Produce json
+// @Security ApiKeyAuth
+// @param X-API-Key header string true "API Key"
 // @Param        permissionId   path      string  true  "Permission ID"
 // @Success 200 {object} PermissionResponse
 // @Router /api/v1/permissions/{permissionId} [get]
