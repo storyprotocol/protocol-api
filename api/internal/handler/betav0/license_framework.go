@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
@@ -30,7 +31,7 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.LicenseFrameworkRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
 		licenses, err := graphService.ListLicenseFrameworks(fromLicenseFWRequestQueryOptions(requestBody))
@@ -47,7 +48,7 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 }
 
 func fromLicenseFWRequestQueryOptions(requestBody *beta_v0.LicenseFrameworkRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -62,7 +63,7 @@ func fromLicenseFWRequestQueryOptions(requestBody *beta_v0.LicenseFrameworkReque
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.Creator = requestBody.Options.Where.Creator

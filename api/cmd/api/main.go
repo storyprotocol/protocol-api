@@ -100,7 +100,7 @@ func main() {
 			protocol.GET("/ipapolicies/:ipaPolicyId", betaHandlers.NewGetIPAPolicy(theGraphBetaService, httpClient))
 			protocol.GET("/disputes/:disputeId", betaHandlers.NewGetDispute(theGraphBetaService, httpClient))
 			protocol.GET("/permissions/:permissionId", betaHandlers.NewGetPermission(theGraphBetaService, httpClient))
-			protocol.GET("/tags/:tagId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
+			//protocol.GET("/tags/:tagId", betaHandlers.NewGetTag(theGraphBetaService, httpClient))
 			protocol.GET("/collections/:collectionId", betaHandlers.NewGetCollection(theGraphBetaService, httpClient))
 			protocol.GET("/transactions/:trxId", betaHandlers.NewGetTransaction(theGraphBetaService, httpClient))
 
@@ -109,7 +109,7 @@ func main() {
 			protocol.POST("/ipapolicies", betaHandlers.NewListIPAPolicies(theGraphBetaService, httpClient))
 			protocol.POST("/disputes", betaHandlers.NewListDisputes(theGraphBetaService, httpClient))
 			protocol.POST("/permissions", betaHandlers.NewListPermissions(theGraphBetaService, httpClient))
-			protocol.POST("/tags", betaHandlers.NewListTags(theGraphBetaService, httpClient))
+			//protocol.POST("/tags", betaHandlers.NewListTags(theGraphBetaService, httpClient))
 			protocol.POST("/collections", betaHandlers.NewListCollections(theGraphBetaService, httpClient))
 			protocol.POST("/transactions", betaHandlers.NewListTransactions(theGraphBetaService, httpClient))
 		}

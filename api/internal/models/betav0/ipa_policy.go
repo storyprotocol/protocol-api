@@ -37,8 +37,8 @@ type IPAPQueryOptions struct {
 	} `json:"pagination"`
 	Where struct {
 		PolicyId  string `json:"policyId"`
-		Active    string `json:"active"`
-		Inherited string `json:"inherited"`
+		Active    bool   `json:"active"`
+		Inherited bool   `json:"inherited"`
 		IPID      string `json:"ipId"`
 	} `json:"where"`
 	OrderBy        string `json:"orderBy"`

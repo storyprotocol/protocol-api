@@ -838,61 +838,6 @@ definitions:
       data:
         $ref: '#/definitions/betav0.RoyaltySplit'
     type: object
-  betav0.Tag:
-    properties:
-      blockNumber:
-        type: string
-      blockTimestamp:
-        type: string
-      deletedAt:
-        type: string
-      id:
-        type: string
-      ipId:
-        type: string
-      tag:
-        type: string
-      uuid:
-        type: string
-    type: object
-  betav0.TagQueryOptions:
-    properties:
-      orderBy:
-        type: string
-      orderDirection:
-        type: string
-      pagination:
-        properties:
-          limit:
-            type: integer
-          offset:
-            type: integer
-        type: object
-      where:
-        properties:
-          ipId:
-            type: string
-          tag:
-            type: string
-        type: object
-    type: object
-  betav0.TagRequestBody:
-    properties:
-      options:
-        $ref: '#/definitions/betav0.TagQueryOptions'
-    type: object
-  betav0.TagResponse:
-    properties:
-      data:
-        $ref: '#/definitions/betav0.Tag'
-    type: object
-  betav0.TagsResponse:
-    properties:
-      data:
-        items:
-          $ref: '#/definitions/betav0.Tag'
-        type: array
-    type: object
   betav0.Transaction:
     properties:
       actionType:
@@ -1722,63 +1667,6 @@ paths:
       summary: Get a Royalty Split
       tags:
       - Royalties
-  /api/v1/tags:
-    post:
-      consumes:
-      - application/json
-      description: Retrieve a paginated, filtered list of Tags
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: Query Parameters (
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/betav0.TagRequestBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.TagsResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: List Tags
-      tags:
-      - Tags
-  /api/v1/tags/{tagId}:
-    get:
-      consumes:
-      - application/json
-      description: Retrieve a Tag
-      parameters:
-      - description: API Key
-        in: header
-        name: X-API-Key
-        required: true
-        type: string
-      - description: Tag ID
-        in: path
-        name: tagId
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/betav0.TagResponse'
-      security:
-      - ApiKeyAuth: []
-      summary: Get a Tag
-      tags:
-      - Tags
   /api/v1/transactions:
     post:
       consumes:

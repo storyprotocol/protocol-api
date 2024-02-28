@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 // @BasePath /
@@ -60,7 +61,7 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.PolicyRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
 		pols, err := graphService.ListPolicies(fromPolicuyRequestQueryOptions(requestBody))
@@ -92,7 +93,7 @@ func fromPolicuyRequestQueryOptions(body *beta_v0.PolicyRequestBody) *thegraph.T
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy
 	queryOptions.Where.PolicyFrameworkManager = body.Options.Where.PolicyFrameworkManager
 	queryOptions.Where.RoyaltyPolicy = body.Options.Where.RoyaltyPolicy

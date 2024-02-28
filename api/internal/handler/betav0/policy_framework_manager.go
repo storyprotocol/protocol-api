@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 // @BasePath /
@@ -60,7 +61,7 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 func NewListPolicyFrameworkManagers(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.PolicyFrameworkManagerRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
 			requestBody = &beta_v0.PolicyFrameworkManagerRequestBody{}
 		}
@@ -94,7 +95,7 @@ func fromPolicyFWMRequestQueryOptions(body *beta_v0.PolicyFrameworkManagerReques
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy
 	queryOptions.Where.Address = body.Options.Where.Address
 	queryOptions.Where.Name = body.Options.Where.Name

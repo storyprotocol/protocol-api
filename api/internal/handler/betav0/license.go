@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 // @BasePath /
@@ -60,7 +61,8 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.LicenseRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
+			logger.Info(err)
 		}
 
 		licenses, err := graphService.ListLicenses(fromLicenseRequestQueryOptions(requestBody))
@@ -77,7 +79,7 @@ func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 }
 
 func fromLicenseRequestQueryOptions(requestBody *beta_v0.LicenseRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -92,7 +94,7 @@ func fromLicenseRequestQueryOptions(requestBody *beta_v0.LicenseRequestBody) *th
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.PolicyId = requestBody.Options.Where.PolicyId

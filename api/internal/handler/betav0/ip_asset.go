@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 // @BasePath /
@@ -51,10 +52,10 @@ func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 // @Tags IPAssets
 // @Accept json
 // @Produce json
-// @Success 200 {object} IPAssetsResponse
 // @Security ApiKeyAuth
 // @param X-API-Key header string true "API Key"
 // @Param data body betav0.IpAssetRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
+// @Success 200 {object} IPAssetsResponse
 // @Router /api/v1/assets [post]
 func NewListIPAssets(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
@@ -93,7 +94,7 @@ func fromIPARequestQueryOptions(body *beta_v0.IpAssetRequestBody) *thegraph.TheG
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy
 
 	queryOptions.Where.MetadataResolverAddress = body.Options.Where.MetadataResolverAddress

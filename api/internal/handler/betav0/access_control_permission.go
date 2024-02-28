@@ -8,12 +8,13 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.AccessControlPermissionsRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
 			requestBody = &beta_v0.AccessControlPermissionsRequestBody{}
 		}
@@ -32,7 +33,7 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 }
 
 func fromACPRequestQueryOptions(requestBody *beta_v0.AccessControlPermissionsRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -47,7 +48,7 @@ func fromACPRequestQueryOptions(requestBody *beta_v0.AccessControlPermissionsReq
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.Module = requestBody.Options.Where.Module

@@ -9,6 +9,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 type TrxWhere struct {
@@ -64,7 +65,7 @@ func NewGetTransaction(graphService thegraph.TheGraphServiceBeta, httpClient xht
 func NewListTransactions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.TransactionRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
 		options := fromTrxRequestQueryOptions(requestBody)
@@ -84,7 +85,7 @@ func NewListTransactions(graphService thegraph.TheGraphServiceBeta, httpClient x
 }
 
 func fromTrxRequestQueryOptions(requestBody *beta_v0.TransactionRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -99,7 +100,7 @@ func fromTrxRequestQueryOptions(requestBody *beta_v0.TransactionRequestBody) *th
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.ActionType = requestBody.Options.Where.ActionType

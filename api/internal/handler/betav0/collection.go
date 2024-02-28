@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 //var CollectionResponse =
@@ -61,7 +62,7 @@ func NewGetCollection(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 func NewListCollections(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.CollectionsRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
 		cols, err := graphService.ListCollections(fromCollectionsRequestQueryOptions(requestBody))
@@ -78,7 +79,7 @@ func NewListCollections(graphService thegraph.TheGraphServiceBeta, httpClient xh
 }
 
 func fromCollectionsRequestQueryOptions(requestBody *beta_v0.CollectionsRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -93,7 +94,7 @@ func fromCollectionsRequestQueryOptions(requestBody *beta_v0.CollectionsRequestB
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	return queryOptions

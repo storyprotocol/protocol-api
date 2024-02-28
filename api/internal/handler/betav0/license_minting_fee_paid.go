@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 // @BasePath /
@@ -60,7 +61,7 @@ func NewGetLicenseMintingFeePay(graphService thegraph.TheGraphServiceBeta, httpC
 func NewListLicenseMintingFeePaids(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.LicenseMintingFeePaidRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
 		lmfps, err := graphService.ListLicenseMintingFeePaids(fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody))
@@ -77,7 +78,7 @@ func NewListLicenseMintingFeePaids(graphService thegraph.TheGraphServiceBeta, ht
 }
 
 func fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody *beta_v0.LicenseMintingFeePaidRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -92,7 +93,7 @@ func fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody *beta_v
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.ReceiverIpId = requestBody.Options.Where.ReceiverIpId

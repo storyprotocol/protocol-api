@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 // @BasePath /
@@ -92,7 +93,7 @@ func fromModuleRequestQueryOptions(body *beta_v0.ModuleRequestBody) *thegraph.Th
 
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
-	queryOptions.OrderDirection = body.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy
 	queryOptions.Where.Name = body.Options.Where.Name
 

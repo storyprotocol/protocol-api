@@ -10,21 +10,6 @@ import (
 	"net/http"
 )
 
-// @BasePath /
-
-// GetTag Example godoc
-// @Summary Get a Tag
-// @Schemes
-// @Description Retrieve a Tag
-// @Security ApiKeyAuth
-// @param X-API-Key header string true "API Key"
-// @Host https://edge.stg.storyprotocol.net
-// @Tags Tags
-// @Accept json
-// @Produce json
-// @Param        tagId   path      string  true  "Tag ID"
-// @Success 200 {object} TagResponse
-// @Router /api/v1/tags/{tagId} [get]
 func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		ipId := c.Param("tagId")
@@ -42,25 +27,10 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 	}
 }
 
-// @BasePath /
-
-// ListTags Example godoc
-// @Summary List Tags
-// @Schemes
-// @Host https://edge.stg.storyprotocol.net
-// @Description Retrieve a paginated, filtered list of Tags
-// @Security ApiKeyAuth
-// @param X-API-Key header string true "API Key"
-// @Param data body betav0.TagRequestBody true "Query Parameters ("where" values are optional. Remove if not using)"
-// @Tags Tags
-// @Accept json
-// @Produce json
-// @Success 200 {object} TagsResponse
-// @Router /api/v1/tags [post]
 func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.TagRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 			logger.Errorf("Failed to read request body: %v", err)
 			requestBody = &beta_v0.TagRequestBody{}
 		}

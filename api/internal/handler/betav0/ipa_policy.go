@@ -8,6 +8,8 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 // @BasePath /
@@ -60,7 +62,7 @@ func NewGetIPAPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 func NewListIPAPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.IPAPolicyRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
 		pols, err := graphService.ListIPAPolicies(fromIPAPolicyRequestQueryOptions(requestBody))
@@ -77,7 +79,7 @@ func NewListIPAPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xh
 }
 
 func fromIPAPolicyRequestQueryOptions(requestBody *beta_v0.IPAPolicyRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -92,12 +94,12 @@ func fromIPAPolicyRequestQueryOptions(requestBody *beta_v0.IPAPolicyRequestBody)
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.PolicyId = requestBody.Options.Where.PolicyId
-	queryOptions.Where.Active = requestBody.Options.Where.Active
-	queryOptions.Where.Inherited = requestBody.Options.Where.Inherited
+	queryOptions.Where.Active = strconv.FormatBool(requestBody.Options.Where.Active)
+	queryOptions.Where.Inherited = strconv.FormatBool(requestBody.Options.Where.Inherited)
 	queryOptions.Where.IPID = requestBody.Options.Where.IPID
 
 	return queryOptions

@@ -34,12 +34,13 @@ func (c *ServiceBetaImpl) GetRoyaltyLiquidSplit(royaltySplitId string) (*beta_v0
 	for i, holder := range royRes.RoyaltySplit.Holders {
 		sHolder := c.formatHolder(holder)
 		holders = append(holders, sHolder)
-		if sHolder.Ownership != "1000" {
-			claimFromIpPoolArg = claimFromIpPoolArg + fmt.Sprintf("%v", sHolder.ID)
 
-			if i != len(royRes.RoyaltySplit.Holders)-1 {
+		if sHolder.Ownership != "" {
+			if i != 0 {
 				claimFromIpPoolArg = claimFromIpPoolArg + ","
 			}
+			claimFromIpPoolArg = claimFromIpPoolArg + fmt.Sprintf("%v", sHolder.ID)
+
 		}
 	}
 

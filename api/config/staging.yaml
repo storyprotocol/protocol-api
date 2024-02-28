@@ -1,1 +1,2 @@
 env: staging
+the_graph_beta_endpoint: https://api.thegraph.com/subgraphs/name/baxterjfinch/story-protocol-staging

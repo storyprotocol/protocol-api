@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strings"
 )
 
 // @BasePath /
@@ -60,7 +61,7 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		var requestBody *beta_v0.PermissionRequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
 		perms, err := graphService.ListPermissions(fromPermissionRequestQueryOptions(requestBody))
@@ -77,7 +78,7 @@ func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xh
 }
 
 func fromPermissionRequestQueryOptions(requestBody *beta_v0.PermissionRequestBody) *thegraph.TheGraphQueryOptions {
-	if requestBody == nil {
+	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
@@ -92,7 +93,7 @@ func fromPermissionRequestQueryOptions(requestBody *beta_v0.PermissionRequestBod
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
-	queryOptions.OrderDirection = requestBody.Options.OrderDirection
+	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
 
 	queryOptions.Where.Signer = requestBody.Options.Where.Signer
