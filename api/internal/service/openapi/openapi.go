@@ -47,19 +47,19 @@ func (ocClient *OpenchainClient) GetPermissionName(encodedName string) (string, 
 	res, err := http.Get(requestUrl)
 	if err != nil {
 		fmt.Printf("error making http request: %s\n", err)
-		return "", err
+		return encodedName, err
 	}
 
 	decodedResponse := &OpenchainResponse{}
 	err = json.NewDecoder(res.Body).Decode(decodedResponse)
 	if err != nil {
 		fmt.Printf("error decoding request: %s\n", err)
-		return "", err
+		return encodedName, err
 	}
 
 	if !decodedResponse.Ok {
 		fmt.Printf("error in response: %s\n", err)
-		return "", err
+		return encodedName, err
 	}
 
 	ocClient.cachedFunctions[encodedName] = decodedResponse.Result.Function[encodedName][0].Name

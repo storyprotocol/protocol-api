@@ -79,6 +79,12 @@ func NewListCollections(graphService thegraph.TheGraphServiceBeta, httpClient xh
 }
 
 func fromCollectionsRequestQueryOptions(requestBody *beta_v0.CollectionsRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

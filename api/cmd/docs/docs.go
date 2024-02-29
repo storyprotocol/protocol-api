@@ -1541,10 +1541,10 @@ const docTemplate = `{
                     "type": "object",
                     "properties": {
                         "active": {
-                            "type": "string"
+                            "type": "boolean"
                         },
                         "inherited": {
-                            "type": "string"
+                            "type": "boolean"
                         },
                         "ipId": {
                             "type": "string"
@@ -1953,7 +1953,7 @@ const docTemplate = `{
                             "type": "string"
                         },
                         "transferable": {
-                            "type": "string"
+                            "type": "boolean"
                         }
                     }
                 }

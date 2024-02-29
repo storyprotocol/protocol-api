@@ -79,6 +79,12 @@ func NewListLicenseOwners(graphService thegraph.TheGraphServiceBeta, httpClient 
 }
 
 func fromLicenseOwnerRequestQueryOptions(requestBody *beta_v0.LicenseOwnersRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

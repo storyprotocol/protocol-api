@@ -33,6 +33,12 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 }
 
 func fromACPRequestQueryOptions(requestBody *beta_v0.AccessControlPermissionsRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

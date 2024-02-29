@@ -8,6 +8,7 @@ import (
 	xhttp "github.com/storyprotocol/protocol-api/pkg/http"
 	"github.com/storyprotocol/protocol-api/pkg/logger"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -79,6 +80,12 @@ func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 }
 
 func fromLicenseRequestQueryOptions(requestBody *beta_v0.LicenseRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
@@ -99,7 +106,7 @@ func fromLicenseRequestQueryOptions(requestBody *beta_v0.LicenseRequestBody) *th
 
 	queryOptions.Where.PolicyId = requestBody.Options.Where.PolicyId
 	queryOptions.Where.LicensorIpdId = requestBody.Options.Where.LicensorIpdId
-	queryOptions.Where.Transferable = requestBody.Options.Where.Transferable
+	queryOptions.Where.Transferable = strconv.FormatBool(requestBody.Options.Where.Transferable)
 
 	return queryOptions
 }

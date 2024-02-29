@@ -48,6 +48,12 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 }
 
 func fromLicenseFWRequestQueryOptions(requestBody *beta_v0.LicenseFrameworkRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

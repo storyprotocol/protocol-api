@@ -141,9 +141,9 @@ definitions:
       where:
         properties:
           active:
-            type: string
+            type: boolean
           inherited:
-            type: string
+            type: boolean
           ipId:
             type: string
           policyId:
@@ -406,7 +406,7 @@ definitions:
           policyId:
             type: string
           transferable:
-            type: string
+            type: boolean
         type: object
     type: object
   betav0.LicenseRequestBody:

@@ -81,6 +81,12 @@ func NewListIPAssets(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 func fromIPARequestQueryOptions(body *beta_v0.IpAssetRequestBody) *thegraph.TheGraphQueryOptions {
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
+	if body.Options == nil {
+		return &thegraph.TheGraphQueryOptions{
 			First: 10,
 			Skip:  0,
 		}

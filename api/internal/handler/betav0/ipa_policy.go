@@ -79,6 +79,12 @@ func NewListIPAPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xh
 }
 
 func fromIPAPolicyRequestQueryOptions(requestBody *beta_v0.IPAPolicyRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
@@ -102,5 +108,6 @@ func fromIPAPolicyRequestQueryOptions(requestBody *beta_v0.IPAPolicyRequestBody)
 	queryOptions.Where.Inherited = strconv.FormatBool(requestBody.Options.Where.Inherited)
 	queryOptions.Where.IPID = requestBody.Options.Where.IPID
 
+	logger.Info(requestBody.Options.Where)
 	return queryOptions
 }

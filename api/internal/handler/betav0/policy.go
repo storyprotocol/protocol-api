@@ -84,6 +84,12 @@ func fromPolicuyRequestQueryOptions(body *beta_v0.PolicyRequestBody) *thegraph.T
 			Skip:  0,
 		}
 	}
+	if body.Options == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 

@@ -78,6 +78,13 @@ func NewListLicenseMintingFeePaids(graphService thegraph.TheGraphServiceBeta, ht
 }
 
 func fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody *beta_v0.LicenseMintingFeePaidRequestBody) *thegraph.TheGraphQueryOptions {
+
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

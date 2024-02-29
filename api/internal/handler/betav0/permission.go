@@ -78,6 +78,12 @@ func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xh
 }
 
 func fromPermissionRequestQueryOptions(requestBody *beta_v0.PermissionRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

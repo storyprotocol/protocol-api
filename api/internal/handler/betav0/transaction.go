@@ -85,6 +85,12 @@ func NewListTransactions(graphService thegraph.TheGraphServiceBeta, httpClient x
 }
 
 func fromTrxRequestQueryOptions(requestBody *beta_v0.TransactionRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

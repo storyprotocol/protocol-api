@@ -84,6 +84,12 @@ func fromModuleRequestQueryOptions(body *beta_v0.ModuleRequestBody) *thegraph.Th
 			Skip:  0,
 		}
 	}
+	if body.Options == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 
 	var queryOptions = &thegraph.TheGraphQueryOptions{}
 

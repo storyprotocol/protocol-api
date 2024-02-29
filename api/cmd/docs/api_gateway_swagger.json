@@ -5,6 +5,7 @@
     "version": "v0.1-beta",
     "title": "Story Protocol API Reference"
   },
+  "host": "api.storyprotocol.net",
   "paths": {
     "/api/v1/assets": {
       "post": {
@@ -1220,96 +1221,6 @@
         }
       }
     },
-    "/api/v1/tags": {
-      "post": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Retrieve a paginated, filtered list of Tags",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Tags"
-        ],
-        "summary": "List Tags",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "API Key",
-            "name": "X-API-Key",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "Query Parameters (",
-            "name": "data",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/TagRequestBody"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/TagsResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/tags/{tagId}": {
-      "get": {
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "description": "Retrieve a Tag",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "Tags"
-        ],
-        "summary": "Get a Tag",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "API Key",
-            "name": "X-API-Key",
-            "in": "header",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Tag ID",
-            "name": "tagId",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/TagResponse"
-            }
-          }
-        }
-      }
-    },
     "/api/v1/transactions": {
       "post": {
         "security": [
@@ -1622,10 +1533,10 @@
           "type": "object",
           "properties": {
             "active": {
-              "type": "string"
+              "type": "boolean"
             },
             "inherited": {
-              "type": "string"
+              "type": "boolean"
             },
             "ipId": {
               "type": "string"
@@ -2034,7 +1945,7 @@
               "type": "string"
             },
             "transferable": {
-              "type": "string"
+              "type": "boolean"
             }
           }
         }
@@ -2705,92 +2616,6 @@
       "properties": {
         "data": {
           "$ref": "#/definitions/RoyaltySplit"
-        }
-      }
-    },
-    "Tag": {
-      "type": "object",
-      "properties": {
-        "blockNumber": {
-          "type": "string"
-        },
-        "blockTimestamp": {
-          "type": "string"
-        },
-        "deletedAt": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "ipId": {
-          "type": "string"
-        },
-        "tag": {
-          "type": "string"
-        },
-        "uuid": {
-          "type": "string"
-        }
-      }
-    },
-    "TagQueryOptions": {
-      "type": "object",
-      "properties": {
-        "orderBy": {
-          "type": "string"
-        },
-        "orderDirection": {
-          "type": "string"
-        },
-        "pagination": {
-          "type": "object",
-          "properties": {
-            "limit": {
-              "type": "integer"
-            },
-            "offset": {
-              "type": "integer"
-            }
-          }
-        },
-        "where": {
-          "type": "object",
-          "properties": {
-            "ipId": {
-              "type": "string"
-            },
-            "tag": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "TagRequestBody": {
-      "type": "object",
-      "properties": {
-        "options": {
-          "$ref": "#/definitions/TagQueryOptions"
-        }
-      }
-    },
-    "TagResponse": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/Tag"
-        }
-      }
-    },
-    "TagsResponse": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Tag"
-          }
         }
       }
     },

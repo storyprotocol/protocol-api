@@ -78,6 +78,12 @@ func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 }
 
 func fromDisputeRequestQueryOptions(requestBody *beta_v0.DisputeRequestBody) *thegraph.TheGraphQueryOptions {
+	if requestBody == nil {
+		return &thegraph.TheGraphQueryOptions{
+			First: 100,
+			Skip:  0,
+		}
+	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,

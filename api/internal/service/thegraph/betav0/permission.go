@@ -3,7 +3,6 @@ package betav0
 import (
 	"context"
 	"fmt"
-
 	beta_v0 "github.com/storyprotocol/protocol-api/api/internal/models/betav0"
 	"github.com/storyprotocol/protocol-api/api/internal/service/thegraph"
 )
@@ -47,6 +46,7 @@ func (c *ServiceBetaImpl) GetPermission(permissionId string) (*beta_v0.Permissio
 
 func (c *ServiceBetaImpl) ListPermissions(options *thegraph.TheGraphQueryOptions) ([]*beta_v0.Permission, error) {
 	whereString := c.buildWhereConditions(options)
+	//TODO: FIgure out why id: in the query statement causes ordering by not to work
 	query := fmt.Sprintf(`
 	query(%s) {
 	  permissions(id: "%s", where:{%s}) {
