@@ -1721,7 +1721,7 @@ paths:
             $ref: '#/definitions/betav0.TransactionResponse'
       security:
       - ApiKeyAuth: []
-      summary: Get a Dispute
+      summary: Get a Transaction
       tags:
       - Transactions
 swagger: "2.0"

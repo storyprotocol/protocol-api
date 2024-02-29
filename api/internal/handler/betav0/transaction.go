@@ -18,7 +18,7 @@ type TrxWhere struct {
 // @BasePath /
 
 // GetTransaction Example godoc
-// @Summary Get a Dispute
+// @Summary Get a Transaction
 // @Schemes
 // @Description Retrieve a Transaction
 // @Tags Transactions

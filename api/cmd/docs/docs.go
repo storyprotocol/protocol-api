@@ -1292,7 +1292,7 @@ const docTemplate = `{
                 "tags": [
                     "Transactions"
                 ],
-                "summary": "Get a Dispute",
+                "summary": "Get a Transaction",
                 "parameters": [
                     {
                         "type": "string",
