@@ -31,16 +31,22 @@ func NewGetIPAPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 	return func(c *gin.Context) {
 		ipaPolicyId := c.Param("ipaPolicyId")
 
-		policies, err := graphService.GetIPAPolicy(ipaPolicyId)
+		policies, renPolicies, err := graphService.GetIPAPolicy(ipaPolicyId)
 		if err != nil {
 			logger.Errorf("Failed to get ipa policy: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.IPAPolicyResponse{
-			Data: policies,
-		})
+		if policies != nil {
+			c.JSON(http.StatusOK, beta_v0.IPAPolicyResponse{
+				Data: policies,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenIPAPolicyResponse{
+				Data: renPolicies,
+			})
+		}
 	}
 }
 
@@ -65,16 +71,22 @@ func NewListIPAPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xh
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		pols, err := graphService.ListIPAPolicies(fromIPAPolicyRequestQueryOptions(requestBody))
+		pols, renPols, err := graphService.ListIPAPolicies(fromIPAPolicyRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list ipa policies: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.IPAPoliciesResponse{
-			Data: pols,
-		})
+		if pols != nil {
+			c.JSON(http.StatusOK, beta_v0.IPAPoliciesResponse{
+				Data: pols,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenIPAPoliciesResponse{
+				Data: renPols,
+			})
+		}
 	}
 }
 
@@ -82,12 +94,14 @@ func fromIPAPolicyRequestQueryOptions(requestBody *beta_v0.IPAPolicyRequestBody)
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -99,6 +113,7 @@ func fromIPAPolicyRequestQueryOptions(requestBody *beta_v0.IPAPolicyRequestBody)
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

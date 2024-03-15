@@ -31,16 +31,23 @@ func NewGetLicense(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 	return func(c *gin.Context) {
 		licenseId := c.Param("licenseId")
 
-		licenses, err := graphService.GetLicense(licenseId)
+		licenses, renLic, err := graphService.GetLicense(licenseId)
 		if err != nil {
 			logger.Errorf("Failed to get license: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseResponse{
-			Data: licenses,
-		})
+		if licenses != nil {
+			c.JSON(http.StatusOK, beta_v0.LicenseResponse{
+				Data: licenses,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicenseResponse{
+				Data: renLic,
+			})
+		}
+
 	}
 }
 
@@ -66,16 +73,22 @@ func NewListLicenses(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			logger.Info(err)
 		}
 
-		licenses, err := graphService.ListLicenses(fromLicenseRequestQueryOptions(requestBody))
+		licenses, renLic, err := graphService.ListLicenses(fromLicenseRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list licenses: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if licenses != nil {
+			c.JSON(http.StatusOK, beta_v0.LicensesResponse{
+				Data: licenses,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicensesResponse{
+				Data: renLic,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.LicensesResponse{
-			Data: licenses,
-		})
 	}
 }
 
@@ -83,12 +96,14 @@ func fromLicenseRequestQueryOptions(requestBody *beta_v0.LicenseRequestBody) *th
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -100,6 +115,7 @@ func fromLicenseRequestQueryOptions(requestBody *beta_v0.LicenseRequestBody) *th
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

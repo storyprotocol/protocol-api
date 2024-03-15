@@ -29,15 +29,21 @@ func NewGetRoyaltyLiquidSplit(graphService thegraph.TheGraphServiceBeta, httpCli
 	return func(c *gin.Context) {
 		royaltySplitId := c.Param("royaltySplitId")
 
-		splits, err := graphService.GetRoyaltyLiquidSplit(royaltySplitId)
+		splits, renSplits, err := graphService.GetRoyaltyLiquidSplit(royaltySplitId)
 		if err != nil {
 			logger.Errorf("Failed to get royalty splits: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if splits != nil {
+			c.JSON(http.StatusOK, beta_v0.RoyaltySplitResponse{
+				Data: splits,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenRoyaltySplitResponse{
+				Data: renSplits,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.RoyaltySplitResponse{
-			Data: splits,
-		})
 	}
 }

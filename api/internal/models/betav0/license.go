@@ -37,7 +37,7 @@ type LicenseQueryOptions struct {
 	} `json:"pagination"`
 	Where struct {
 		PolicyId      string `json:"policyId"`
-		LicensorIpdId string `json:"licensorIpdId"`
+		LicensorIpdId string `json:"licensorIpId"`
 		Transferable  bool   `json:"transferable"`
 	} `json:"where"`
 	OrderBy        string `json:"orderBy"`

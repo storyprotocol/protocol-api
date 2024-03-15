@@ -31,16 +31,22 @@ func NewGetCollection(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 	return func(c *gin.Context) {
 		collectionId := c.Param("collectionId")
 
-		cols, err := graphService.GetCollection(collectionId)
+		cols, renCols, err := graphService.GetCollection(collectionId)
 		if err != nil {
 			logger.Errorf("Failed to get collection: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.CollectionResponse{
-			Data: cols,
-		})
+		if cols != nil {
+			c.JSON(http.StatusOK, beta_v0.CollectionResponse{
+				Data: cols,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenCollectionResponse{
+				Data: renCols,
+			})
+		}
 	}
 }
 
@@ -65,16 +71,22 @@ func NewListCollections(graphService thegraph.TheGraphServiceBeta, httpClient xh
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		cols, err := graphService.ListCollections(fromCollectionsRequestQueryOptions(requestBody))
+		cols, renCols, err := graphService.ListCollections(fromCollectionsRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list collections: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.CollectionsResponse{
-			Data: cols,
-		})
+		if cols != nil {
+			c.JSON(http.StatusOK, beta_v0.CollectionsResponse{
+				Data: cols,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenCollectionsResponse{
+				Data: renCols,
+			})
+		}
 	}
 }
 
@@ -83,11 +95,13 @@ func fromCollectionsRequestQueryOptions(requestBody *beta_v0.CollectionsRequestB
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
 			Skip:  0,
+			Limit: 100,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -99,6 +113,7 @@ func fromCollectionsRequestQueryOptions(requestBody *beta_v0.CollectionsRequestB
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

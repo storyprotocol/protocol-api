@@ -30,16 +30,22 @@ func NewGetLicenseMintingFeePay(graphService thegraph.TheGraphServiceBeta, httpC
 	return func(c *gin.Context) {
 		licenseMintingFeePaidId := c.Param("licenseMintingFeePaidId")
 
-		lmfp, err := graphService.GetLicenseMintingFeePaid(licenseMintingFeePaidId)
+		lmfp, renLmfp, err := graphService.GetLicenseMintingFeePaid(licenseMintingFeePaidId)
 		if err != nil {
 			logger.Errorf("Failed to get license minting fee paid: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if lmfp != nil {
+			c.JSON(http.StatusOK, beta_v0.LicenseMintingFeePaidResponse{
+				Data: lmfp,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicenseMintingFeePaidResponse{
+				Data: renLmfp,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseMintingFeePaidResponse{
-			Data: lmfp,
-		})
 	}
 }
 
@@ -64,16 +70,22 @@ func NewListLicenseMintingFeePaids(graphService thegraph.TheGraphServiceBeta, ht
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		lmfps, err := graphService.ListLicenseMintingFeePaids(fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody))
+		lmfps, renLmfps, err := graphService.ListLicenseMintingFeePaids(fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list license minting fee paids: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if lmfps != nil {
+			c.JSON(http.StatusOK, beta_v0.LicenseMintingFeePaidsResponse{
+				Data: lmfps,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicenseMintingFeePaidsResponse{
+				Data: renLmfps,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseMintingFeePaidsResponse{
-			Data: lmfps,
-		})
 	}
 }
 
@@ -82,12 +94,14 @@ func fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody *beta_v
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -99,6 +113,7 @@ func fromLicenseMintingFeePaysRequestBodyRequestQueryOptions(requestBody *beta_v
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

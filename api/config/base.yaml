@@ -3,7 +3,28 @@ port: 8090
 the_graph_alpha_endpoint: https://api.thegraph.com/subgraphs/name/edisonz0718/storyprotocol-v0-mvp
 the_graph_beta_endpoint: https://api.thegraph.com/subgraphs/name/baxterjfinch/protocol-beta-v0-pre
 the_graph_0x_split_beta_endpoint: https://api.thegraph.com/subgraphs/name/baxterjfinch/0x_split_beta_v0
+
+the_graph_renaissance_endpoint: https://api.thegraph.com/subgraphs/name/baxterjfinch/protocol-beta-v0-pre
+the_graph_renaissance_0x_split_beta_endpoint: https://api.thegraph.com/subgraphs/name/baxterjfinch/0x_split_beta_v0
 rpc_url: https://eth-sepolia.g.alchemy.com/v2/j8FjbXW53K_ZSL1TLfYw
 api_keys:
   - "U3RvcnlQcm90b2NvbFRlc3RBUElLRVk="
 openchain_lookup_endpoint: "https://api.openchain.xyz/signature-database/v1/lookup"
+zettablock_api_key: "2853a23e-4de7-4991-bcb1-2583fdf1f8ed"
+zettablock_trx_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_c23fe51e5e1a437eb7c4b44b2675065f/graphql"
+zettablock_acl_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_7e8be598c2cd42f6a127b589ed772199/graphql"
+zettablock_collection_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_986230e02ab445e29b2c1d983cc0d0b9/graphql"
+zettablock_dispute_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_f704cc52e2594a3cb24e32a5365fceca/graphql"
+zettablock_ipasset_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_3d14c5efacef42eb998e58711e272f9f/graphql"
+zettablock_ipapolicy_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_b4f19ca1698c43e9b5313640223604f2/graphql"
+zettablock_license_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_d8389f4155164e79a7d9bae46a9e934b/graphql"
+zettablock_lmfp_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_fe377faeb21f45178d29dc22e5088022/graphql"
+zettablock_license_owner_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_fa57c2cfeb514936a0e2bb0617e0ed96/graphql"
+zettablock_module_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_7e8be598c2cd42f6a127b589ed772199/graphql"
+zettablock_permissions_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_72cf7b7e6271497b8eb97e0b0ad6df76/graphql"
+zettablock_policy_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_29b9e6bd24c649e9ae87c61badb9d6ce/graphql"
+zettablock_policyfwm_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_b270a24cba3f4939930b6f5b1d6b6732/graphql"
+zettablock_royalty_pay_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_cab3cf86ef2046b697f49a64b1d245b0/graphql"
+zettablock_royalty_policy_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_600f5583926145a68338ee5daa983204/graphql"
+
+zettablock_splits_endpoint: "https://api.zettablock.com/api/v1/dataset/sq_7e8be598c2cd42f6a127b589ed772199/graphql"

@@ -19,16 +19,22 @@ func NewListAccessControlPermissions(graphService thegraph.TheGraphServiceBeta, 
 			requestBody = &beta_v0.AccessControlPermissionsRequestBody{}
 		}
 
-		acps, err := graphService.ListAccessControlPermissions(fromACPRequestQueryOptions(requestBody))
+		acps, renAcps, err := graphService.ListAccessControlPermissions(fromACPRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get access control permissions: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.AccessControlPermissionResponse{
-			Data: acps,
-		})
+		if acps != nil {
+			c.JSON(http.StatusOK, beta_v0.AccessControlPermissionResponse{
+				Data: acps,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenAccessControlPermissionResponse{
+				Data: renAcps,
+			})
+		}
 	}
 }
 
@@ -36,12 +42,14 @@ func fromACPRequestQueryOptions(requestBody *beta_v0.AccessControlPermissionsReq
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -53,6 +61,7 @@ func fromACPRequestQueryOptions(requestBody *beta_v0.AccessControlPermissionsReq
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy
