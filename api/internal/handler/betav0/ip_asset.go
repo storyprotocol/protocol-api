@@ -29,16 +29,22 @@ import (
 func NewGetIPAsset(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Client) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		assetId := c.Param("assetId")
-		assets, err := graphService.GetIPAsset(assetId)
+		assets, renAssets, err := graphService.GetIPAsset(assetId)
 		if err != nil {
 			logger.Errorf("Failed to get asset: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.IPAssetResponse{
-			Data: assets,
-		})
+		if assets != nil {
+			c.JSON(http.StatusOK, beta_v0.IPAssetResponse{
+				Data: assets,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenIPAssetResponse{
+				Data: renAssets,
+			})
+		}
 	}
 }
 
@@ -65,16 +71,22 @@ func NewListIPAssets(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 			logger.Info(err)
 		}
 
-		ipAssets, err := graphService.ListIPAssets(fromIPARequestQueryOptions(requestBody))
+		ipAssets, renAssets, err := graphService.ListIPAssets(fromIPARequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get registered IP Assets: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.IPAssetsResponse{
-			Data: ipAssets,
-		})
+		if ipAssets != nil {
+			c.JSON(http.StatusOK, beta_v0.IPAssetsResponse{
+				Data: ipAssets,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenIPAssetsResponse{
+				Data: renAssets,
+			})
+		}
 	}
 }
 
@@ -82,12 +94,14 @@ func fromIPARequestQueryOptions(body *beta_v0.IpAssetRequestBody) *thegraph.TheG
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if body.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
-			First: 10,
+			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -99,6 +113,7 @@ func fromIPARequestQueryOptions(body *beta_v0.IpAssetRequestBody) *thegraph.TheG
 	}
 
 	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Limit = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy

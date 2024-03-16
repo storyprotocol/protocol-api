@@ -34,16 +34,22 @@ func NewGetTransaction(graphService thegraph.TheGraphServiceBeta, httpClient xht
 	return func(c *gin.Context) {
 		trxId := c.Param("trxId")
 
-		trx, err := graphService.GetTransaction(trxId)
+		trx, renTrx, err := graphService.GetTransaction(trxId)
 		if err != nil {
 			logger.Errorf("Failed to get transaction: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.TransactionResponse{
-			Data: trx,
-		})
+		if trx != nil {
+			c.JSON(http.StatusOK, beta_v0.TransactionResponse{
+				Data: trx,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenTransactionResponse{
+				Data: renTrx,
+			})
+		}
 	}
 }
 
@@ -71,16 +77,22 @@ func NewListTransactions(graphService thegraph.TheGraphServiceBeta, httpClient x
 		options := fromTrxRequestQueryOptions(requestBody)
 
 		fmt.Println(options)
-		trxs, err := graphService.ListTransactions(options)
+		trxs, renTrxs, err := graphService.ListTransactions(options)
 		if err != nil {
 			logger.Errorf("Failed to get added transactions: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.TransactionsResponse{
-			Data: trxs,
-		})
+		if trxs != nil {
+			c.JSON(http.StatusOK, beta_v0.TransactionsResponse{
+				Data: trxs,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenTransactionsResponse{
+				Data: renTrxs,
+			})
+		}
 	}
 }
 
@@ -88,12 +100,14 @@ func fromTrxRequestQueryOptions(requestBody *beta_v0.TransactionRequestBody) *th
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -105,6 +119,7 @@ func fromTrxRequestQueryOptions(requestBody *beta_v0.TransactionRequestBody) *th
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

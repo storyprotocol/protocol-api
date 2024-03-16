@@ -30,16 +30,22 @@ func NewGetLicenseOwner(graphService thegraph.TheGraphServiceBeta, httpClient xh
 	return func(c *gin.Context) {
 		licenseOwnerId := c.Param("licenseOwnerId")
 
-		licenses, err := graphService.GetLicenseOwner(licenseOwnerId)
+		licenses, renLic, err := graphService.GetLicenseOwner(licenseOwnerId)
 		if err != nil {
 			logger.Errorf("Failed to get license owner: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if licenses != nil {
+			c.JSON(http.StatusOK, beta_v0.LicenseOwnerResponse{
+				Data: licenses,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicenseOwnerResponse{
+				Data: renLic,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseOwnerResponse{
-			Data: licenses,
-		})
 	}
 }
 
@@ -65,16 +71,22 @@ func NewListLicenseOwners(graphService thegraph.TheGraphServiceBeta, httpClient 
 
 		}
 
-		licenses, err := graphService.ListLicenseOwners(fromLicenseOwnerRequestQueryOptions(requestBody))
+		licenses, renLic, err := graphService.ListLicenseOwners(fromLicenseOwnerRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list license owners: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if licenses != nil {
+			c.JSON(http.StatusOK, beta_v0.LicenseOwnersResponse{
+				Data: licenses,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicenseOwnersResponse{
+				Data: renLic,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseOwnersResponse{
-			Data: licenses,
-		})
 	}
 }
 
@@ -82,12 +94,14 @@ func fromLicenseOwnerRequestQueryOptions(requestBody *beta_v0.LicenseOwnersReque
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -99,6 +113,7 @@ func fromLicenseOwnerRequestQueryOptions(requestBody *beta_v0.LicenseOwnersReque
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

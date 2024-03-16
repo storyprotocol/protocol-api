@@ -30,16 +30,22 @@ func NewGetRoyaltyPay(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 	return func(c *gin.Context) {
 		royaltyPayId := c.Param("royaltyPayId")
 
-		roys, err := graphService.GetRoyaltyPay(royaltyPayId)
+		roys, renRoys, err := graphService.GetRoyaltyPay(royaltyPayId)
 		if err != nil {
 			logger.Errorf("Failed to get royalty pay: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if roys != nil {
+			c.JSON(http.StatusOK, beta_v0.RoyaltyPayResponse{
+				Data: roys,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenRoyaltyPayResponse{
+				Data: renRoys,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.RoyaltyPayResponse{
-			Data: roys,
-		})
 	}
 }
 
@@ -66,16 +72,22 @@ func NewListRoyaltyPays(graphService thegraph.TheGraphServiceBeta, httpClient xh
 			requestBody = &beta_v0.RoyaltyPayRequestBody{}
 		}
 
-		roys, err := graphService.ListRoyaltyPays(fromRoyaltyPayRequestQueryOptions(requestBody))
+		roys, renRoys, err := graphService.ListRoyaltyPays(fromRoyaltyPayRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list royalty pays: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if roys != nil {
+			c.JSON(http.StatusOK, beta_v0.RoyaltyPaysResponse{
+				Data: roys,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenRoyaltyPaysResponse{
+				Data: renRoys,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.RoyaltyPaysResponse{
-			Data: roys,
-		})
 	}
 }
 
@@ -83,12 +95,14 @@ func fromRoyaltyPayRequestQueryOptions(body *beta_v0.RoyaltyPayRequestBody) *the
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if body.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -100,6 +114,7 @@ func fromRoyaltyPayRequestQueryOptions(body *beta_v0.RoyaltyPayRequestBody) *the
 	}
 
 	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Limit = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy

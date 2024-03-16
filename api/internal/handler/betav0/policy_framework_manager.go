@@ -30,16 +30,22 @@ func NewGetPolicyFrameworkManager(graphService thegraph.TheGraphServiceBeta, htt
 	return func(c *gin.Context) {
 		pfwmId := c.Param("pfwmId")
 
-		pfwms, err := graphService.GetPolicyFrameworkManager(pfwmId)
+		pfwms, renPfwms, err := graphService.GetPolicyFrameworkManager(pfwmId)
 		if err != nil {
 			logger.Errorf("Failed to get policy framework manager: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if pfwms != nil {
+			c.JSON(http.StatusOK, beta_v0.PolicyFrameworkManagerResponse{
+				Data: pfwms,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenPolicyFrameworkManagerResponse{
+				Data: renPfwms,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.PolicyFrameworkManagerResponse{
-			Data: pfwms,
-		})
 	}
 }
 
@@ -66,16 +72,22 @@ func NewListPolicyFrameworkManagers(graphService thegraph.TheGraphServiceBeta, h
 			requestBody = &beta_v0.PolicyFrameworkManagerRequestBody{}
 		}
 
-		pfwms, err := graphService.ListPolicyFrameworkManagers(fromPolicyFWMRequestQueryOptions(requestBody))
+		pfwms, renPfwms, err := graphService.ListPolicyFrameworkManagers(fromPolicyFWMRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list policy framework managers : %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if pfwms != nil {
+			c.JSON(http.StatusOK, beta_v0.PolicyFrameworkManagersResponse{
+				Data: pfwms,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenPolicyFrameworkManagersResponse{
+				Data: renPfwms,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.PolicyFrameworkManagersResponse{
-			Data: pfwms,
-		})
 	}
 }
 
@@ -83,12 +95,14 @@ func fromPolicyFWMRequestQueryOptions(body *beta_v0.PolicyFrameworkManagerReques
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if body.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -100,6 +114,7 @@ func fromPolicyFWMRequestQueryOptions(body *beta_v0.PolicyFrameworkManagerReques
 	}
 
 	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Limit = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy

@@ -30,16 +30,22 @@ func NewGetDispute(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.C
 	return func(c *gin.Context) {
 		disputeId := c.Param("disputeId")
 
-		disputes, err := graphService.GetDispute(disputeId)
+		disputes, renDisputes, err := graphService.GetDispute(disputeId)
 		if err != nil {
 			logger.Errorf("Failed to get dispute: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.DisputeResponse{
-			Data: disputes,
-		})
+		if disputes != nil {
+			c.JSON(http.StatusOK, beta_v0.DisputeResponse{
+				Data: disputes,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenDisputeResponse{
+				Data: renDisputes,
+			})
+		}
 	}
 }
 
@@ -64,16 +70,22 @@ func NewListDisputes(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		disputes, err := graphService.ListDisputes(fromDisputeRequestQueryOptions(requestBody))
+		disputes, renDisputes, err := graphService.ListDisputes(fromDisputeRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get added disputes: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.DisputesResponse{
-			Data: disputes,
-		})
+		if disputes != nil {
+			c.JSON(http.StatusOK, beta_v0.DisputesResponse{
+				Data: disputes,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenDisputesResponse{
+				Data: renDisputes,
+			})
+		}
 	}
 }
 
@@ -81,12 +93,14 @@ func fromDisputeRequestQueryOptions(requestBody *beta_v0.DisputeRequestBody) *th
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -98,6 +112,7 @@ func fromDisputeRequestQueryOptions(requestBody *beta_v0.DisputeRequestBody) *th
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

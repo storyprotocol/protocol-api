@@ -30,16 +30,22 @@ func NewGetRoyaltyPolicy(graphService thegraph.TheGraphServiceBeta, httpClient x
 	return func(c *gin.Context) {
 		royaltyPolicyId := c.Param("royaltyPolicyId")
 
-		roys, err := graphService.GetRoyaltyPolicy(royaltyPolicyId)
+		roys, renRoys, err := graphService.GetRoyaltyPolicy(royaltyPolicyId)
 		if err != nil {
 			logger.Errorf("Failed to get royalty policy: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if roys != nil {
+			c.JSON(http.StatusOK, beta_v0.RoyaltyPolicyResponse{
+				Data: roys,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenRoyaltyPolicyResponse{
+				Data: renRoys,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.RoyaltyPolicyResponse{
-			Data: roys,
-		})
 	}
 }
 
@@ -66,16 +72,22 @@ func NewListRoyaltyPolicies(graphService thegraph.TheGraphServiceBeta, httpClien
 			requestBody = &beta_v0.RoyaltyPolicyRequestBody{}
 		}
 
-		roys, err := graphService.ListRoyaltyPolicies(fromRoyaltyPolicyRequestQueryOptions(requestBody))
+		roys, renRoys, err := graphService.ListRoyaltyPolicies(fromRoyaltyPolicyRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list royalties: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if roys != nil {
+			c.JSON(http.StatusOK, beta_v0.RoyaltyPoliciesResponse{
+				Data: roys,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenRoyaltyPoliciesResponse{
+				Data: renRoys,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.RoyaltyPoliciesResponse{
-			Data: roys,
-		})
 	}
 }
 
@@ -83,12 +95,14 @@ func fromRoyaltyPolicyRequestQueryOptions(body *beta_v0.RoyaltyPolicyRequestBody
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if body.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -100,6 +114,7 @@ func fromRoyaltyPolicyRequestQueryOptions(body *beta_v0.RoyaltyPolicyRequestBody
 	}
 
 	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Limit = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy

@@ -30,16 +30,22 @@ func NewGetPermission(graphService thegraph.TheGraphServiceBeta, httpClient xhtt
 	return func(c *gin.Context) {
 		permissionId := c.Param("permissionId")
 
-		perms, err := graphService.GetPermission(permissionId)
+		perms, renPerms, err := graphService.GetPermission(permissionId)
 		if err != nil {
 			logger.Errorf("Failed to get permission: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if perms != nil {
+			c.JSON(http.StatusOK, beta_v0.PermissionResponse{
+				Data: perms,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenPermissionResponse{
+				Data: renPerms,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.PermissionResponse{
-			Data: perms,
-		})
 	}
 }
 
@@ -64,16 +70,22 @@ func NewListPermissions(graphService thegraph.TheGraphServiceBeta, httpClient xh
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		perms, err := graphService.ListPermissions(fromPermissionRequestQueryOptions(requestBody))
+		perms, renPerms, err := graphService.ListPermissions(fromPermissionRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list permissions: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if perms != nil {
+			c.JSON(http.StatusOK, beta_v0.PermissionsResponse{
+				Data: perms,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenPermissionsResponse{
+				Data: renPerms,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.PermissionsResponse{
-			Data: perms,
-		})
 	}
 }
 
@@ -81,12 +93,14 @@ func fromPermissionRequestQueryOptions(requestBody *beta_v0.PermissionRequestBod
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -98,6 +112,7 @@ func fromPermissionRequestQueryOptions(requestBody *beta_v0.PermissionRequestBod
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

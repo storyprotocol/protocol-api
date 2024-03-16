@@ -30,16 +30,22 @@ func NewGetModule(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 	return func(c *gin.Context) {
 		moduleId := c.Param("moduleId")
 
-		mods, err := graphService.GetModule(moduleId)
+		mods, renMods, err := graphService.GetModule(moduleId)
 		if err != nil {
 			logger.Errorf("Failed to get module: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if mods != nil {
+			c.JSON(http.StatusOK, beta_v0.ModuleResponse{
+				Data: mods,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenModuleResponse{
+				Data: renMods,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.ModuleResponse{
-			Data: mods,
-		})
 	}
 }
 
@@ -64,16 +70,22 @@ func NewListModules(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		mods, err := graphService.ListModules(fromModuleRequestQueryOptions(requestBody))
+		mods, renMods, err := graphService.ListModules(fromModuleRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get added modules: %v", err)
 			c.JSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if mods != nil {
+			c.JSON(http.StatusOK, beta_v0.ModulesResponse{
+				Data: mods,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenModulesResponse{
+				Data: renMods,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.ModulesResponse{
-			Data: mods,
-		})
 	}
 }
 
@@ -81,12 +93,14 @@ func fromModuleRequestQueryOptions(body *beta_v0.ModuleRequestBody) *thegraph.Th
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if body.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -98,6 +112,7 @@ func fromModuleRequestQueryOptions(body *beta_v0.ModuleRequestBody) *thegraph.Th
 	}
 
 	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Limit = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
 	queryOptions.OrderBy = body.Options.OrderBy

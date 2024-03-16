@@ -14,16 +14,22 @@ func NewGetTag(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Clien
 	return func(c *gin.Context) {
 		ipId := c.Param("tagId")
 
-		tags, err := graphService.GetTag(ipId)
+		tags, renTags, err := graphService.GetTag(ipId)
 		if err != nil {
 			logger.Errorf("Failed to get tag: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.TagResponse{
-			Data: tags,
-		})
+		if tags != nil {
+			c.JSON(http.StatusOK, beta_v0.TagResponse{
+				Data: tags,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenTagResponse{
+				Data: renTags,
+			})
+		}
 	}
 }
 
@@ -35,16 +41,22 @@ func NewListTags(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cli
 			requestBody = &beta_v0.TagRequestBody{}
 		}
 
-		tags, err := graphService.ListTag(fromTagRequestQueryOptions(requestBody))
+		tags, renTags, err := graphService.ListTag(fromTagRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list tags: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
 
-		c.JSON(http.StatusOK, beta_v0.TagsResponse{
-			Data: tags,
-		})
+		if tags != nil {
+			c.JSON(http.StatusOK, beta_v0.TagsResponse{
+				Data: tags,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenTagsResponse{
+				Data: renTags,
+			})
+		}
 	}
 }
 
@@ -52,12 +64,14 @@ func fromTagRequestQueryOptions(body *beta_v0.TagRequestBody) *thegraph.TheGraph
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if body.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -69,6 +83,7 @@ func fromTagRequestQueryOptions(body *beta_v0.TagRequestBody) *thegraph.TheGraph
 	}
 
 	queryOptions.First = body.Options.Pagination.Limit
+	queryOptions.Limit = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
 	queryOptions.OrderDirection = body.Options.OrderDirection
 	queryOptions.OrderBy = body.Options.OrderBy

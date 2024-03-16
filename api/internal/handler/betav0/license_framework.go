@@ -15,16 +15,22 @@ func NewGetLicenseFramework(graphService thegraph.TheGraphServiceBeta, httpClien
 	return func(c *gin.Context) {
 		licenseId := c.Param("frameworkId")
 
-		licenses, err := graphService.GetLicenseFramework(licenseId)
+		licenses, renLfw, err := graphService.GetLicenseFramework(licenseId)
 		if err != nil {
 			logger.Errorf("Failed to get license: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if licenses != nil {
+			c.JSON(http.StatusOK, beta_v0.LicenseFrameworkResponse{
+				Data: licenses,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicenseFrameworkResponse{
+				Data: renLfw,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseFrameworkResponse{
-			Data: licenses,
-		})
 	}
 }
 
@@ -34,16 +40,22 @@ func NewListLicenseFrameworks(graphService thegraph.TheGraphServiceBeta, httpCli
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		licenses, err := graphService.ListLicenseFrameworks(fromLicenseFWRequestQueryOptions(requestBody))
+		licenses, renLfw, err := graphService.ListLicenseFrameworks(fromLicenseFWRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to get license frameworks: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if licenses != nil {
+			c.JSON(http.StatusOK, beta_v0.LicenseFrameworksResponse{
+				Data: licenses,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenLicenseFrameworksResponse{
+				Data: renLfw,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.LicenseFrameworksResponse{
-			Data: licenses,
-		})
 	}
 }
 
@@ -51,12 +63,14 @@ func fromLicenseFWRequestQueryOptions(requestBody *beta_v0.LicenseFrameworkReque
 	if requestBody == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if requestBody.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -68,6 +82,7 @@ func fromLicenseFWRequestQueryOptions(requestBody *beta_v0.LicenseFrameworkReque
 	}
 
 	queryOptions.First = requestBody.Options.Pagination.Limit
+	queryOptions.Limit = requestBody.Options.Pagination.Limit
 	queryOptions.Skip = requestBody.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(requestBody.Options.OrderDirection)
 	queryOptions.OrderBy = requestBody.Options.OrderBy

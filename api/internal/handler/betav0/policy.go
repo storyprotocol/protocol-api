@@ -30,16 +30,21 @@ func NewGetPolicy(graphService thegraph.TheGraphServiceBeta, httpClient xhttp.Cl
 	return func(c *gin.Context) {
 		policyId := c.Param("policyId")
 
-		policies, err := graphService.GetPolicy(policyId)
+		policies, renPols, err := graphService.GetPolicy(policyId)
 		if err != nil {
 			logger.Errorf("Failed to get policy: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
-
-		c.JSON(http.StatusOK, beta_v0.PolicyResponse{
-			Data: policies,
-		})
+		if policies != nil {
+			c.JSON(http.StatusOK, beta_v0.PolicyResponse{
+				Data: policies,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenPolicyResponse{
+				Data: renPols,
+			})
+		}
 	}
 }
 
@@ -64,16 +69,22 @@ func NewListPolicies(graphService thegraph.TheGraphServiceBeta, httpClient xhttp
 		if err := c.ShouldBindJSON(&requestBody); err != nil {
 		}
 
-		pols, err := graphService.ListPolicies(fromPolicuyRequestQueryOptions(requestBody))
+		pols, renPols, err := graphService.ListPolicies(fromPolicuyRequestQueryOptions(requestBody))
 		if err != nil {
 			logger.Errorf("Failed to list policies: %v", err)
 			c.AbortWithStatusJSON(http.StatusInternalServerError, messages.ErrorMessage("Internal server error"))
 			return
 		}
+		if pols != nil {
+			c.JSON(http.StatusOK, beta_v0.PoliciesResponse{
+				Data: pols,
+			})
+		} else {
+			c.JSON(http.StatusOK, beta_v0.RenPoliciesResponse{
+				Data: renPols,
+			})
+		}
 
-		c.JSON(http.StatusOK, beta_v0.PoliciesResponse{
-			Data: pols,
-		})
 	}
 }
 
@@ -81,12 +92,14 @@ func fromPolicuyRequestQueryOptions(body *beta_v0.PolicyRequestBody) *thegraph.T
 	if body == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
 	if body.Options == nil {
 		return &thegraph.TheGraphQueryOptions{
 			First: 100,
+			Limit: 100,
 			Skip:  0,
 		}
 	}
@@ -97,6 +110,7 @@ func fromPolicuyRequestQueryOptions(body *beta_v0.PolicyRequestBody) *thegraph.T
 		body.Options.Pagination.Limit = 100
 	}
 
+	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.First = body.Options.Pagination.Limit
 	queryOptions.Skip = body.Options.Pagination.Offset
 	queryOptions.OrderDirection = strings.ToLower(body.Options.OrderDirection)
